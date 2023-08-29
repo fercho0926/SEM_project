@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Home Page";
+}
+@if (@TempData["AlertMessage"] != null)
+{
+    <div class="alert-success jumbotron">
+        <strong>Success !</strong> @TempData["AlertMessage"]
+    </div>
+}
+
+@if (@TempData["ErrorMessage"] != null)
+{
+    <div class="alert-danger jumbotron">
+        <strong>Error !</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+
+
+
+
+
+
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+            <h1><b>Inicio</b></h1>
+    </div>
+    <div class="card-body">
+
+
+            <h1 style="color : #326091"><b>¿Free espace?</b></h1>
+            <br />
+
+@*               <h2 style="color : #326091"><b>Con Empresarios con Liderazgo lo puedes lograr</b></h2>
+*@            <br />
+
+
+    </div>
+</div>
+
+

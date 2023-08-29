@@ -1,0 +1,68 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Confirmación de registro";
+    Layout = "_Layout_simple";
+}
+
+<style>
+
+    body, html {
+        margin: 0;
+        font-family: sans-serif;
+    }
+
+
+
+    a {
+        outline: none;
+        text-decoration: none;
+        display: inline-block;
+        width: 19.5%;
+        margin-right: 0.625%;
+        text-align: center;
+        line-height: 3;
+        color: black;
+    }
+
+    li:last-child a {
+        margin-right: 0;
+    }
+
+    #confirm-link {
+        background: lightgreen;
+    }
+
+        #confirm-link:hover {
+            background: orange;
+        }
+
+    a:active {
+        background: red;
+        color: white;
+    }
+
+</style>
+
+@{
+
+
+
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h1 style="color : #326091"><b>Confirmación</b></h1>
+        </div>
+        <div class="card-body">
+            @if (@Model.DisplayConfirmAccountLink)
+            {
+                <p><b>
+                    Bienvenido a Empresarios con liderazgo Somos una organización que trabajamos de forma ordenada y perseverante para obtener un buen desempeño, satisfacción de los clientes y colaboradores :<br/> <a id="confirm-link" href="@Model.EmailConfirmationUrl">ACEPTAR</a>
+                </b></p>
+            }
+
+        </div>
+    </div>
+
+
+}
+
