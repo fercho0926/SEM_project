@@ -11,7 +11,7 @@ using SEM_project.Models;
 using SEM_project.Utils;
 using Microsoft.AspNetCore.Authorization;
 
-namespace SEM_project.Controllers
+namespace SEM_project.Controllers.Delete
 {
     //[Authorize(Roles = "Administrator")]
     public class Users_AppController : Controller
