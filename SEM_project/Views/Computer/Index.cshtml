@@ -13,54 +13,64 @@
 <table class="table">
     <thead>
         <tr>
-@*             <th>
-                @Html.DisplayNameFor(model => model.)
+            <th>
+                @Html.DisplayNameFor(model => model.ComputerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.Serial)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BalanceAvailable)
+                @Html.DisplayNameFor(model => model.Reference)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastMovement)
+                @Html.DisplayNameFor(model => model.Processer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InitialDate)
+                @Html.DisplayNameFor(model => model.Ram)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndlDate)
+                @Html.DisplayNameFor(model => model.HardDisk)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.OperativeSystem)
             </th>
-            <th></th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InstaledApplications)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licences)
+            </th>
+ 
+            <th></th> 
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-@*             <td>
-                @Html.DisplayFor(modelItem => item.UserApp)
+            <td>
+                    @Html.DisplayFor(modelItem => item.ComputerId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product)
+                @Html.DisplayFor(modelItem => item.Serial)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BalanceAvailable)
+                @Html.DisplayFor(modelItem => item.Reference)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastMovement)
+                @Html.DisplayFor(modelItem => item.Processer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InitialDate)
+                @Html.DisplayFor(modelItem => item.Ram)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndlDate)
+                @Html.DisplayFor(modelItem => item.HardDisk)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td> *@
+                @Html.DisplayFor(modelItem => item.OperativeSystem)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ComputerId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ComputerId">Details</a> |

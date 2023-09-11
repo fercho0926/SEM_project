@@ -21,7 +21,7 @@ namespace SEM_project.Models
         public DateTime DateBirth { get; set; }
 
         //Contact Information
-        [Required, Display(Name = "Pais")] public EnumCountries EnumCountries { get; set; }
+        [Required, Display(Name = "Contraseña")] public EnumCountries EnumCountries { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -43,7 +43,9 @@ namespace SEM_project.Models
         public string? phone { get; set; }
 
         //Connect with aspnetUsers Table
+        [Display(Name = "Email")]
         public string? AspNetUserId { get; set; }
+
 
 
         //

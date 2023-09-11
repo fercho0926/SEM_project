@@ -150,31 +150,31 @@ namespace SEM_project.Controllers
         }
 
 
-        public async Task<IActionResult> SendMail([FromForm] MailRequest request)
-        {
-            try
-            {
-                await mailService.SendEmailAsync(request);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //public async Task<IActionResult> SendMail([FromForm] MailRequest request)
+        //{
+        //    try
+        //    {
+        //        await mailService.SendEmailAsync(request);
+        //        return Ok();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
 
 
-        public IActionResult Refer()
-        {
-            return View();
-        }
+        //public IActionResult Refer()
+        //{
+        //    return View();
+        //}
 
 
         public IActionResult FinalRegister()

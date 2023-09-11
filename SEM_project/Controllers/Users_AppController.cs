@@ -10,17 +10,39 @@ using SEM_project.Data;
 using SEM_project.Models;
 using SEM_project.Utils;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
+using System.Text;
 
-namespace SEM_project.Controllers.Delete
+namespace SEM_project.Controllers
 {
     //[Authorize(Roles = "Administrator")]
     public class Users_AppController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public Users_AppController(ApplicationDbContext context)
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IEmailSender _emailSender;
+        public string ReturnUrl { get; set; }
+
+
+
+        public Users_AppController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            IUserStore<IdentityUser> userStore,
+            SignInManager<IdentityUser> signInManager,
+            IEmailSender emailSender)
         {
             _context = context;
+            _userManager = userManager;
+            _userStore = userStore;
+            _emailStore = GetEmailStore();
+            _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         // GET: Users_App
@@ -65,14 +87,68 @@ namespace SEM_project.Controllers.Delete
                 "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name")]
             Users_App users_App)
         {
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(users_App);
                 await _context.SaveChangesAsync();
+
+                //var returnUrl ??= Url.Content("~/");
+
+                var user = CreateUser();
+
+                var password =users_App.EnumCountries.ToString();
+
+                await _userStore.SetUserNameAsync(user, users_App.AspNetUserId, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, users_App.AspNetUserId, CancellationToken.None);
+                var result = await _userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
+                {
+
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+
+
+                    code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+                   await _userManager.ConfirmEmailAsync(user, code);
+
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation",
+                            new { email = users_App.AspNetUserId});
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //return LocalRedirect(UrlToRegister);
+                    }
+                }
+
+
+
                 return RedirectToAction(nameof(Index));
             }
 
             return View(users_App);
+        }
+
+        private IdentityUser CreateUser()
+        {
+            try
+            {
+                return Activator.CreateInstance<IdentityUser>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
+                                                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                                                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
         }
 
         // GET: Users_App/Edit/5
@@ -196,6 +272,16 @@ namespace SEM_project.Controllers.Delete
             }
 
             return View(users_App);
+        }
+
+        private IUserEmailStore<IdentityUser> GetEmailStore()
+        {
+            if (!_userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("The default UI requires a user store with email support.");
+            }
+
+            return (IUserEmailStore<IdentityUser>)_userStore;
         }
     }
 }

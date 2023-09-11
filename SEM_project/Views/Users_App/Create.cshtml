@@ -13,6 +13,16 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="AspNetUserId" class="control-label"></label>
+                <input asp-for="AspNetUserId" class="form-control" />
+                <span asp-validation-for="AspNetUserId" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="EnumCountries" class="control-label"></label>
+                <input asp-for="EnumCountries" class="form-control" />
+                <span asp-validation-for="EnumCountries" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -27,16 +37,12 @@
                 <input asp-for="Identification" class="form-control" />
                 <span asp-validation-for="Identification" class="text-danger"></span>
             </div>
-            <div class="form-group">
+     @*        <div class="form-group">
                 <label asp-for="DateBirth" class="control-label"></label>
                 <input asp-for="DateBirth" class="form-control" />
                 <span asp-validation-for="DateBirth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EnumCountries" class="control-label"></label>
-                 @Html.DropDownList("EnumCountries", Html.GetEnumSelectList<EnumCountries>(), "", new { @class = "form-control" })
-                <span asp-validation-for="EnumCountries" class="text-danger"></span>
-            </div>
+            </div> *@
+         
             <div class="form-group">
                 <label asp-for="City" class="control-label"></label>
                 <input asp-for="City" class="form-control" />
@@ -57,11 +63,18 @@
                 <input asp-for="phone" class="form-control" />
                 <span asp-validation-for="phone" class="text-danger"></span>
             </div>
+@*             <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div> *@
+@* 
             <div class="form-group">
-                <label asp-for="AspNetUserId" class="control-label"></label>
-                <input asp-for="AspNetUserId" class="form-control" />
-                <span asp-validation-for="AspNetUserId" class="text-danger"></span>
-            </div>
+                <label asp-for="EnumCountries" class="control-label"></label>
+                @Html.DropDownList("EnumCountries", Html.GetEnumSelectList<EnumCountries>(), "", new { @class = "form-control" })
+                <span asp-validation-for="EnumCountries" class="text-danger"></span>
+            </div> *@
+          
             
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

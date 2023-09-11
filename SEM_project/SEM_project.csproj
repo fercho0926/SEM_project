@@ -49,7 +49,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\User_contracts\Contracts\" />
   </ItemGroup>
 
 </Project>
