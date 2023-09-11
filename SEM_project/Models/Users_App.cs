@@ -44,10 +44,18 @@ namespace SEM_project.Models
 
         //Connect with aspnetUsers Table
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string? AspNetUserId { get; set; }
 
+        [Required]
+        [MaxLength(50)]
+        [Display(Name = "Contrasena")]
+        [DataType(DataType.Password)]
+
+        public string? Password { get; set; }
 
 
-        //
+
+
     }
 }

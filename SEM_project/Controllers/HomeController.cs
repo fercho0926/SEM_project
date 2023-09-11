@@ -1,10 +1,4 @@
-﻿using Amazon;
-using SEM_project.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc;
 using SEM_project.Data;
 using Microsoft.AspNetCore.Identity;
 using SEM_project.Services;

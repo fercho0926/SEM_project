@@ -1,7 +1,4 @@
-﻿using Amazon.SecretsManager;
-using Amazon.SecretsManager.Model;
-using SEM_project.Models;
-using SEM_project.Settings;
+﻿using SEM_project.Models;
 using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -20,15 +17,19 @@ namespace SEM_project.Services
             var port = "";
 
 
-            var client = new AmazonSecretsManagerClient();
+            //var client = new AmazonSecretsManagerClient();
 
 
-            var response = await client.GetSecretValueAsync(new GetSecretValueRequest()
-            {
-                SecretId = "Mail"
-            });
+            //var response = await client.GetSecretValueAsync(new GetSecretValueRequest()
+            //{
+            //    SecretId = "Mail"
+            //});
 
-            var secretValues = JObject.Parse(response.SecretString);
+            var delete = "asd";
+
+
+            var secretValues = JObject.Parse(delete);
+            //var secretValues = JObject.Parse(response.SecretString);
             if (secretValues != null)
             {
                 password = secretValues["Mail_Password"].ToString();

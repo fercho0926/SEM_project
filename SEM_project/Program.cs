@@ -1,18 +1,7 @@
-using DinkToPdf;
-using DinkToPdf.Contracts;
 using SEM_project.Data;
 using SEM_project.Services;
-using SEM_project.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-using Amazon;
-using Amazon.CDK.AWS.SSM;
-using Amazon.SecretsManager;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,15 +28,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 // Services dependencies
-builder.Services.AddTransient<IDocumentService, DocumentService>();
+//builder.Services.AddTransient<IDocumentService, DocumentService>();
 builder.Services.AddTransient<IMailService, MailService>();
-builder.Services.AddTransient<ICloudwatchLogs, CloudwatchLogs>();
 
 
-builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
@@ -56,8 +42,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
 }
 else
 {

@@ -84,7 +84,7 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind(
-                "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name")]
+                "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name, Password")]
             Users_App users_App)
         {
 
@@ -98,11 +98,11 @@ namespace SEM_project.Controllers
 
                 var user = CreateUser();
 
-                var password =users_App.EnumCountries.ToString();
+                //var password =users_App.EnumCountries.ToString();
 
                 await _userStore.SetUserNameAsync(user, users_App.AspNetUserId, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, users_App.AspNetUserId, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, password);
+                var result = await _userManager.CreateAsync(user, users_App.Password);
 
                 if (result.Succeeded)
                 {
@@ -119,8 +119,8 @@ namespace SEM_project.Controllers
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation",
-                            new { email = users_App.AspNetUserId});
+                        return RedirectToAction(nameof(Index));
+
                     }
                     else
                     {
