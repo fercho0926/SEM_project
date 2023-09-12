@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SEM_project.Models.RoleViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<style>
+
+    .thNew {
+        background-color: #326091;
+        color: white;
+    }
+
+        .thmov {
+        background-color: #605F5F;
+        color: white;
+    }
+
+</style>
+
+<h1 style="color : #326091"><b>Roles</b></h1>
+
+
+<p>
+    <a asp-action="Create">Crear Nuevo</a>
+</p>
+
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="table" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="thNew">
+                                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    
+                             
+                                    <td>
+                                        <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.Id"></a> |
+                                        <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.Id"></a> |
+                                        <a class="fa fa-trash" asp-action="Delete" asp-route-id="@item.Id"></a>
+                                    </td>
+
+                                </tr>
+                            }
+                    </table>
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+
