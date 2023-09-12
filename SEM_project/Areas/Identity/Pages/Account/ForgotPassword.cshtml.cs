@@ -20,7 +20,6 @@ using SEM_project.Services;
 
 namespace SEM_project.Areas.Identity.Pages.Account
 {
-    [Authorize(Roles = "Admin")]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -85,9 +84,9 @@ namespace SEM_project.Areas.Identity.Pages.Account
                 //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
 
-                string subject = "Restablecer Contraseña - Empresarios con Liderazgo";
+                string subject = "Restablecer Contraseña - SEM-project";
                 string body =
-                    $"Empresarios con liderazgo le ha enviado una solicitud de <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Restablecer contraseña</a>.";
+                    $"se le ha enviado una solicitud de <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Restablecer contraseña</a>.";
 
                 var request = new MailRequest();
 

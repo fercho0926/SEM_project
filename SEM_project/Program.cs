@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Builder;
 using SEM_project.Data;
 using SEM_project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,15 +37,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IMailService, MailService>();
 
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
-
 }
 else
 {

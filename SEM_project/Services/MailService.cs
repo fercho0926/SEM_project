@@ -11,33 +11,10 @@ namespace SEM_project.Services
     {
         public async Task SendEmailAsync(MailRequest mailRequest)
         {
-            var password = "";
-            var userC = "";
-            var smttp = "";
-            var port = "";
-
-
-            //var client = new AmazonSecretsManagerClient();
-
-
-            //var response = await client.GetSecretValueAsync(new GetSecretValueRequest()
-            //{
-            //    SecretId = "Mail"
-            //});
-
-            var delete = "asd";
-
-
-            var secretValues = JObject.Parse(delete);
-            //var secretValues = JObject.Parse(response.SecretString);
-            if (secretValues != null)
-            {
-                password = secretValues["Mail_Password"].ToString();
-                userC = secretValues["Mail_From"].ToString();
-                smttp = secretValues["Mail_Smtp"].ToString();
-                port = secretValues["Mail_Port"].ToString();
-            }
-
+            var password = "zwkq zvdg nhwg sqkq";
+            var userC = "sem.project.tdea@gmail.com";
+            var smttp = "smtp.gmail.com";
+            var port = "587";
 
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(userC);

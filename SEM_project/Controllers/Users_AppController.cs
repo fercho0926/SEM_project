@@ -91,6 +91,7 @@ namespace SEM_project.Controllers
 
             if (ModelState.IsValid)
             {
+                users_App.IsActive = true;
                 _context.Add(users_App);
                 await _context.SaveChangesAsync();
 
@@ -243,7 +244,11 @@ namespace SEM_project.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var users_App = await _context.Users_App.FindAsync(id);
-            _context.Users_App.Remove(users_App);
+
+            users_App.IsActive = false;
+
+
+            _context.Users_App.Update(users_App);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

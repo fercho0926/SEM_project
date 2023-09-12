@@ -51,10 +51,9 @@ namespace SEM_project.Models
         [MaxLength(50)]
         [Display(Name = "Contrasena")]
         [DataType(DataType.Password)]
-
         public string? Password { get; set; }
 
-
+        public bool IsActive { get; set; } = true;
 
 
     }
