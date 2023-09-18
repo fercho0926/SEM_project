@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEM_project.Data;
 
@@ -11,9 +12,10 @@ using SEM_project.Data;
 namespace SEM_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230912160433_role")]
+    partial class role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,12 +41,17 @@ namespace SEM_project.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("Users_AppId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.HasIndex("Users_AppId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -306,30 +313,6 @@ namespace SEM_project.Migrations
                     b.ToTable("ComputerHistory");
                 });
 
-            modelBuilder.Entity("SEM_project.Models.Entities.Permission", b =>
-                {
-                    b.Property<int>("PermissionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"), 1L, 1);
-
-                    b.Property<string>("PermissionDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
-                    b.HasKey("PermissionId");
-
-                    b.ToTable("Permission");
-                });
-
             modelBuilder.Entity("SEM_project.Models.Entities.UserToComputer", b =>
                 {
                     b.Property<int>("Id")
@@ -347,37 +330,6 @@ namespace SEM_project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserToComputer");
-                });
-
-            modelBuilder.Entity("SEM_project.Models.RoleViewModel", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("HasAdminPermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasComputerPermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasLicensesPermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasSoftwarePermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Users_AppId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Users_AppId");
-
-                    b.ToTable("RoleViewModel");
                 });
 
             modelBuilder.Entity("SEM_project.Models.Users_App", b =>
@@ -443,6 +395,13 @@ namespace SEM_project.Migrations
                     b.ToTable("Users_App");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.HasOne("SEM_project.Models.Users_App", null)
+                        .WithMany("role")
+                        .HasForeignKey("Users_AppId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -501,13 +460,6 @@ namespace SEM_project.Migrations
                         .HasForeignKey("ComputerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SEM_project.Models.RoleViewModel", b =>
-                {
-                    b.HasOne("SEM_project.Models.Users_App", null)
-                        .WithMany("role")
-                        .HasForeignKey("Users_AppId");
                 });
 
             modelBuilder.Entity("SEM_project.Models.Entities.Computer", b =>

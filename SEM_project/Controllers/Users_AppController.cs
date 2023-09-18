@@ -29,13 +29,14 @@ namespace SEM_project.Controllers
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly IEmailSender _emailSender;
         public string ReturnUrl { get; set; }
-
+        private readonly RoleManager<IdentityRole> _roleManager;
 
 
         public Users_AppController(ApplicationDbContext context, UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -43,11 +44,11 @@ namespace SEM_project.Controllers
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         // GET: Users_App
 
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users_App.ToListAsync());
@@ -74,7 +75,19 @@ namespace SEM_project.Controllers
         // GET: Users_App/Create
         public IActionResult Create()
         {
-            return View();
+            var roles = _roleManager.Roles.Select(r => new RoleViewModel
+            {
+                Id = r.Id,
+                Name = r.Name
+            }).ToList();
+
+            var s = new Users_App();
+            s.role = roles;
+
+
+            return View(s);
+
+            //return View();
         }
 
         // POST: Users_App/Create
@@ -84,11 +97,9 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind(
-                "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name, Password")]
+                "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name, Password,role.Id")]
             Users_App users_App)
         {
-
-
             if (ModelState.IsValid)
             {
                 users_App.IsActive = true;
@@ -107,21 +118,18 @@ namespace SEM_project.Controllers
 
                 if (result.Succeeded)
                 {
-
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
 
-
                     code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-                   await _userManager.ConfirmEmailAsync(user, code);
+                    await _userManager.ConfirmEmailAsync(user, code);
 
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToAction(nameof(Index));
-
                     }
                     else
                     {
@@ -129,7 +137,6 @@ namespace SEM_project.Controllers
                         //return LocalRedirect(UrlToRegister);
                     }
                 }
-
 
 
                 return RedirectToAction(nameof(Index));

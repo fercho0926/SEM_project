@@ -22,6 +22,74 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt class="col-sm-2">
+             Permisos
+        </dt>
+        <div>
+            <hr />
+            <dl class="row">
+                <!-- Display Admin Permission -->
+                <dt class="col-sm-2">
+                    Admin:
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.HasAdminPermissions)
+                    {
+                        <span class="text-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">No</span>
+                    }
+                </dd>
+
+                <!-- Display Computer Permission -->
+                <dt class="col-sm-2">
+                    Equipos:
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.HasComputerPermissions)
+                    {
+                        <span class="text-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">No</span>
+                    }
+                </dd>
+
+                <!-- Display Licence Permission -->
+                <dt class="col-sm-2">
+                    Licencias:
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.HasLicensesPermissions)
+                    {
+                        <span class="text-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">No</span>
+                    }
+                </dd>
+
+                <!-- Display Software Permission -->
+                <dt class="col-sm-2">
+                    Software:
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.HasSoftwarePermissions)
+                    {
+                        <span class="text-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">No</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <!-- Repeat this block for other permission properties -->
     </dl>
 </div>
 

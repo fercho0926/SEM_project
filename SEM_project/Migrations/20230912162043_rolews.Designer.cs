@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEM_project.Data;
 
@@ -11,9 +12,10 @@ using SEM_project.Data;
 namespace SEM_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230912162043_rolews")]
+    partial class rolews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,30 +308,6 @@ namespace SEM_project.Migrations
                     b.ToTable("ComputerHistory");
                 });
 
-            modelBuilder.Entity("SEM_project.Models.Entities.Permission", b =>
-                {
-                    b.Property<int>("PermissionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"), 1L, 1);
-
-                    b.Property<string>("PermissionDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
-                    b.HasKey("PermissionId");
-
-                    b.ToTable("Permission");
-                });
-
             modelBuilder.Entity("SEM_project.Models.Entities.UserToComputer", b =>
                 {
                     b.Property<int>("Id")
@@ -353,18 +331,6 @@ namespace SEM_project.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("HasAdminPermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasComputerPermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasLicensesPermissions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasSoftwarePermissions")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

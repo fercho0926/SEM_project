@@ -1,4 +1,5 @@
-﻿using SEM_project.Utils;
+﻿using Microsoft.AspNetCore.Identity;
+using SEM_project.Utils;
 using System.ComponentModel.DataAnnotations;
 
 namespace SEM_project.Models
@@ -21,7 +22,8 @@ namespace SEM_project.Models
         public DateTime DateBirth { get; set; }
 
         //Contact Information
-        [Required, Display(Name = "Contraseña")] public EnumCountries EnumCountries { get; set; }
+        [Required, Display(Name = "Contraseña")]
+        public EnumCountries EnumCountries { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -55,6 +57,6 @@ namespace SEM_project.Models
 
         public bool IsActive { get; set; } = true;
 
-
+        public IEnumerable<RoleViewModel> role { get; set; }
     }
 }

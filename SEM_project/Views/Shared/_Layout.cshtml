@@ -64,11 +64,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                @*  <li class="nav-item d-none d-sm-inline-block">
-                <a href="~/Home/Index" class="nav-link">Home</a>
-                </li>*@
-
-            </ul>
+   </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -96,21 +92,11 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                @*        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                <a href="#" class="d-block">@User.Identity?.Name</a>
-                </div>
-                </div>*@
+       
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="~/Home/Index" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -119,115 +105,42 @@
                                 </p>
                             </a>
                         </li>
+                        @if (User.HasClaim("Permission", "Computer"))
+                    {
                         <li class="nav-item">
                             <a href="~/Computer/Index" class="nav-link">
                                 <i class="nav-icon ion-person-add"></i>
                                 <p>
                                     Equipos
-                                
+
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="~/Balance/Packages" class="nav-link">
-                                <i class="nav-icon ion-social-usd-outline"></i>
-                                <p>
-                                   software
-                                    @*<span class="right badge badge-danger">New</span>*@
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Balance/EmergencyFund" class="nav-link">
-                                <i class="nav-icon ion-social-euro-outline"></i>
-                                <p>
-                                    Lincecias
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
-                        @*<li class="nav-item">
-                            <a href="~/Balance/BalanceByMail/?mail=@User.Identity?.Name" class="nav-link">
-                                <i class="nav-icon ion-ios-pie-outline"></i>
-                                <p>
-                                    Mis productos
-                                </p>
-                            </a>
-                        </li>
-                                <li class="nav-item">
-                            <a href="~/Refer/ReferedByMail/?mail=@User.Identity?.Name" class="nav-link">
-                                <i class="nav-icon ion-social-bitcoin-outline"></i>
-                                <p>
-                                    Comisiones
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/Transfer" class="nav-link">
-                                <i class="nav-icon ion-arrow-swap"></i>
-                                <p>
-                                    Transferencias
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/WebSite" class="nav-link">
-                                <i class="nav-icon ion-ios-world-outline"></i>
-                                <p>
-                                    Nuestra Web
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/Support" class="nav-link">
-                                <i class="nav-icon ion-social-whatsapp-outline"></i>
-                                <p>
-                                    Soporte
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/Credential" class="nav-link">
-                                <i class="nav-icon ion-card"></i>
-                                <p>
-                                    Solicita tu credencial
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/News" class="nav-link">
-                                <i class="nav-icon ion-ios-paper-outline"></i>
-                                <p>
-                                    Noticias
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/Crypto" class="nav-link">
-                                <i class="nav-icon ion-social-bitcoin-outline"></i>
-                                <p>
-                                    Pagos en Cryptomonedas
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/Home/Bancolombia" class="nav-link">
-                                <i class="nav-icon ion-social-usd-outline"></i>
-                                <p>
-                                    Pagos Bancolombia
-                                </p>
-                            </a>
-                        </li>
-                 @*       <li class="nav-item">
-                            <a href="~/Home/Crypto" class="nav-link">
-                                <i class="nav-icon ion-social-bitcoin-outline"></i>
-                                <p>
-                                    contratos -Dll
-                                </p>
-                            </a>
-                        </li>*@
-                
-                         @if (User.IsInRole("Admin"))
+                    }
+                        @if (User.HasClaim("Permission", "Software"))
+                        {
+                            <li class="nav-item">
+                                <a href="~/Balance/Packages" class="nav-link">
+                                    <i class="nav-icon ion-social-usd-outline"></i>
+                                    <p>
+                                        software
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (User.HasClaim("Permission", "Licence"))
+                        {
+                            <li class="nav-item">
+                                <a href="~/Balance/EmergencyFund" class="nav-link">
+                                    <i class="nav-icon ion-social-euro-outline"></i>
+                                    <p>
+                                        Lincecias
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                      @if (User.HasClaim("Permission", "Admin"))
                         {
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -250,31 +163,9 @@
                                         <p>Roles</p>
                                     </a>
                                 </li>
-                              @*  <li class="nav-item">
-                                    <a href="~/Balance/ApproveCashOut" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Aprobar Retiros</p>
-                                    </a>
-                                </li>  
-                                <li class="nav-item">
-                                    <a href="~/Refer/ApproveRetireCommissions" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Aprobar Comisiones</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/Identity/Account/ForgotPassword" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Restaurar Contraseñas</p>
-                                    </a>
-                                </li>*@
+                              
                             </ul>
                         </li>
-
-
-
-
-
                         }
 
                     </ul>
@@ -302,13 +193,7 @@
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
-                <!-- Page Heading -->
-           @*     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h2 class="h3 mb-0 text-gray-800"></h2>
-                    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="~/Refer/Index">
-                        <i class="fa fa-user-plus fa-sm text-white-50"></i>  Refiere un amigo
-                    </a>
-                </div>*@
+
 
 
 
