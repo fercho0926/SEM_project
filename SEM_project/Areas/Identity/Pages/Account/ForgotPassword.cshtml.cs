@@ -62,6 +62,13 @@ namespace SEM_project.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                if (user == null)
+                {
+                    TempData["ErrorMessage"] = "El usuario no existe";
+                    return RedirectToPage("./ForgotPassword");
+                }
+
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed

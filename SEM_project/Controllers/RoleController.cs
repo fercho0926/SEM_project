@@ -13,15 +13,12 @@ namespace SEM_project.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _context;
 
-
         public RoleController(RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _roleManager = roleManager;
             _context = context;
         }
 
-
-        // List roles
         public IActionResult Index()
         {
             var roles = _roleManager.Roles.Select(r => new RoleViewModel
@@ -29,8 +26,6 @@ namespace SEM_project.Controllers
                 Id = r.Id,
                 Name = r.Name
             }).ToList();
-
-
             return View(roles);
         }
 
@@ -38,45 +33,38 @@ namespace SEM_project.Controllers
         {
             if (id == null)
             {
-                return BadRequest(); // Return a bad request response if the ID is not provided.
+                return BadRequest();
             }
 
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
             {
-                return NotFound(); // Return a not found response if the role doesn't exist.
+                return NotFound();
             }
 
-            // Create a RoleViewModel and set its properties
             var roleViewModel = new RoleViewModel
             {
                 Id = role.Id,
                 Name = role.Name
-                // Initialize other properties as needed
             };
 
-            // Check if the role has the "Admin" claim
             var adminClaim =
                 (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(c =>
                     c.Type == "Permission" && c.Value == "Admin");
 
-            // Check if the role has the "Computer" claim
             var computerClaim =
                 (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(c =>
                     c.Type == "Permission" && c.Value == "Computer");
 
-            // Check if the role has the "Licence" claim
             var licenseClaim =
                 (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(c =>
                     c.Type == "Permission" && c.Value == "Licence");
 
-            // Check if the role has the "Software" claim
             var softwareClaim =
                 (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(c =>
                     c.Type == "Permission" && c.Value == "Software");
 
-            // Set the permission properties based on the claims
             roleViewModel.HasAdminPermissions = adminClaim != null;
             roleViewModel.HasComputerPermissions = computerClaim != null;
             roleViewModel.HasLicensesPermissions = licenseClaim != null;
@@ -96,14 +84,11 @@ namespace SEM_project.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(RoleViewModel roleViewModel)
         {
-            // Create a new IdentityRole and set its properties based on the view model
             var role = new IdentityRole
             {
                 Name = roleViewModel.Name,
-                // Set other properties based on roleViewModel.HasAdminPermissions, etc.
             };
 
-            // Use the role instance to create the role in the database
             var result = await _roleManager.CreateAsync(role);
 
             if (result.Succeeded)
@@ -124,7 +109,6 @@ namespace SEM_project.Controllers
                     }
                 }
 
-                // Save changes to the database
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index");
@@ -136,23 +120,19 @@ namespace SEM_project.Controllers
 
         public async Task<IActionResult> Edit(string id)
         {
-            // Find the role by its ID
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
             {
-                return NotFound(); // Return a not found response if the role doesn't exist.
+                return NotFound();
             }
 
-            // Map the role properties to the RoleViewModel
             var roleViewModel = new RoleViewModel
             {
                 Id = role.Id,
                 Name = role.Name,
-                // Map other role properties as needed
             };
 
-            // Check for claims and set permissions
             roleViewModel.HasAdminPermissions = await HasClaimAsync(role, "Admin");
             roleViewModel.HasComputerPermissions = await HasClaimAsync(role, "Computer");
             roleViewModel.HasLicensesPermissions = await HasClaimAsync(role, "Licence");
@@ -179,24 +159,21 @@ namespace SEM_project.Controllers
 
             if (role == null)
             {
-                return NotFound(); // Return a not found response if the role doesn't exist.
+                return NotFound();
             }
 
             role.Name = roleViewModel.Name;
-            // Update other role properties as needed
 
             var result = await _roleManager.UpdateAsync(role);
 
             if (result.Succeeded)
             {
-                // Remove existing claims associated with the role
                 var existingClaims = await _roleManager.GetClaimsAsync(role);
                 foreach (var claim in existingClaims)
                 {
                     await _roleManager.RemoveClaimAsync(role, claim);
                 }
 
-                // Add new claims based on roleViewModel permissions
                 var claimsToAdd = new Dictionary<string, bool>
                 {
                     { "Admin", roleViewModel.HasAdminPermissions },
@@ -213,17 +190,14 @@ namespace SEM_project.Controllers
                     }
                 }
 
-                return RedirectToAction("Index"); // Redirect to the role list on successful update.
+                return RedirectToAction("Index");
             }
 
-            // If the update fails, add model errors and return the view to show validation errors.
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-
-            // If ModelState is not valid, return to the Edit view with validation errors.
             return View(roleViewModel);
         }
 
@@ -232,7 +206,7 @@ namespace SEM_project.Controllers
         {
             if (id == null)
             {
-                return BadRequest(); // Return a bad request response if the ID is not provided.
+                return BadRequest();
             }
 
             var role = await _roleManager.FindByIdAsync(id);
