@@ -4,6 +4,21 @@
     ViewData["Title"] = "Index";
 
 }
+
+@if (@TempData["AlertMessage"] != null)
+{
+    <div class="alert-success jumbotron">
+        <strong>Success !</strong> @TempData["AlertMessage"]
+    </div>
+}
+
+@if (@TempData["ErrorMessage"] != null)
+{
+    <div class="alert-danger jumbotron">
+        <strong>Error !</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
 <style>
 
     .thNew {

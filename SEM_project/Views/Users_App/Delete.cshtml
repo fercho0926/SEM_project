@@ -4,9 +4,9 @@
     ViewData["Title"] = "Eliminar";
 }
 
-<h1>Delete</h1>
 
-<h3>Seguro quieres eliminar este usuario?</h3>
+
+<h3 style="color : #326091"><b>Seguro quieres eliminar este usuario?</b></h3>
 <div>
    
     <hr />
@@ -73,9 +73,13 @@
         </dd>
     </dl>
     
+  
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Regresar</a>
+        <div class="form-group">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
     </form>
+
 </div>

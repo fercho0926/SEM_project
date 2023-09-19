@@ -5,13 +5,13 @@
 
 }
 
-<h1>Detalles</h1>
+
+<h3 style="color : #326091"><b>Detalles</b></h3>
 
 <div>
-    <h4>Usuarios </h4>
     <hr />
     <dl class="row">
-         <dt class = "col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
@@ -74,7 +74,10 @@
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
 </div>
+

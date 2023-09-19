@@ -111,7 +111,9 @@ namespace SEM_project.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                TempData["AlertMessage"] = "Se ha realizado la creacion del Rol";
+                //return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Index));
             }
 
 
@@ -190,7 +192,8 @@ namespace SEM_project.Controllers
                     }
                 }
 
-                return RedirectToAction("Index");
+                TempData["AlertMessage"] = "Se ha realizado la actualización de la información.";
+                return RedirectToAction(nameof(Index));
             }
 
             foreach (var error in result.Errors)
@@ -248,7 +251,8 @@ namespace SEM_project.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index"); // Redirect to the role list on successful deletion.
+                TempData["AlertMessage"] = "Se ha realizado la Eliminación";
+                return RedirectToAction(nameof(Index));
             }
 
             // If the deletion fails, add model errors and return the view to show validation errors.

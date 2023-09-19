@@ -3,9 +3,8 @@
     ViewData["Title"] = "Editar";
 }
 
-<h1>Editar</h1>
+<h3 style="color : #326091"><b>Editar</b></h3>
 
-<h4>Usuarios de la aplicación</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -59,8 +58,11 @@
 </div>
 
 <div>
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
 </div>
+
 
 @section Scripts {
     @{

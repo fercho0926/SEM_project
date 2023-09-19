@@ -122,6 +122,7 @@ namespace SEM_project.Controllers
                     var rolename = await _roleManager.FindByIdAsync(users_App.SelectedRoleId);
 
                     users_App.RoleName = rolename.Name;
+                    users_App.Password = "hiddenData1*";
                     _context.Add(users_App);
                     await _context.SaveChangesAsync();
 
@@ -136,23 +137,17 @@ namespace SEM_project.Controllers
                     var resultUserToRol = await AssignRoleToUser(userId, roleId: users_App.SelectedRoleId);
 
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        //return LocalRedirect(UrlToRegister);
-                    }
+                    TempData["AlertMessage"] = "Usuario Creado Correctamente";
+                    return RedirectToAction(nameof(Index));
                 }
             }
 
-
+            TempData["ErrorMessage"] = "No se creo el usuario";
+            //return RedirectToPage("./ForgotPassword");
             return RedirectToAction(nameof(Index));
 
 
-            return View(users_App);
+            //return View(users_App);
         }
 
         private IdentityUser CreateUser()
@@ -304,7 +299,8 @@ namespace SEM_project.Controllers
                     await EditRoleToUser(user.Id, users_App.SelectedRoleId);
 
                     TempData["AlertMessage"] = "Se ha realizado la actualización de la información.";
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception)
@@ -347,6 +343,9 @@ namespace SEM_project.Controllers
 
             _context.Users_App.Update(users_App);
             await _context.SaveChangesAsync();
+
+            TempData["AlertMessage"] = "Se ha realizado la Inactivacion del usuario";
+            //return RedirectToAction("Index", "Home");
             return RedirectToAction(nameof(Index));
         }
 
