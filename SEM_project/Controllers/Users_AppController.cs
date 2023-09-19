@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
+using SEM_project.Migrations;
 
 namespace SEM_project.Controllers
 {
@@ -75,20 +77,21 @@ namespace SEM_project.Controllers
         // GET: Users_App/Create
         public IActionResult Create()
         {
-            var roles = _roleManager.Roles.Select(r => new RoleViewModel
+            var roles = _roleManager.Roles.Select(r => new SelectListItem
             {
-                Id = r.Id,
-                Name = r.Name
+                Value = r.Id,
+                Text = r.Name
             }).ToList();
 
-            var s = new Users_App();
-            s.role = roles;
+            var user = new Users_App
+            {
+                role = roles,
+                AspNetUserId = "@"
+            };
 
-
-            return View(s);
-
-            //return View();
+            return View(user);
         }
+
 
         // POST: Users_App/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -97,20 +100,16 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind(
-                "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name, Password,role.Id")]
+                "LastName,Identification,City,Neighborhood,Address,phone,AspNetUserId,Id,Name, Password,SelectedRoleId")]
             Users_App users_App)
         {
+            ModelState.Remove("role"); // Remove the existing validation state if it exists
+            ModelState.Remove("RoleName"); // Remove the existing validation state if it exists
+
             if (ModelState.IsValid)
             {
-                users_App.IsActive = true;
-                _context.Add(users_App);
-                await _context.SaveChangesAsync();
-
-                //var returnUrl ??= Url.Content("~/");
-
                 var user = CreateUser();
 
-                //var password =users_App.EnumCountries.ToString();
 
                 await _userStore.SetUserNameAsync(user, users_App.AspNetUserId, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, users_App.AspNetUserId, CancellationToken.None);
@@ -118,6 +117,14 @@ namespace SEM_project.Controllers
 
                 if (result.Succeeded)
                 {
+                    users_App.IsActive = true;
+
+                    var rolename = await _roleManager.FindByIdAsync(users_App.SelectedRoleId);
+
+                    users_App.RoleName = rolename.Name;
+                    _context.Add(users_App);
+                    await _context.SaveChangesAsync();
+
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -125,6 +132,8 @@ namespace SEM_project.Controllers
 
                     code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
                     await _userManager.ConfirmEmailAsync(user, code);
+
+                    var resultUserToRol = await AssignRoleToUser(userId, roleId: users_App.SelectedRoleId);
 
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -137,10 +146,11 @@ namespace SEM_project.Controllers
                         //return LocalRedirect(UrlToRegister);
                     }
                 }
-
-
-                return RedirectToAction(nameof(Index));
             }
+
+
+            return RedirectToAction(nameof(Index));
+
 
             return View(users_App);
         }
@@ -159,6 +169,67 @@ namespace SEM_project.Controllers
             }
         }
 
+
+        public async Task<bool> AssignRoleToUser(string userId, string roleId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var role = await _roleManager.FindByIdAsync(roleId);
+
+            if (user == null || role == null) return false;
+            // Check if the user is already in the role
+            var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
+
+            if (!isInRole)
+            {
+                // Add the user to the role
+                var result = await _userManager.AddToRoleAsync(user, role.Name);
+
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private async Task<bool> EditRoleToUser(string userId, string roleId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return false; // User not found
+            }
+
+            // Get the roles the user currently has
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            // Calculate roles to be added and removed
+            var roleToAdd = roleId;
+            //var rolesToRemove = userRoles.Except(new List<string> { roleToAdd });
+
+            await _userManager.RemoveFromRolesAsync(user, userRoles);
+
+            // Add the new role
+
+            //await _userManager.AddToRoleAsync(user, roleToAdd);
+            await AssignRoleToUser(userId, roleId);
+
+            // Remove old roles
+
+
+            return true; // Role updated successfully
+        }
+
+
         // GET: Users_App/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -173,6 +244,19 @@ namespace SEM_project.Controllers
                 return NotFound();
             }
 
+
+            var user = await _userManager.FindByEmailAsync(users_App.AspNetUserId);
+            var rolesselect = await _userManager.GetRolesAsync(user);
+
+
+            var roles = _roleManager.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Id,
+                Text = r.Name
+            }).ToList();
+
+            users_App.role = roles;
+
             return View(users_App);
         }
 
@@ -183,49 +267,55 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
             [Bind(
-                "LastName,Identification,DateBirth,EnumCountries,City,Neighborhood,Address,phone,AspNetUserId,Id,Name")]
+                "LastName,Identification,City, AspNetUserId,Neighborhood,Address,phone,Id,Name,SelectedRoleId,RoleName")]
             Users_App users_App)
         {
-            if (id != users_App.Id)
+            ModelState.Remove("role"); // Remove the existing validation state if it exists
+            ModelState.Remove("Password"); // Remove the existing validation state if it exists
+            ModelState.Remove("RoleName"); // Remove the existing validation state if it exists
+
+            try
             {
-                return NotFound();
+                if (ModelState.IsValid)
+                {
+                    if (id != users_App.Id)
+                    {
+                        return NotFound();
+                    }
+
+                    // Ensure that you have a valid user
+                    var user = await _userManager.FindByEmailAsync(users_App.AspNetUserId);
+                    if (user == null)
+                    {
+                        return NotFound();
+                    }
+
+
+                    var roleName = await _roleManager.FindByIdAsync(users_App.SelectedRoleId);
+
+                    users_App.RoleName = roleName.Name;
+
+                    users_App.Password = "hiddenData1*";
+                    _context.Update(users_App);
+                    await _context.SaveChangesAsync();
+
+
+                    // Update user role
+                    await EditRoleToUser(user.Id, users_App.SelectedRoleId);
+
+                    TempData["AlertMessage"] = "Se ha realizado la actualización de la información.";
+                    return RedirectToAction("Index", "Home");
+                }
             }
-
-            if (ModelState.IsValid)
+            catch (Exception)
             {
-                //  var refer = await _context.ReferedByUser.OrderByDescending(x => x.Date).FirstOrDefaultAsync(x =>
-                //x.ReferedUserId == users_App.AspNetUserId);
-
-                //  if (refer != null)
-                //  {
-                //      refer.Accepted = true;
-                //      var movement = new ReferedByUserMovement()
-                //      {
-                //          ReferedByUserId = refer.Id,
-                //          Message = "Acepto Invitación",
-                //          DateMovement = DateTime.Now,
-                //          Status = EnumStatusBalance.PENDIENTE
-                //      };
-                //      _context.ReferedByUserMovement.Add(movement);
-
-                _context.Update(users_App);
-                await _context.SaveChangesAsync();
-
-
-                //}
-                //else
-                //{
-                //    return NotFound();
-                //}
-
-
-                TempData["AlertMessage"] =
-                    $"Se ha realizado la actualizacion de la Informacion";
-                return RedirectToAction("Index", "Home");
+                // Log the exception for debugging purposes
+                // Handle the exception as needed (e.g., return an error view)
             }
 
             return View(users_App);
         }
+
 
         // GET: Users_App/Delete/5
         public async Task<IActionResult> Delete(int? id)

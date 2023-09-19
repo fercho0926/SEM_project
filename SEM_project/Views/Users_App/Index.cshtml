@@ -44,6 +44,7 @@
 
                                 <th>@Html.DisplayNameFor(model => model.City)</th>
                                 <th>@Html.DisplayNameFor(model => model.phone)</th>
+                                <th>@Html.DisplayNameFor(model => model.RoleName)</th>
                                 <th>@Html.DisplayNameFor(model => model.IsActive)</th>
                                 <th>Acciones</th>
                             </tr>
@@ -59,7 +60,9 @@
                                     <td>@Html.DisplayFor(modelItem => item.AspNetUserId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.City)</td>
                                     <td>@Html.DisplayFor(modelItem => item.phone)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                             
                              
                                     <td>
                                         <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.Id"></a> |

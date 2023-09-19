@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SEM_project.Utils;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SEM_project.Models
 {
@@ -16,7 +18,7 @@ namespace SEM_project.Models
         [Display(Name = "Identificacion")]
         public string? Identification { get; set; }
 
-        [Required]
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha de nacimiento")]
         public DateTime DateBirth { get; set; }
@@ -25,12 +27,10 @@ namespace SEM_project.Models
         [Required, Display(Name = "Contraseña")]
         public EnumCountries EnumCountries { get; set; }
 
-        [Required]
         [MaxLength(50)]
         [Display(Name = "Ciudad")]
         public string? City { get; set; }
 
-        [Required]
         [MaxLength(50)]
         [Display(Name = "Barrio")]
         public string? Neighborhood { get; set; }
@@ -46,17 +46,31 @@ namespace SEM_project.Models
 
         //Connect with aspnetUsers Table
         [Display(Name = "Email")]
+        [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$",
+            ErrorMessage = "tiene que ser un email correcto")]
         [DataType(DataType.EmailAddress)]
         public string? AspNetUserId { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [StringLength(255, ErrorMessage = "minimo 8 caracteres", MinimumLength = 8)]
+        [RegularExpression(@"^(?=.*\d)(?=.*[A-Z])(?=.*\W).+$",
+            ErrorMessage =
+                "Contraseña debe tener un digito ('0'-'9'), una mayuscula ('A'-'Z'), y un caracter especial.")]
         [Display(Name = "Contrasena")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
 
         public bool IsActive { get; set; } = true;
 
-        public IEnumerable<RoleViewModel> role { get; set; }
+        [NotMapped] // Exclude this property from Entity Framework mapping
+        [Display(Name = "Selectciona el rol para el usuario")]
+        public string SelectedRoleId { get; set; }
+
+
+        [Display(Name = "Rol")] public string RoleName { get; set; }
+
+
+        [NotMapped] // Exclude this property from Entity Framework mapping
+        public IEnumerable<SelectListItem> role { get; set; }
     }
 }

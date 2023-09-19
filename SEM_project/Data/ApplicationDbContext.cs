@@ -15,6 +15,5 @@ namespace SEM_project.Data
         public DbSet<SEM_project.Models.Entities.Computer> Computer { get; set; }
         public DbSet<SEM_project.Models.Entities.UserToComputer> UserToComputer { get; set; }
         public DbSet<SEM_project.Models.Entities.ComputerHistory> ComputerHistory { get; set; }
-        public DbSet<SEM_project.Models.Entities.Permission> Permission { get; set; }
     }
 }

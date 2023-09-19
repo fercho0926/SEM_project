@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Editar";
-
 }
 
 <h1>Editar</h1>
@@ -14,7 +13,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="AspNetUserId" />
+
+    
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -29,16 +32,6 @@
                 <label asp-for="Identification" class="control-label"></label>
                 <input asp-for="Identification" class="form-control" />
                 <span asp-validation-for="Identification" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateBirth" class="control-label"></label>
-                <input asp-for="DateBirth" class="form-control" />
-                <span asp-validation-for="DateBirth" class="text-danger"></span>
-            </div>
-           <div class="form-group">
-                <label asp-for="EnumCountries" class="control-label"></label>
-                @Html.DropDownList("EnumCountries", Html.GetEnumSelectList<EnumCountries>(), "", new { @class = "form-control" })
-                <span asp-validation-for="EnumCountries" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City" class="control-label"></label>
@@ -60,17 +53,26 @@
                 <input asp-for="phone" class="form-control" />
                 <span asp-validation-for="phone" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
-                <label asp-for="AspNetUserId" class="control-label"></label>
-                <input asp-for="AspNetUserId" class="form-control" />
-                <span asp-validation-for="AspNetUserId" class="text-danger"></span>
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control"  disabled="true"/>
+                <span asp-validation-for="RoleName" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" type="checkbox" class="form-control" />
-                <span asp-validation-for="AspNetUserId" class="text-danger"></span>
+                <label asp-for="SelectedRoleId" class="control-label">Selecciona un nuevo Rol:</label>
+                <select asp-for="SelectedRoleId" asp-items="Model.role" class="form-control"></select>
+                <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
             </div>
-           
+
+            
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label">Activo:</label>
+                <input type="checkbox" id="toggleIsActive" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="success" data-offstyle="danger" asp-for="IsActive" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
@@ -78,10 +80,9 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
