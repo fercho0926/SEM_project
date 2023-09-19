@@ -1,0 +1,92 @@
+﻿@model SEM_project.Models.Entities.Computer
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Display computer details -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 style="color: #326091;"><b>Detalles del Equipo</b></h3>
+                        <hr />
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.ComputerId)</th>
+                                <td>@Html.DisplayFor(model => model.ComputerId)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Serial)</th>
+                                <td>@Html.DisplayFor(model => model.Serial)</td>
+                            </tr>
+                            <!-- Add more details as needed -->
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Display computer history -->
+                <div class="card">
+                    <div class="card-body">
+                        
+                        
+                       
+                        
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CreateActivity", new { id = Model.ComputerId })'">
+                             Registrar Actividad
+                        </button>
+
+
+
+
+
+
+                        <h3 style="color: #326091;"><b>Registro de actividad</b></h3>
+                        <hr/>
+                        <table id="table" class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="thNew">
+                                <th>Fecha</th>
+                                <th>propietario</th>
+                                <th>accion</th>
+                                <th>Ejecutor</th>
+                                <th>Detalles</th>
+                                <!-- Add more table headers as needed -->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var history in Model.ComputerHistory)
+                            {
+                                <tr>
+                                    <td>@history.date</td>
+
+                                    <td>@history.Owner</td>
+                                    <td>@history.Action</td>
+                                    <td>@history.Performer</td>
+                                    <td>@history.Details</td>
+                                    <!-- Add more table cells as needed -->
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            
+            
+
+            
+            
+
+
+<div>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
+</div>

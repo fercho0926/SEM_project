@@ -145,9 +145,6 @@ namespace SEM_project.Controllers
             TempData["ErrorMessage"] = "No se creo el usuario";
             //return RedirectToPage("./ForgotPassword");
             return RedirectToAction(nameof(Index));
-
-
-            //return View(users_App);
         }
 
         private IdentityUser CreateUser()

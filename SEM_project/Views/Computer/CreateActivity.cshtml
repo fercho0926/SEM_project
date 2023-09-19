@@ -1,0 +1,90 @@
+﻿@model SEM_project.Models.Entities.ComputerHistory
+@{
+    ViewData["Title"] = "Crear actividad";
+}
+
+<h3 style="color : #326091"><b>Nuevo Actividad</b></h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateActivity">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ComputerId" />
+
+            <div class="form-group">
+                <label asp-for="ComputerId" class="control-label"></label>
+                <input asp-for="ComputerId" class="form-control" />
+                <span asp-validation-for="ComputerId" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Owner" class="control-label"></label>
+                <input asp-for="Owner" class="form-control" />
+                <span asp-validation-for="Owner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Action" class="control-label"></label>
+                <input asp-for="Action" class="form-control" />
+                <span asp-validation-for="Action" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Details" class="control-label"></label>
+                <textarea asp-for="Details" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+</div>
+<div>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
+</div>
+<style>
+    /* Custom styles for the toggle switch */
+    .custom-switch .custom-control-label::before {
+        background-color: #6c757d; /* Color when the toggle is ON (green) */
+    }
+
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #28a745; /* Color when the toggle is OFF (gray) */
+    }
+
+    .custom-switch .custom-control-label::after {
+        background-color: #fff; /* Color of the toggle knob */
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // JavaScript to handle toggle switch functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            var toggleAdmin = document.getElementById("toggleAdmin");
+            var toggleComputers = document.getElementById("toggleComputers");
+            var toggleSoftware = document.getElementById("toggleSoftware");
+            var toggleLicences = document.getElementById("toggleLicences");
+
+            toggleAdmin.addEventListener("change", function () {
+                // Handle toggleAdmin change event
+            });
+
+            toggleComputers.addEventListener("change", function () {
+                // Handle toggleComputers change event
+            });
+
+            toggleSoftware.addEventListener("change", function () {
+                // Handle toggleSoftware change event
+            });
+
+            toggleLicences.addEventListener("change", function () {
+                // Handle toggleLicences change event
+            });
+        });
+    </script>
+}
