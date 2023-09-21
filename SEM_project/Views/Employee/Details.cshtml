@@ -1,0 +1,71 @@
+﻿@model SEM_project.Models.Entities.Employee
+
+@{
+    ViewData["Title"] = "Detalles del Empleado";
+}
+
+<div class="container mt-4">
+    <h3 class="text-primary">Detalles del Empleado</h3>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Nombre:</dt>
+                <dd class="col-sm-8">@Model.EmployeeName</dd>
+
+                <dt class="col-sm-4">Cédula:</dt>
+                <dd class="col-sm-8">@Model.IDNumber</dd>
+
+                <dt class="col-sm-4">Fecha:</dt>
+                <dd class="col-sm-8">@Model.Date.ToShortDateString()</dd>
+
+                <dt class="col-sm-4">Cargo:</dt>
+                <dd class="col-sm-8">@Model.EnumPosition</dd>
+
+                <dt class="col-sm-4">Vinculación:</dt>
+                <dd class="col-sm-8">@Model.EnumAffiliation</dd>
+
+                <dt class="col-sm-4">Sede:</dt>
+                <dd class="col-sm-8">@Model.EnumLocation</dd>
+
+                <dt class="col-sm-4">Piso:</dt>
+                <dd class="col-sm-8">@Model.EnumFloor</dd>
+
+                <dt class="col-sm-4">Subsecretaría:</dt>
+                <dd class="col-sm-8">@Model.EnumSubdepartment</dd>
+
+                <dt class="col-sm-4">Grupo de Trabajo:</dt>
+                <dd class="col-sm-8">@Model.EnumWorkGroup</dd>
+
+                <dt class="col-sm-4">Placa de Equipo Asignado:</dt>
+                <dd class="col-sm-8">@Model.AssignedEquipmentPlate</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Teléfono:</dt>
+                <dd class="col-sm-8">@Model.PhonePlate</dd>
+
+                <dt class="col-sm-4">Modelo de Teléfono:</dt>
+                <dd class="col-sm-8">@Model.PhoneModel</dd>
+
+                <dt class="col-sm-4">Serial de Teléfono:</dt>
+                <dd class="col-sm-8">@Model.PhoneSerial</dd>
+
+                <dt class="col-sm-4">Extensión de Teléfono:</dt>
+                <dd class="col-sm-8">@Model.PhoneExtension</dd>
+
+                <dt class="col-sm-4">Observaciones:</dt>
+                <dd class="col-sm-8">@Model.Observations</dd>
+
+                <dt class="col-sm-4">Equipo Personal:</dt>
+                <dd class="col-sm-8">@Model.PersonalEquipment ? "Sí" : "No"</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-primary">Regresar</a>
+</div>

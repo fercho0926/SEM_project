@@ -1,0 +1,32 @@
+﻿namespace SEM_project.Utils
+{
+    public enum EnumPosition
+    {
+        AuxiliarAdministrativo,
+        Asesor,
+        Abogado,
+        AnalistaServidores,
+        AnalistaTelecomunicaciones,
+        AsesorDespacho,
+        Contratista,
+        Coordinador,
+        DirectorTecnico,
+        LiderDeGestion,
+        LiderDeProyecto,
+        LiderDePrograma,
+        LiderZonal,
+        GuardaDeSeguridad,
+        ProfesionalAltoRendimiento,
+        ProfesionalEspecializado,
+        ProfesionalUniversitario,
+        ProfesionalDeGestion,
+        SecretarioDespacho,
+        SecretariaO,
+        SubsecretarioPlaneacionEducativa,
+        SubsecretarioAdministrativoYFinanciero,
+        SubsecretarioPrestacionServicioEducativo,
+        TecnicoAdministrativo,
+        TecnicoAsistencial,
+        TecnicoOperativo
+    }
+}

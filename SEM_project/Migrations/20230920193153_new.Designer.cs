@@ -12,8 +12,8 @@ using SEM_project.Data;
 namespace SEM_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230912160433_role")]
-    partial class role
+    [Migration("20230920193153_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,17 +41,12 @@ namespace SEM_project.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("Users_AppId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.HasIndex("Users_AppId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -237,6 +232,9 @@ namespace SEM_project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("HardDisk")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -274,6 +272,8 @@ namespace SEM_project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ComputerId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Computer");
                 });
@@ -313,6 +313,73 @@ namespace SEM_project.Migrations
                     b.ToTable("ComputerHistory");
                 });
 
+            modelBuilder.Entity("SEM_project.Models.Entities.Employee", b =>
+                {
+                    b.Property<Guid>("EmployeeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AssignedEquipmentPlate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EnumAffiliation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnumFloor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnumLocation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnumPosition")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnumSubdepartment")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnumWorkGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IDNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Observations")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PersonalEquipment")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhoneExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhonePlate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneSerial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmployeeId");
+
+                    b.ToTable("Employee");
+                });
+
             modelBuilder.Entity("SEM_project.Models.Entities.UserToComputer", b =>
                 {
                     b.Property<int>("Id")
@@ -349,7 +416,6 @@ namespace SEM_project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -377,14 +443,17 @@ namespace SEM_project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Neighborhood")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phone")
                         .HasMaxLength(25)
@@ -393,13 +462,6 @@ namespace SEM_project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users_App");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.HasOne("SEM_project.Models.Users_App", null)
-                        .WithMany("role")
-                        .HasForeignKey("Users_AppId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -453,6 +515,17 @@ namespace SEM_project.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SEM_project.Models.Entities.Computer", b =>
+                {
+                    b.HasOne("SEM_project.Models.Entities.Employee", "Employee")
+                        .WithMany("Computers")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("SEM_project.Models.Entities.ComputerHistory", b =>
                 {
                     b.HasOne("SEM_project.Models.Entities.Computer", null)
@@ -467,9 +540,9 @@ namespace SEM_project.Migrations
                     b.Navigation("ComputerHistory");
                 });
 
-            modelBuilder.Entity("SEM_project.Models.Users_App", b =>
+            modelBuilder.Entity("SEM_project.Models.Entities.Employee", b =>
                 {
-                    b.Navigation("role");
+                    b.Navigation("Computers");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SEM_project.Migrations
 {
-    public partial class NewMigrationJuly : Migration
+    public partial class initialMigrationasd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,65 +49,30 @@ namespace SEM_project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Balance",
+                name: "Employee",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserApp = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Product = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BalanceAvailable = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BaseBalanceAvailable = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Profit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Currency = table.Column<int>(type: "int", nullable: false),
-                    CashOut = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    LastMovement = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    InitialDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndlDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StatusBalance = table.Column<int>(type: "int", nullable: false),
-                    Contract = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Balance", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User_contracts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserContract = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Version = table.Column<int>(type: "int", nullable: false),
-                    Product = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    S3Route = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Approved = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User_contracts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User_Logs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    User = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    EnumPosition = table.Column<int>(type: "int", nullable: false),
+                    EnumAffiliation = table.Column<int>(type: "int", nullable: false),
+                    EnumLocation = table.Column<int>(type: "int", nullable: false),
+                    EnumFloor = table.Column<int>(type: "int", nullable: false),
+                    EnumSubdepartment = table.Column<int>(type: "int", nullable: false),
+                    WorkGroup = table.Column<int>(type: "int", nullable: false),
+                    AssignedEquipmentPlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhonePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneSerial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneExtension = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observations = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonalEquipment = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User_Logs", x => x.Id);
+                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,16 +85,33 @@ namespace SEM_project.Migrations
                     Identification = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EnumCountries = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Neighborhood = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Neighborhood = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     phone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
                     AspNetUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users_App", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserToComputer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserToComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserToComputer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,27 +221,52 @@ namespace SEM_project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovementsByBalance",
+                name: "Computer",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DateMovement = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BalanceBefore = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CashOut = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BalanceAfter = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
-                    BalanceId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Serial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Processer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ram = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HardDisk = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OperativeSystem = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InstaledApplications = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Licences = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovementsByBalance", x => x.Id);
+                    table.PrimaryKey("PK_Computer", x => x.ComputerId);
                     table.ForeignKey(
-                        name: "FK_MovementsByBalance_Balance_BalanceId",
-                        column: x => x.BalanceId,
-                        principalTable: "Balance",
-                        principalColumn: "Id",
+                        name: "FK_Computer_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ComputerHistory",
+                columns: table => new
+                {
+                    ComputerHistoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Performer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComputerHistory", x => x.ComputerHistoryId);
+                    table.ForeignKey(
+                        name: "FK_ComputerHistory_Computer_ComputerId",
+                        column: x => x.ComputerId,
+                        principalTable: "Computer",
+                        principalColumn: "ComputerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -303,9 +310,14 @@ namespace SEM_project.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovementsByBalance_BalanceId",
-                table: "MovementsByBalance",
-                column: "BalanceId");
+                name: "IX_Computer_EmployeeId",
+                table: "Computer",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComputerHistory_ComputerId",
+                table: "ComputerHistory",
+                column: "ComputerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -326,16 +338,13 @@ namespace SEM_project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "MovementsByBalance");
-
-            migrationBuilder.DropTable(
-                name: "User_contracts");
-
-            migrationBuilder.DropTable(
-                name: "User_Logs");
+                name: "ComputerHistory");
 
             migrationBuilder.DropTable(
                 name: "Users_App");
+
+            migrationBuilder.DropTable(
+                name: "UserToComputer");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -344,7 +353,10 @@ namespace SEM_project.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Balance");
+                name: "Computer");
+
+            migrationBuilder.DropTable(
+                name: "Employee");
         }
     }
 }

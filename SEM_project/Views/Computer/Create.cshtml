@@ -3,134 +3,73 @@
     ViewData["Title"] = "Nuevo Equipo";
 }
 
-<h3 style="color : #326091"><b>Nuevo Equipo</b></h3>
-
+<h3 style="color: #326091;"><b>Nuevo Equipo</b></h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="Serial" class="control-label"></label>
+                <label asp-for="Serial" class="control-label">Serial</label>
                 <input asp-for="Serial" class="form-control" />
                 <span asp-validation-for="Serial" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Reference" class="control-label"></label>
+                <label asp-for="Reference" class="control-label">Reference</label>
                 <input asp-for="Reference" class="form-control" />
                 <span asp-validation-for="Reference" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Processer" class="control-label"></label>
+                <label asp-for="Processer" class="control-label">Processer</label>
                 <input asp-for="Processer" class="form-control" />
                 <span asp-validation-for="Processer" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Ram" class="control-label"></label>
+                <label asp-for="Ram" class="control-label">RAM</label>
                 <input asp-for="Ram" class="form-control" />
                 <span asp-validation-for="Ram" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="HardDisk" class="control-label"></label>
+                <label asp-for="HardDisk" class="control-label">Hard Disk</label>
                 <input asp-for="HardDisk" class="form-control" />
                 <span asp-validation-for="HardDisk" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="OperativeSystem" class="control-label"></label>
+                <label asp-for="OperativeSystem" class="control-label">Sistema Operativo</label>
                 <input asp-for="OperativeSystem" class="form-control" />
                 <span asp-validation-for="OperativeSystem" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
+                <label asp-for="Model" class="control-label">Modelo</label>
                 <input asp-for="Model" class="form-control" />
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
-            
-
-
-            @* <div class="form-group">
-                <label asp-for="HasAdminPermissions" class="control-label">Panel Administrativo:</label>
-                <div class="custom-control custom-switch">
-                    <input asp-for="HasAdminPermissions" class="custom-control-input" id="toggleAdmin" />
-                    <label class="custom-control-label" for="toggleAdmin"></label>
-                </div>
-            </div>
 
             <div class="form-group">
-                <label asp-for="HasComputerPermissions" class="control-label">Equipos:</label>
-                <div class="custom-control custom-switch">
-                    <input asp-for="HasComputerPermissions" class="custom-control-input" id="toggleComputers" />
-                    <label class="custom-control-label" for="toggleComputers"></label>
-                </div>
+                <label asp-for="EmployeeId" class="control-label">Asignar a un Usuario:</label>
+                <select asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" class="form-control">
+                    <option value="">Seleccione un Usuario...</option>
+                </select>
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <label asp-for="HasSoftwarePermissions" class="control-label">Software:</label>
-                <div class="custom-control custom-switch">
-                    <input asp-for="HasSoftwarePermissions" class="custom-control-input" id="toggleSoftware" />
-                    <label class="custom-control-label" for="toggleSoftware"></label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="HasLicensesPermissions" class="control-label">Licencias:</label>
-                <div class="custom-control custom-switch">
-                    <input asp-for="HasLicensesPermissions" class="custom-control-input" id="toggleLicences" />
-                    <label class="custom-control-label" for="toggleLicences"></label>
-                </div>
-            </div> *@
 
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
-
 </div>
+
 <div>
     <a asp-action="Index" class="back-button">
         <span>&#8592;</span> Regresar
     </a>
 </div>
-<style>
-    /* Custom styles for the toggle switch */
-    .custom-switch .custom-control-label::before {
-        background-color: #6c757d; /* Color when the toggle is ON (green) */
-    }
-
-    .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: #28a745; /* Color when the toggle is OFF (gray) */
-    }
-
-    .custom-switch .custom-control-label::after {
-        background-color: #fff; /* Color of the toggle knob */
-    }
-</style>
-
-@section Scripts {
-    <script>
-        // JavaScript to handle toggle switch functionality
-        document.addEventListener("DOMContentLoaded", function () {
-            var toggleAdmin = document.getElementById("toggleAdmin");
-            var toggleComputers = document.getElementById("toggleComputers");
-            var toggleSoftware = document.getElementById("toggleSoftware");
-            var toggleLicences = document.getElementById("toggleLicences");
-
-            toggleAdmin.addEventListener("change", function () {
-                // Handle toggleAdmin change event
-            });
-
-            toggleComputers.addEventListener("change", function () {
-                // Handle toggleComputers change event
-            });
-
-            toggleSoftware.addEventListener("change", function () {
-                // Handle toggleSoftware change event
-            });
-
-            toggleLicences.addEventListener("change", function () {
-                // Handle toggleLicences change event
-            });
-        });
-    </script>
-}

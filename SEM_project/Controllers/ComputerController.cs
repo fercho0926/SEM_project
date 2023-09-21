@@ -7,6 +7,7 @@ using SEM_project.Data;
 using SEM_project.Models;
 using System.Text;
 using SEM_project.Models.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SEM_project.Controllers
 {
@@ -30,7 +31,8 @@ namespace SEM_project.Controllers
         {
             var details = _context.Computer.Find(id);
 
-            var history = _context.ComputerHistory.Where(x => x.ComputerId == id).ToList();
+            var history = _context.ComputerHistory.Where(x => x.ComputerId == id).OrderByDescending(x => x.date)
+                .ToList();
             details.ComputerHistory = history;
             return View(details);
         }
@@ -38,6 +40,12 @@ namespace SEM_project.Controllers
         // GET: ComputerController/Create
         public ActionResult Create()
         {
+            var allEmployees = _context.Employee.ToList();
+            ViewBag.EmployeeList =
+                new SelectList(allEmployees, "EmployeeId",
+                    "EmployeeName"); // Replace "UserId" and "UserName" with your actual property names.
+
+
             return View();
         }
 
@@ -110,19 +118,22 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model")]
+            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model, EmployeeId")]
             Computer computer)
         {
             // Remove the existing validation state for these properties if it exists
             ModelState.Remove("ComputerHistory");
             ModelState.Remove("InstaledApplications");
             ModelState.Remove("Licences");
+            ModelState.Remove("Employee");
 
             if (ModelState.IsValid)
             {
+                var employee = _context.Employee.Find(computer.EmployeeId);
                 computer.InstaledApplications = "m";
                 computer.ComputerHistory = new List<ComputerHistory>();
                 computer.Licences = "null";
+                computer.Employee = employee;
                 _context.Add(computer);
                 await _context.SaveChangesAsync();
 
@@ -133,7 +144,7 @@ namespace SEM_project.Controllers
                 {
                     ComputerId = computer.ComputerId,
                     date = DateTime.Now,
-                    Owner = "sin propietario",
+                    Owner = employee.EmployeeName,
                     Action = "Creacion Inicial equipo",
                     Performer = userAuth.Identity.Name,
                     Details = "sin novedad"

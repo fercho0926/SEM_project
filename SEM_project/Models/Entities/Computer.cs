@@ -12,6 +12,10 @@
         public string Model { get; set; }
         public string InstaledApplications { get; set; }
         public string Licences { get; set; }
+
+        // Foreign key to relate a computer to an employee
+        public Guid EmployeeId { get; set; }
+        public Employee Employee { get; set; }
         public IEnumerable<ComputerHistory> ComputerHistory { get; set; }
     }
 }

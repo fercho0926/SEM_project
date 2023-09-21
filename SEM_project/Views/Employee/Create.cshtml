@@ -1,0 +1,134 @@
+﻿@using SEM_project.Utils
+@model SEM_project.Models.Entities.Employee
+
+@{
+    ViewData["Title"] = "Nuevo Empleado";
+}
+
+<h3 style="color : #326091"><b>Nuevo Empleado</b></h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmployeeName" class="control-label">Nombre del Empleado:</label>
+                <input asp-for="EmployeeName" class="form-control" />
+                <span asp-validation-for="EmployeeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IDNumber" class="control-label">Número de Identificación:</label>
+                <input asp-for="IDNumber" class="form-control" />
+                <span asp-validation-for="IDNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label">Fecha:</label>
+                <input asp-for="Date" type="date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+           
+            
+            <div class="form-group">
+                <label asp-for="EnumPosition" class="control-label">Cargo:</label>
+                <select asp-for="EnumPosition" asp-items="Html.GetEnumSelectList<EnumPosition>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="EnumPosition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnumAffiliation" class="control-label">Vinculación:</label>
+                <select asp-for="EnumAffiliation" asp-items="Html.GetEnumSelectList<EnumAffiliation>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="EnumAffiliation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnumLocation" class="control-label">Sede:</label>
+                <select asp-for="EnumLocation" asp-items="Html.GetEnumSelectList<EnumLocation>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="EnumLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnumFloor" class="control-label">Piso:</label>
+                <select asp-for="EnumFloor" asp-items="Html.GetEnumSelectList<EnumFloor>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="EnumFloor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnumSubdepartment" class="control-label">Subsecretaria:</label>
+                <select asp-for="EnumSubdepartment" asp-items="Html.GetEnumSelectList<EnumSubdepartment>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="EnumSubdepartment" class="text-danger"></span>
+            </div>       
+            
+            <div class="form-group">
+                <label asp-for="EnumWorkGroup" class="control-label">Subsecretaria:</label>
+                <select asp-for="EnumWorkGroup" asp-items="Html.GetEnumSelectList<EnumWorkGroup>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="EnumWorkGroup" class="text-danger"></span>
+            </div>
+     
+
+       @*      <div class="form-group">
+                <label asp-for="WorkGroup" class="control-label">Grupo Trabajo:</label>
+                <input asp-for="WorkGroup" class="form-control" />
+                <span asp-validation-for="WorkGroup" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="AssignedEquipmentPlate" class="control-label">PLACA DEL EQUIPO ASIGNADO:</label>
+                <input asp-for="AssignedEquipmentPlate" class="form-control" />
+                <span asp-validation-for="AssignedEquipmentPlate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhonePlate" class="control-label">placa de telefono:</label>
+                <input asp-for="PhonePlate" class="form-control" />
+                <span asp-validation-for="PhonePlate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneModel" class="control-label">modelo de telefono:</label>
+                <input asp-for="PhoneModel" class="form-control" />
+                <span asp-validation-for="PhoneModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneSerial" class="control-label">serial del telefono:</label>
+                <input asp-for="PhoneSerial" class="form-control" />
+                <span asp-validation-for="PhoneSerial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneExtension" class="control-label">extension de telefono:</label>
+                <input asp-for="PhoneExtension" class="form-control" />
+                <span asp-validation-for="PhoneExtension" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observations" class="control-label">observaciones:</label>
+                <textarea asp-for="Observations" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Observations" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonalEquipment" class="control-label">equipo personal:</label>
+                <input asp-for="PersonalEquipment" type="checkbox" class="form-check-input" />
+                <span asp-validation-for="PersonalEquipment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
