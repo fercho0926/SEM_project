@@ -1,4 +1,6 @@
-﻿@model SEM_project.Models.Entities.ComputerHistory
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SEM_project.Utils
+@model SEM_project.Models.Entities.ComputerHistory
 @{
     ViewData["Title"] = "Crear actividad";
 }
@@ -11,28 +13,35 @@
         <form asp-action="CreateActivity">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ComputerId" />
+            <input type="hidden" asp-for="EmployeeId" id="EmployeeId_new" />
 
             <div class="form-group">
-                <label asp-for="ComputerId" class="control-label"></label>
-                <input asp-for="ComputerId" class="form-control" />
-                <span asp-validation-for="ComputerId" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
                 <label asp-for="Owner" class="control-label"></label>
-                <input asp-for="Owner" class="form-control" />
+                <div class="input-group">
+                    <input asp-for="Owner" class="form-control" readOnly="true" id="ownerInput" />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeOwnerModal">
+                            Cambiar
+                        </button>
+                    </div>
+                </div>
                 <span asp-validation-for="Owner" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Action" class="control-label"></label>
-                <input asp-for="Action" class="form-control" />
+                <label asp-for="Action" class="control-label">Accion:</label>
+                <select asp-for="Action" asp-items="Html.GetEnumSelectList<EnumAction>()" class="form-control" id="myAction">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
                 <span asp-validation-for="Action" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Details" class="control-label"></label>
-                <textarea asp-for="Details" class="form-control" rows="5"></textarea>
+                <textarea asp-for="Details" class="form-control" rows="5" id ="details"></textarea>
                 <span asp-validation-for="Details" class="text-danger"></span>
             </div>
+
             
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
@@ -41,6 +50,36 @@
     </div>
 
 </div>
+
+<!-- Modal for changing owner -->
+<div class="modal fade" id="changeOwnerModal" tabindex="-1" role="dialog" aria-labelledby="changeOwnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeOwnerModalLabel">Cambiar propietario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form or controls for changing the owner here -->
+                <!-- For example, you can use a dropdown to select a new owner -->
+                <div class="form-group">
+                    <label for="newOwner">Seleccion nuevo propietario:</label>
+                    <select id="newOwner" asp-items="ViewBag.EmployeeList" class="form-control">
+                        <option value="">Seleccione un Usuario...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveOwnerButton">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div>
     <a asp-action="Index" class="back-button">
         <span>&#8592;</span> Regresar
@@ -87,4 +126,33 @@
             });
         });
     </script>
+    
+    
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get references to elements
+        var ownerInput = document.getElementById("ownerInput");
+        var newOwnerSelect = document.getElementById("newOwner");
+        var saveOwnerButton = document.getElementById("saveOwnerButton");
+
+        // Add an event listener to the "Continuar" button
+        saveOwnerButton.addEventListener("click", function () {
+            // Get the selected option's text (new owner)
+            var selectedOption = newOwnerSelect.options[newOwnerSelect.selectedIndex];
+            var newOwnerText = selectedOption.text;
+
+            // Update the value in the owner input field
+            ownerInput.value = newOwnerText;
+            EmployeeId_new.value = selectedOption.value;
+            myAction.value = 7;
+
+                var selectElement = document.getElementById("myAction");
+            selectElement.readOnly = true;
+            // Close the modal
+            $('#changeOwnerModal').modal('hide');
+        });
+    });
+</script>
+
 }

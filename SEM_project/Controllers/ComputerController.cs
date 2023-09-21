@@ -8,6 +8,7 @@ using SEM_project.Models;
 using System.Text;
 using SEM_project.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SEM_project.Utils;
 
 namespace SEM_project.Controllers
 {
@@ -62,6 +63,12 @@ namespace SEM_project.Controllers
                 Owner = currentOwner.Owner
             };
 
+
+            var allEmployees = _context.Employee.ToList();
+            ViewBag.EmployeeList =
+                new SelectList(allEmployees, "EmployeeId",
+                    "EmployeeName"); // Replace "UserId" and "UserName" with your actual property names.
+
             return View(activity);
         }
 
@@ -69,7 +76,7 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateActivity(
-            [Bind(" ComputerId, Owner, Action, Details")]
+            [Bind(" ComputerId, Owner, Action, Details,EmployeeId")]
             ComputerHistory computerHistory)
         {
             // Remove the existing validation state for these properties if it exists
@@ -85,6 +92,11 @@ namespace SEM_project.Controllers
                 computerHistory.Performer = userAuth.Identity.Name;
                 _context.Add(computerHistory);
                 await _context.SaveChangesAsync();
+
+
+                //if (computerHistory.Action == EnumAction.Cambio_De_Funcionario.)
+                //{
+                //}
 
                 TempData["AlertMessage"] = "Actividad Creada Correctamente";
 

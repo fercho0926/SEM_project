@@ -9,5 +9,6 @@
         public string Action { get; set; }
         public string Performer { get; set; }
         public string Details { get; set; }
+        public Guid EmployeeId { get; set; }
     }
 }
