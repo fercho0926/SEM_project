@@ -4,6 +4,7 @@
     {
         AdministrativaYFinanciera,
         PlaneacionEducativa,
-        PrestacionDelServicioEducativo
+        PrestacionDelServicioEducativo,
+        NA
     }
 }

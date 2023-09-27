@@ -8,6 +8,7 @@
         Novedades,
         Tecnologia,
         TalentoHumano,
-        ServiciosGenerales
+        ServiciosGenerales,
+        NA
     }
 }

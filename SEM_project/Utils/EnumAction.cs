@@ -5,8 +5,8 @@
         Cambio_De_Piso,
         Cambio_De_Edificio,
         Mantenimientos,
-        Equipo_Se_Da_De_Baja,
-        Cambia_De_Puesto_Modulo_O_Oficina,
+        Equipo_Reintegrado,
+        Cambia_De_Puesto,
         Actualizacion_De_Equipo,
         Cambios_De_Software,
         Cambio_De_Funcionario

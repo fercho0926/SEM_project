@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SEM_project.Data;
 using SEM_project.Models.Entities;
 
+
 namespace SEM_project.Controllers
 {
     public class EmployeeController : Controller
@@ -103,7 +104,7 @@ namespace SEM_project.Controllers
                 }
 
                 TempData["AlertMessage"] =
-                    "Employee updated successfully."; // You can use TempData to show success messages.
+                    "Se ha realizado la actualización de la información."; // You can use TempData to show success messages.
                 return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
             }
 

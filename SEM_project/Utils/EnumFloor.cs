@@ -7,6 +7,7 @@
         Tercero,
         Cuarto,
         Quinto,
-        Sexto
+        Sexto,
+        NA
     }
 }

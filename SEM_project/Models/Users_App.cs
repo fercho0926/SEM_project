@@ -15,7 +15,7 @@ namespace SEM_project.Models
 
         [Required]
         [MaxLength(50)]
-        [Display(Name = "Identificacion")]
+        [Display(Name = "Identificación")]
         public string? Identification { get; set; }
 
 
@@ -37,22 +37,22 @@ namespace SEM_project.Models
 
         [Required]
         [MaxLength(80)]
-        [Display(Name = "Direccion")]
+        [Display(Name = "Dirección")]
         public string? Address { get; set; }
 
         [DataType(DataType.PhoneNumber), StringLength(25)]
-        [Display(Name = "Telefono")]
+        [Display(Name = "Teléfono")]
         public string? phone { get; set; }
 
         //Connect with aspnetUsers Table
         [Display(Name = "Email")]
         [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$",
-            ErrorMessage = "tiene que ser un email correcto")]
+            ErrorMessage = "Tiene que ser un email correcto")]
         [DataType(DataType.EmailAddress)]
         public string? AspNetUserId { get; set; }
 
         [Required]
-        [StringLength(255, ErrorMessage = "minimo 8 caracteres", MinimumLength = 8)]
+        [StringLength(255, ErrorMessage = "mínimo 8 caracteres", MinimumLength = 8)]
         [RegularExpression(@"^(?=.*\d)(?=.*[A-Z])(?=.*\W).+$",
             ErrorMessage =
                 "Contraseña debe tener un digito ('0'-'9'), una mayuscula ('A'-'Z'), y un caracter especial.")]
@@ -63,14 +63,14 @@ namespace SEM_project.Models
         public bool IsActive { get; set; } = true;
 
         [NotMapped] // Exclude this property from Entity Framework mapping
-        [Display(Name = "Selectciona el rol para el usuario")]
-        public string SelectedRoleId { get; set; }
+        [Display(Name = "Selecciona el rol para el usuario")]
+        public string? SelectedRoleId { get; set; }
 
 
-        [Display(Name = "Rol")] public string RoleName { get; set; }
+        [Display(Name = "Rol")] public string? RoleName { get; set; }
 
 
         [NotMapped] // Exclude this property from Entity Framework mapping
-        public IEnumerable<SelectListItem> role { get; set; }
+        public IEnumerable<SelectListItem>? role { get; set; }
     }
 }

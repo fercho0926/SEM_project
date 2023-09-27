@@ -2,9 +2,10 @@
 {
     public enum EnumAffiliation
     {
-        CarreraAdministrativa,
+        Carrera_Administrativa,
         Provisional,
         Contratista,
-        LibreRemocionYNombramiento
+        Libre_Remocion_Y_Nombramiento,
+        NA
     }
 }

@@ -70,13 +70,13 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button" title="Expandir">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
                 <li class="nav-item">
                     <form class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></button>
+                        <button  type="submit" class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" title="Logout"></button>
                     </form>
                 </li>
 
@@ -106,7 +106,7 @@
                             </a>
                         </li>
                         
-                        <li class="nav-item">
+                       @* <li class="nav-item">
                             <a href="~/Employee/Index" class="nav-link">
                                 <i class="nav-icon ion-person-add"></i>
                                 <p>
@@ -114,14 +114,14 @@
 
                                 </p>
                             </a>
-                        </li>
+                        </li>*@
                         
 
                         @if (User.HasClaim("Permission", "Computer"))
                     {
                         <li class="nav-item">
                             <a href="~/Computer/Index" class="nav-link">
-                                <i class="nav-icon ion-person-add"></i>
+                                    <i class="nav-icon fa fa-laptop" aria-hidden="true" ></i>
                                 <p>
                                     Equipos
 
@@ -133,7 +133,7 @@
                         {
                             <li class="nav-item">
                                 <a href="~/Balance/Packages" class="nav-link">
-                                    <i class="nav-icon ion-social-usd-outline"></i>
+                                    <i class="nav-icon fa fa-laptop" aria-hidden="true" ></i>
                                     <p>
                                         software
                                     </p>
@@ -148,6 +148,19 @@
                                     <p>
                                         Licencias
                                         <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        
+                        @if (User.HasClaim("Permission", "Employee"))
+                        {
+                           <li class="nav-item">
+                                <a href="~/Employee/Index" class="nav-link">
+                                    <i class="nav-icon fa fa-users" aria-hidden="true"></i>
+                                    <p>
+                                        Funcionarios
+                                        <span class="right badge badge-danger">sem</span>
                                     </p>
                                 </a>
                             </li>

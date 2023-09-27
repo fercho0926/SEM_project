@@ -86,6 +86,21 @@
                         <span class="text-danger">No</span>
                     }
                 </dd>
+
+                <!-- Display employee Permission -->
+                <dt class="col-sm-2">
+                    Employee:
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.HasEmployeePermissions)
+                    {
+                        <span class="text-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">No</span>
+                    }
+                </dd>
             </dl>
         </div>
         <!-- Repeat this block for other permission properties -->

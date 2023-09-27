@@ -142,11 +142,13 @@ namespace SEM_project.Areas.Identity.Pages.Account
                         ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrecto");
                         return Page();
                     }
+
                 }
                 else {
-                    ModelState.AddModelError(string.Empty, "Usuario inactivo");
+                    ModelState.AddModelError(string.Empty, "Usuario inactivo ");
                     return Page();
                 }
+                
             }
 
             // If we got this far, something failed, redisplay form

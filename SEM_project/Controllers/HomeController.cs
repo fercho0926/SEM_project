@@ -25,7 +25,7 @@ namespace SEM_project.Controllers
 
         public IActionResult Index()
         {
-            string UserLogged = User.Identity?.Name.ToString();
+            string? UserLogged = User.Identity?.Name.ToString();
 
             var completed = _context.Users_App.FirstOrDefault(m => m.AspNetUserId == UserLogged);
 

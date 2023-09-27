@@ -65,10 +65,15 @@ namespace SEM_project.Controllers
                 (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(c =>
                     c.Type == "Permission" && c.Value == "Software");
 
+            var employeeClaim =
+                (await _roleManager.GetClaimsAsync(role)).FirstOrDefault(c =>
+                    c.Type == "Permission" && c.Value == "Employee");
+
             roleViewModel.HasAdminPermissions = adminClaim != null;
             roleViewModel.HasComputerPermissions = computerClaim != null;
             roleViewModel.HasLicensesPermissions = licenseClaim != null;
             roleViewModel.HasSoftwarePermissions = softwareClaim != null;
+            roleViewModel.HasEmployeePermissions = employeeClaim != null;
 
             return View(roleViewModel);
         }
@@ -98,7 +103,8 @@ namespace SEM_project.Controllers
                     { "Admin", roleViewModel.HasAdminPermissions },
                     { "Computer", roleViewModel.HasComputerPermissions },
                     { "Licence", roleViewModel.HasLicensesPermissions },
-                    { "Software", roleViewModel.HasSoftwarePermissions }
+                    { "Software", roleViewModel.HasSoftwarePermissions },
+                    { "Employee", roleViewModel.HasEmployeePermissions }
                 };
 
                 foreach (var (permission, hasPermission) in claimsToAdd)
@@ -139,6 +145,7 @@ namespace SEM_project.Controllers
             roleViewModel.HasComputerPermissions = await HasClaimAsync(role, "Computer");
             roleViewModel.HasLicensesPermissions = await HasClaimAsync(role, "Licence");
             roleViewModel.HasSoftwarePermissions = await HasClaimAsync(role, "Software");
+            roleViewModel.HasEmployeePermissions = await HasClaimAsync(role, "Employee");
 
             return View(roleViewModel);
         }
@@ -181,7 +188,8 @@ namespace SEM_project.Controllers
                     { "Admin", roleViewModel.HasAdminPermissions },
                     { "Computer", roleViewModel.HasComputerPermissions },
                     { "Licence", roleViewModel.HasLicensesPermissions },
-                    { "Software", roleViewModel.HasSoftwarePermissions }
+                    { "Software", roleViewModel.HasSoftwarePermissions },
+                    { "Employee", roleViewModel.HasEmployeePermissions }
                 };
 
                 foreach (var (permission, hasPermission) in claimsToAdd)

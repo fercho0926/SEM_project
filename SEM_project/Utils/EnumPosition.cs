@@ -1,17 +1,23 @@
-﻿namespace SEM_project.Utils
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SEM_project.Utils
 {
     public enum EnumPosition
     {
-        AuxiliarAdministrativo,
+        [Display(Name = "Auxiliar Administrativo")]
+        administrativo,
+        [Display(Name = "Profesional")]
+        profesional,
+        [Display(Name = "No definido")]
+        No_definido,
         Asesor,
         Abogado,
-        AnalistaServidores,
-        AnalistaTelecomunicaciones,
+        Analista,Servidores,
+        Analista_Telecomunicaciones,
         AsesorDespacho,
         Contratista,
         Coordinador,
         DirectorTecnico,
-        LiderDeGestion,
         LiderDeProyecto,
         LiderDePrograma,
         LiderZonal,

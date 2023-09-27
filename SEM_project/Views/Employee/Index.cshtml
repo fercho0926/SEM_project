@@ -48,9 +48,10 @@
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                             <tr class="thNew">
-                                <th>@Html.DisplayNameFor(model => model.EmployeeId)</th>
+                                <!-- <th>@Html.DisplayNameFor(model => model.EmployeeId)</th>-->
                                 <th>@Html.DisplayNameFor(model => model.EmployeeName)</th>
                                 <th>@Html.DisplayNameFor(model => model.IDNumber)</th>
+                                <th>@Html.DisplayNameFor(model => model.AssignedEquipmentPlate)</th>
                                 <!-- Add more headers for other properties as needed -->
                                 <th>Acciones</th>
                             </tr>
@@ -59,9 +60,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
+                                    <!-- <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>-->
                                     <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AssignedEquipmentPlate)</td>
                                     <!-- Add more columns for other properties as needed -->
                                     <td>
                                         <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.EmployeeId"></a> |

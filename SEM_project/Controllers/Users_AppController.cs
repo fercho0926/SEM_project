@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 //using SEM_project.Migrations;
 
@@ -143,7 +144,7 @@ namespace SEM_project.Controllers
                 }
             }
 
-            TempData["ErrorMessage"] = "No se creo el usuario";
+            TempData["ErrorMessage"] = "Usuario ya existe";
             //return RedirectToPage("./ForgotPassword");
             return RedirectToAction(nameof(Index));
         }
@@ -336,15 +337,18 @@ namespace SEM_project.Controllers
         {
             var users_App = await _context.Users_App.FindAsync(id);
 
-            users_App.IsActive = false;
+            users_App.IsActive = false ;
+            
+                _context.Users_App.Update(users_App);
+                await _context.SaveChangesAsync();
 
+                TempData["AlertMessage"] = "Se ha realizado la Inactivación del usuario";
+                //return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Index));
 
-            _context.Users_App.Update(users_App);
-            await _context.SaveChangesAsync();
+            
+           
 
-            TempData["AlertMessage"] = "Se ha realizado la Inactivacion del usuario";
-            //return RedirectToAction("Index", "Home");
-            return RedirectToAction(nameof(Index));
         }
 
         private bool Users_AppExists(int id)

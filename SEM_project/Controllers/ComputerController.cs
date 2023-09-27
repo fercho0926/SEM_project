@@ -177,6 +177,7 @@ namespace SEM_project.Controllers
 
             // Redirect to the Index action in both success and error cases
             return RedirectToAction(nameof(Index));
+
         }
 
 
