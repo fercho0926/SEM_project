@@ -1,22 +1,13 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SEM_project.Data;
 using SEM_project.Models;
-using SEM_project.Utils;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Text.Encodings.Web;
 using System.Text;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 //using SEM_project.Migrations;
 
@@ -110,6 +101,17 @@ namespace SEM_project.Controllers
 
             if (ModelState.IsValid)
             {
+                var userExist = await _context.Users_App.Where(x => x.Identification == users_App.Identification)
+                    .FirstOrDefaultAsync();
+
+                if (userExist != null)
+                {
+                    TempData["ErrorMessage"] =
+                        "Usuario ya existe."; // You can use TempData to show success messages.
+                    return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
+                }
+
+
                 var user = CreateUser();
 
 
@@ -337,18 +339,14 @@ namespace SEM_project.Controllers
         {
             var users_App = await _context.Users_App.FindAsync(id);
 
-            users_App.IsActive = false ;
-            
-                _context.Users_App.Update(users_App);
-                await _context.SaveChangesAsync();
+            users_App.IsActive = false;
 
-                TempData["AlertMessage"] = "Se ha realizado la Inactivación del usuario";
-                //return RedirectToAction("Index", "Home");
-                return RedirectToAction(nameof(Index));
+            _context.Users_App.Update(users_App);
+            await _context.SaveChangesAsync();
 
-            
-           
-
+            TempData["AlertMessage"] = "Se ha realizado la Inactivación del usuario";
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Index));
         }
 
         private bool Users_AppExists(int id)

@@ -41,12 +41,24 @@ namespace SEM_project.Controllers
 
                 employee.EmployeeId = Guid.NewGuid(); // Generate a new unique ID for the employee.
 
+
+                var employeeExist = await _context.Employee.Where(x => x.IDNumber == employee.IDNumber)
+                    .FirstOrDefaultAsync();
+
+                if (employeeExist != null)
+                {
+                    TempData["ErrorMessage"] =
+                        "Empleado ya existe."; // You can use TempData to show success messages.
+                    return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
+                }
+
+
                 // Add the employee to the database.
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
 
                 TempData["AlertMessage"] =
-                    "Employee created successfully."; // You can use TempData to show success messages.
+                    "Empleado Creado correctamente."; // You can use TempData to show success messages.
                 return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
             }
 

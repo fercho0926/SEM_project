@@ -1,14 +1,8 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.Mvc;
 using SEM_project.Data;
-using SEM_project.Models;
-using System.Text;
 using SEM_project.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SEM_project.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace SEM_project.Controllers
 {
@@ -141,6 +135,18 @@ namespace SEM_project.Controllers
 
             if (ModelState.IsValid)
             {
+                var computerExist =
+                    await _context.Computer.Where(x => x.Serial == computer.Serial).FirstOrDefaultAsync();
+
+
+                if (computerExist != null)
+                {
+                    TempData["ErrorMessage"] =
+                        "Equipo ya existe."; // You can use TempData to show success messages.
+                    return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
+                }
+
+
                 var employee = _context.Employee.Find(computer.EmployeeId);
                 computer.InstaledApplications = "m";
                 computer.ComputerHistory = new List<ComputerHistory>();
@@ -177,7 +183,6 @@ namespace SEM_project.Controllers
 
             // Redirect to the Index action in both success and error cases
             return RedirectToAction(nameof(Index));
-
         }
 
 

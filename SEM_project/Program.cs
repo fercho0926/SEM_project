@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Builder;
 using SEM_project.Data;
 using SEM_project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 
 var builder = WebApplication.CreateBuilder(args);

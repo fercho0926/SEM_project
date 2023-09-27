@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SEM_project.Data;
 using SEM_project.Models;
-using SEM_project.Models.Entities;
 using System.Security.Claims;
 
 namespace SEM_project.Controllers

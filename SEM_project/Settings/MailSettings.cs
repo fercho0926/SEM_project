@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SEM_project.Settings
+﻿namespace SEM_project.Settings
 {
     public class MailSettings
     {
@@ -15,4 +9,3 @@ namespace SEM_project.Settings
         public int Port { get; set; }
     }
 }
-

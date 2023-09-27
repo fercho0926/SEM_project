@@ -1,6 +1,4 @@
-﻿using SEM_project.Utils;
-
-namespace SEM_project.Models
+﻿namespace SEM_project.Models
 {
     public class RoleViewModel
     {
