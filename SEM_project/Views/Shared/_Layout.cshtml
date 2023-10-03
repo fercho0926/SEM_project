@@ -128,7 +128,7 @@
                             </a>
                         </li>
                     }
-                        @if (User.HasClaim("Permission", "Software"))
+                     @*    @if (User.HasClaim("Permission", "Software"))
                         {
                             <li class="nav-item">
                                 <a href="~/Balance/Packages" class="nav-link">
@@ -138,7 +138,7 @@
                                     </p>
                                 </a>
                             </li>
-                        }
+                        } *@
                         @if (User.HasClaim("Permission", "Licence"))
                         {
                             <li class="nav-item">

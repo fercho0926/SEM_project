@@ -54,17 +54,12 @@
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                             <tr class="thNew">
-                                <th>@Html.DisplayNameFor(model => model.ComputerId)</th>
                                 <th>@Html.DisplayNameFor(model => model.Serial)</th>
                                 <th> @Html.DisplayNameFor(model => model.Reference)</th>
-                                <th>@Html.DisplayNameFor(model => model.Processer)</th>
-
-                                <th>@Html.DisplayNameFor(model => model.Ram)</th>
-                                <th>@Html.DisplayNameFor(model => model.HardDisk)</th>
                                 <th>@Html.DisplayNameFor(model => model.OperativeSystem)</th>
-                                <th>@Html.DisplayNameFor(model => model.Model)</th>
-                        
-           
+                                <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                <th>@Html.DisplayNameFor(model => model.IsAssigned)</th>
+          
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -72,15 +67,12 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.ComputerId)</td>
 
                                     <td>@Html.DisplayFor(modelItem => item.Serial)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Reference)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Processer)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Ram)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.HardDisk)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OperativeSystem)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IsAssigned)</td>
 
 
                                     <td>

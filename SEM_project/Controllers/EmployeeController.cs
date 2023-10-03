@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SEM_project.Data;
 using SEM_project.Models.Entities;
+using SEM_project.Utils;
 
 
 namespace SEM_project.Controllers
@@ -132,10 +134,38 @@ namespace SEM_project.Controllers
 
             var employee = _context.Employee.FirstOrDefault(e => e.EmployeeId == id);
 
+            var assignedComputers = _context.EmployeeToComputer.Where(x => x.EmployeeId == id).ToList();
+
+            var listComputers = new List<Computer>();
+
+            foreach (var assignedItem in assignedComputers)
+            {
+                var result = _context.Computer.FirstOrDefault(x => x.ComputerId == assignedItem.ComputerId);
+                listComputers.Add(result);
+            }
+
+            employee.Computers = listComputers;
+
             if (employee == null)
             {
                 return NotFound();
             }
+
+
+            var allComputers
+                = _context.Computer.Where(x => x.IsActive && x.IsAssigned == false).ToList();
+
+
+            ViewBag.ComputerList =
+                new SelectList(allComputers, "ComputerId",
+                    "Serial");
+
+
+            //var allEmployees = _context.Employee.ToList();
+            //ViewBag.EmployeeList =
+            //    new SelectList(allEmployees, "EmployeeId",
+            //        "EmployeeName"); // Replace "UserId" and "UserName" with your actual property names.
+
 
             return View(employee);
         }
@@ -143,6 +173,57 @@ namespace SEM_project.Controllers
         private bool EmployeeExists(Guid id)
         {
             return _context.Employee.Any(e => e.EmployeeId == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUserToComputer(Guid employeeId, Guid selectedOption)
+        {
+            var newUserToComputer = new EmployeeToComputer
+            {
+                EmployeeId = employeeId,
+                ComputerId = selectedOption
+            };
+
+            _context.Add(newUserToComputer);
+
+
+            var editComputer = _context.Computer.Where(c => c.ComputerId == selectedOption).First();
+
+            editComputer.IsAssigned = true;
+            editComputer.EmployeeId = employeeId;
+            _context.Update(editComputer);
+
+
+            var userAuth = HttpContext.User;
+            var employee = _context.Employee.Where(x => x.EmployeeId == employeeId).First();
+
+            var newComputerHistory = new ComputerHistory()
+            {
+                ComputerId = selectedOption,
+                date = DateTime.Now,
+                Owner = employee.EmployeeName, // GET THE NAME
+                Action = (int)EnumAction.Asignacion_Equipo,
+                Performer = userAuth.Identity.Name,
+                Details = "sin novedad",
+                EmployeeId = employeeId
+            };
+            _context.Add(newComputerHistory);
+
+
+            _context.SaveChanges();
+
+            // Your logic here...
+            // You can use the employeeId and selectedOption values for processing.
+
+            // For demonstration purposes, you can return a JSON response.
+            var result = new
+            {
+                EmployeeId = employeeId,
+                SelectedOption = selectedOption,
+            };
+
+            return Json(result);
         }
     }
 }

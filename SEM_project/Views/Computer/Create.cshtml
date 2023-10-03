@@ -54,14 +54,6 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label">Asignar a un Usuario:</label>
-                <select asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" class="form-control">
-                    <option value="">Seleccione un Usuario...</option>
-                </select>
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>

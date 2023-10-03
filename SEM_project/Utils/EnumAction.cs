@@ -2,6 +2,8 @@
 {
     public enum EnumAction
     {
+        Creacion_Inicial,
+        Asignacion_Equipo,
         Cambio_De_Piso,
         Cambio_De_Edificio,
         Mantenimientos,

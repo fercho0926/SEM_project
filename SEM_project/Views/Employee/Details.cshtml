@@ -1,71 +1,140 @@
-﻿@model SEM_project.Models.Entities.Employee
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model SEM_project.Models.Entities.Employee
 
 @{
     ViewData["Title"] = "Detalles del Empleado";
 }
 
-<div class="container mt-4">
-    <h3 class="text-primary">Detalles del Empleado</h3>
-    <hr />
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Employee Details Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-primary"><b>Detalles del Funcionario</b></h3>
+                        <hr />
 
-    <div class="row">
-        <div class="col-md-6">
-            <dl class="row">
-                <dt class="col-sm-4">Nombre:</dt>
-                <dd class="col-sm-8">@Model.EmployeeName</dd>
+                        <div class="row">
+                            <!-- Employee Details -->
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Nombre:</dt>
+                                    <dd class="col-sm-8">@Model.EmployeeName</dd>
+                                    <!-- Add more employee details here -->
+                                </dl>
+                            </div>
 
-                <dt class="col-sm-4">Cédula:</dt>
-                <dd class="col-sm-8">@Model.IDNumber</dd>
+                            <!-- Additional Employee Details -->
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Teléfono:</dt>
+                                    <dd class="col-sm-8">@Model.PhonePlate</dd>
+                                    <!-- Add more employee details here -->
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <dt class="col-sm-4">Fecha:</dt>
-                <dd class="col-sm-8">@Model.Date.ToShortDateString()</dd>
+                <!-- Add Computer Button Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddComputerModal">
+                            Agregar Equipo
+                        </button>
+                        <hr />
 
-                <dt class="col-sm-4">Cargo:</dt>
-                <dd class="col-sm-8">@Model.EnumPosition</dd>
-
-                <dt class="col-sm-4">Vinculación:</dt>
-                <dd class="col-sm-8">@Model.EnumAffiliation</dd>
-
-                <dt class="col-sm-4">Sede:</dt>
-                <dd class="col-sm-8">@Model.EnumLocation</dd>
-
-                <dt class="col-sm-4">Piso:</dt>
-                <dd class="col-sm-8">@Model.EnumFloor</dd>
-
-                <dt class="col-sm-4">Subsecretaría:</dt>
-                <dd class="col-sm-8">@Model.EnumSubdepartment</dd>
-
-                <dt class="col-sm-4">Grupo de Trabajo:</dt>
-                <dd class="col-sm-8">@Model.EnumWorkGroup</dd>
-
-                <dt class="col-sm-4">Placa de Equipo Asignado:</dt>
-                <dd class="col-sm-8">@Model.AssignedEquipmentPlate</dd>
-            </dl>
+                        <!-- Computer History -->
+                        <h3 class="text-primary"><b>Equipos Asignados</b></h3>
+                        <hr />
+                        <table id="table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="thNew">
+                                    <th>ComputerId</th>
+                                    <th>Serial</th>
+                                    <th>OperativeSystem</th>
+                                    <th>IsActive</th>
+                                    <!-- Add more table headers as needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var computer in Model.Computers)
+                            {
+                                <tr>
+                                    <td>@computer.ComputerId</td>
+                                    <td>@computer.Serial</td>
+                                    <td>@computer.OperativeSystem</td>
+                                    <td>@computer.IsActive</td>
+                                    <!-- Add more table cells as needed -->
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dl class="row">
-                <dt class="col-sm-4">Teléfono:</dt>
-                <dd class="col-sm-8">@Model.PhonePlate</dd>
+    </div>
+</section>
 
-                <dt class="col-sm-4">Modelo de Teléfono:</dt>
-                <dd class="col-sm-8">@Model.PhoneModel</dd>
+<!-- Modal for changing owner -->
+<div class="modal fade" id="AddComputerModal" tabindex="-1" role="dialog" aria-labelledby="changeOwnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="addComputerForm" method="post" action="@Url.Action("AddUserToComputer")">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeOwnerModalLabel">asignar Equipo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for changing the owner -->
+                    <div class="form-group">
+                        <select id="newOwner" asp-items="ViewBag.ComputerList" class="form-control">
+                            <option value="">Seleccione un Equipo...</option>
+                        </select>
+                    </div>
 
-                <dt class="col-sm-4">Serial de Teléfono:</dt>
-                <dd class="col-sm-8">@Model.PhoneSerial</dd>
-
-                <dt class="col-sm-4">Extensión de Teléfono:</dt>
-                <dd class="col-sm-8">@Model.PhoneExtension</dd>
-
-                <dt class="col-sm-4">Observaciones:</dt>
-                <dd class="col-sm-8">@Model.Observations</dd>
-
-                <dt class="col-sm-4">Equipo Personal:</dt>
-                <dd class="col-sm-8">@Model.PersonalEquipment ? "Sí" : "No"</dd>
-            </dl>
+                    <!-- Hidden fields for EmployeeId and selectedOption -->
+                    <input type="hidden" id="employeeId" name="employeeId" value="@Model.EmployeeId" />
+                    <input type="hidden" id="selectedOption" name="selectedOption" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="AddComputerToEmployeeButton">Continuar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+
 <div class="text-center mt-4">
     <a asp-action="Index" class="btn btn-primary">Regresar</a>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#AddComputerToEmployeeButton').click(function () {
+                var selectedOption = $('#newOwner').val(); // Get the selected option value
+                var employeeId = '@Model.EmployeeId'; // Get the employee ID from Razor model
+
+                console.log(selectedOption);
+
+                if (selectedOption) {
+                    $('#selectedOption').val(selectedOption); // Update the hidden field
+
+                    // Submit the form
+                    $('#addComputerForm').submit();
+                } else {
+                    alert('Please select an option.');
+                }
+            });
+        });
+    </script>
+
+}

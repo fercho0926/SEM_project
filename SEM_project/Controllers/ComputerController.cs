@@ -3,6 +3,7 @@ using SEM_project.Data;
 using SEM_project.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SEM_project.Utils;
 
 namespace SEM_project.Controllers
 {
@@ -17,6 +18,7 @@ namespace SEM_project.Controllers
 
         // GET: ComputerController
         public async Task<IActionResult> Index()
+
         {
             return View(_context.Computer.ToList());
         }
@@ -28,6 +30,8 @@ namespace SEM_project.Controllers
 
             var history = _context.ComputerHistory.Where(x => x.ComputerId == id).OrderByDescending(x => x.date)
                 .ToList();
+
+
             details.ComputerHistory = history;
             return View(details);
         }
@@ -35,12 +39,6 @@ namespace SEM_project.Controllers
         // GET: ComputerController/Create
         public ActionResult Create()
         {
-            var allEmployees = _context.Employee.ToList();
-            ViewBag.EmployeeList =
-                new SelectList(allEmployees, "EmployeeId",
-                    "EmployeeName"); // Replace "UserId" and "UserName" with your actual property names.
-
-
             return View();
         }
 
@@ -88,9 +86,33 @@ namespace SEM_project.Controllers
                 await _context.SaveChangesAsync();
 
 
-                //if (computerHistory.Action == EnumAction.Cambio_De_Funcionario.)
-                //{
-                //}
+                if (computerHistory.Action == 9) //CAMBIO DE FUCNIONARIO
+                {
+                    var currentEmployeeToComputer =
+                        _context.EmployeeToComputer.FirstOrDefault(x => x.ComputerId == computerHistory.ComputerId);
+
+                    if (currentEmployeeToComputer != null)
+                    {
+                        _context.Remove(currentEmployeeToComputer);
+                    }
+
+
+                    var employeeTocomputer = new EmployeeToComputer()
+                    {
+                        ComputerId = computerHistory.ComputerId,
+                        EmployeeId = computerHistory.EmployeeId
+                    };
+                    _context.Add(employeeTocomputer);
+
+
+                    var computer = _context.Computer.FirstOrDefault(x => x.ComputerId == computerHistory.ComputerId);
+                    computer.IsAssigned = true;
+                    computer.EmployeeId = computerHistory.EmployeeId;
+
+                    _context.Update(computer);
+
+                    await _context.SaveChangesAsync();
+                }
 
                 TempData["AlertMessage"] = "Actividad Creada Correctamente";
 
@@ -124,14 +146,13 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model, EmployeeId")]
+            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model")]
             Computer computer)
         {
             // Remove the existing validation state for these properties if it exists
             ModelState.Remove("ComputerHistory");
             ModelState.Remove("InstaledApplications");
             ModelState.Remove("Licences");
-            ModelState.Remove("Employee");
 
             if (ModelState.IsValid)
             {
@@ -151,7 +172,7 @@ namespace SEM_project.Controllers
                 computer.InstaledApplications = "m";
                 computer.ComputerHistory = new List<ComputerHistory>();
                 computer.Licences = "null";
-                computer.Employee = employee;
+                computer.IsActive = true;
                 _context.Add(computer);
                 await _context.SaveChangesAsync();
 
@@ -162,8 +183,8 @@ namespace SEM_project.Controllers
                 {
                     ComputerId = computer.ComputerId,
                     date = DateTime.Now,
-                    Owner = employee.EmployeeName,
-                    Action = "Creacion Inicial equipo",
+                    Owner = "",
+                    Action = (int)EnumAction.Creacion_Inicial,
                     Performer = userAuth.Identity.Name,
                     Details = "sin novedad"
                 };

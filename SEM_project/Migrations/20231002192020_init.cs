@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SEM_project.Migrations
 {
-    public partial class initialMigrationasd : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,25 +54,38 @@ namespace SEM_project.Migrations
                 {
                     EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EnumPosition = table.Column<int>(type: "int", nullable: false),
                     EnumAffiliation = table.Column<int>(type: "int", nullable: false),
                     EnumLocation = table.Column<int>(type: "int", nullable: false),
                     EnumFloor = table.Column<int>(type: "int", nullable: false),
                     EnumSubdepartment = table.Column<int>(type: "int", nullable: false),
-                    WorkGroup = table.Column<int>(type: "int", nullable: false),
-                    AssignedEquipmentPlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhonePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneSerial = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneExtension = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Observations = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EnumWorkGroup = table.Column<int>(type: "int", nullable: false),
+                    AssignedEquipmentPlate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    PhonePlate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneSerial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneExtension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Observations = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PersonalEquipment = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employee", x => x.EmployeeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeToComputer",
+                columns: table => new
+                {
+                    EmployeeToComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeToComputer", x => x.EmployeeToComputerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,26 +105,12 @@ namespace SEM_project.Migrations
                     AspNetUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users_App", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserToComputer",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserToComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserToComputer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,15 +224,17 @@ namespace SEM_project.Migrations
                 columns: table => new
                 {
                     ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Serial = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Processer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ram = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HardDisk = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OperativeSystem = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InstaledApplications = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Licences = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Serial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Processer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ram = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HardDisk = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OperativeSystem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InstaledApplications = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Licences = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsAssigned = table.Column<bool>(type: "bit", nullable: false),
                     EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -254,10 +255,11 @@ namespace SEM_project.Migrations
                     ComputerHistoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ComputerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Performer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Performer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -341,10 +343,10 @@ namespace SEM_project.Migrations
                 name: "ComputerHistory");
 
             migrationBuilder.DropTable(
-                name: "Users_App");
+                name: "EmployeeToComputer");
 
             migrationBuilder.DropTable(
-                name: "UserToComputer");
+                name: "Users_App");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
