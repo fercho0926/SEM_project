@@ -11,6 +11,8 @@
         Cambia_De_Puesto,
         Actualización_De_Equipo,
         Cambios_De_Software,
-        Cambio_De_Funcionario
+        Cambio_De_Funcionario,
+        Inactivar_Equipo,
+        Actualizacion_De_Informacion
     }
 }

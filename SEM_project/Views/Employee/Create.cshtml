@@ -23,13 +23,6 @@
                 <span asp-validation-for="IDNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label">Fecha:</label>
-                <input asp-for="Date" type="date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-           
-            
-            <div class="form-group">
                 <label asp-for="EnumPosition" class="control-label">Cargo:</label>
                 <select asp-for="EnumPosition" asp-items="Html.GetEnumSelectList<EnumPosition>()" class="form-control">
                     <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
@@ -103,7 +96,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PersonalEquipment" class="control-label">equipo personal:</label>
-                <input type="checkbox" asp-for="PersonalEquipment" class="form-check-input" />
+                <input type="checkbox" asp-for="PersonalEquipment" class="form-check" />
                 <span asp-validation-for="PersonalEquipment" class="text-danger"></span>
             </div>
                                         

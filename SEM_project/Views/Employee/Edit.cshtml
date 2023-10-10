@@ -28,12 +28,6 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Date" class="control-label">Fecha:</label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
                 <label asp-for="EnumPosition" class="control-label">Cargo:</label>
                 <select asp-for="EnumPosition" asp-items="Html.GetEnumSelectList<EnumPosition>()" class="form-control">
                     <option value="">Seleccione...</option>
@@ -78,13 +72,6 @@
                 <input asp-for="EnumWorkGroup" class="form-control" />
                 <span asp-validation-for="EnumWorkGroup" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <label asp-for="AssignedEquipmentPlate" class="control-label">Placa del Equipo Asignado:</label>
-                <input asp-for="AssignedEquipmentPlate" class="form-control" />
-                <span asp-validation-for="AssignedEquipmentPlate" class="text-danger"></span>
-            </div>
-
             <div class="form-group">
                 <label asp-for="PhonePlate" class="control-label">Placa de Teléfono:</label>
                 <input asp-for="PhonePlate" class="form-control" />
@@ -116,8 +103,14 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="IsActive" class="control-label">Funcionario Activo:</label>
+                <input type="checkbox" asp-for="IsActive" class="form-check" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="PersonalEquipment" class="control-label">Equipo Personal:</label>
-                <input asp-for="PersonalEquipment" class="form-control" />
+                <input type="checkbox" asp-for="PersonalEquipment" class="form-check" />
                 <span asp-validation-for="PersonalEquipment" class="text-danger"></span>
             </div>
 

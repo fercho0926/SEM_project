@@ -54,7 +54,7 @@ namespace SEM_project.Controllers
                     return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
                 }
 
-
+                employee.IsActive = true;
                 // Add the employee to the database.
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
@@ -92,6 +92,20 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Employee employee)
         {
+
+
+
+            var employeeExist = await _context.Employee.Where(x => x.IDNumber == employee.IDNumber && x.EmployeeId != id).FirstOrDefaultAsync();
+
+            if (employeeExist != null)
+            {
+                TempData["ErrorMessage"] =
+              "No se puede actualizar, el empleado ya existe."; // You can use TempData to show success messages.
+                return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
+            }
+
+
+
             if (id != employee.EmployeeId)
             {
                 return NotFound();
@@ -205,7 +219,7 @@ namespace SEM_project.Controllers
                 Owner = employee.EmployeeName, // GET THE NAME
                 Action = (int)EnumAction.Asignación_Equipo,
                 Performer = userAuth.Identity.Name,
-                Details = "sin novedad",
+                Details = "",
                 EmployeeId = employeeId
             };
             _context.Add(newComputerHistory);
@@ -225,5 +239,48 @@ namespace SEM_project.Controllers
 
             return Json(result);
         }
+
+
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+        // POST: Users_App/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+
+            var employee = await _context.Employee.FindAsync(id);
+
+            if (!employee.IsActive)
+            {
+                TempData["ErrorMessage"] = "El Funcionario ya se encuentra inactivo";
+                return RedirectToAction(nameof(Index));
+            }
+
+            employee.IsActive = false;
+
+            _context.Employee.Update(employee);
+            await _context.SaveChangesAsync();
+
+            TempData["AlertMessage"] = "Se ha realizado la Inactivación del Funcionario";
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

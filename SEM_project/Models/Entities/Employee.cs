@@ -29,6 +29,8 @@ namespace SEM_project.Models.Entities
         public string? PhoneExtension { get; set; }
         public string? Observations { get; set; }
         public bool PersonalEquipment { get; set; }
+        public bool IsActive { get; set; }
+
 
         public ICollection<Computer>? Computers { get; set; }
     }

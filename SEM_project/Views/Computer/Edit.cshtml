@@ -1,0 +1,80 @@
+﻿@using SEM_project.Utils
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model SEM_project.Models.Entities.Computer
+
+@{
+    ViewData["Title"] = "Editar Equipo";
+}
+
+<h3 style="color: #326091;"><b>Editar Equipo</b></h3>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="ComputerId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Serial" class="control-label">Serial:</label>
+                <input asp-for="Serial" class="form-control" />
+                <span asp-validation-for="Serial" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Reference" class="control-label">Reference:</label>
+                <input asp-for="Reference" class="form-control" />
+                <span asp-validation-for="Reference" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Processer" class="control-label">Processer:</label>
+                <input asp-for="Processer" class="form-control" />
+                <span asp-validation-for="Processer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ram" class="control-label">Ram:</label>
+                <input asp-for="Ram" class="form-control" />
+                <span asp-validation-for="Ram" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HardDisk" class="control-label">HardDisk:</label>
+                <input asp-for="HardDisk" class="form-control" />
+                <span asp-validation-for="HardDisk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperativeSystem" class="control-label">OperativeSystem:</label>
+                <input asp-for="OperativeSystem" class="form-control" />
+                <span asp-validation-for="OperativeSystem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label">Model:</label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label">IsActive:</label>
+                <input type="checkbox" asp-for="IsActive" class="form-check" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+ 
+            <div class="form-group">
+                <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

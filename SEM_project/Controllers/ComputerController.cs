@@ -4,6 +4,7 @@ using SEM_project.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SEM_project.Utils;
+using System.Drawing;
 
 namespace SEM_project.Controllers
 {
@@ -56,7 +57,7 @@ namespace SEM_project.Controllers
             };
 
 
-            var allEmployees = _context.Employee.ToList();
+            var allEmployees = _context.Employee.Where(x=>x.IsActive).ToList();
             ViewBag.EmployeeList =
                 new SelectList(allEmployees, "EmployeeId",
                     "EmployeeName"); // Replace "UserId" and "UserName" with your actual property names.
@@ -169,9 +170,9 @@ namespace SEM_project.Controllers
 
 
                 var employee = _context.Employee.Find(computer.EmployeeId);
-                computer.InstaledApplications = "m";
+                //computer.InstaledApplications = "m";
                 computer.ComputerHistory = new List<ComputerHistory>();
-                computer.Licences = "null";
+                //computer.Licences = "null";
                 computer.IsActive = true;
                 _context.Add(computer);
                 await _context.SaveChangesAsync();
@@ -186,7 +187,7 @@ namespace SEM_project.Controllers
                     Owner = "",
                     Action = (int)EnumAction.Creación_Inicial,
                     Performer = userAuth.Identity.Name,
-                    Details = "sin novedad"
+                    Details = ""
                 };
                 _context.Add(newComputerHistory);
                 await _context.SaveChangesAsync();
@@ -208,45 +209,128 @@ namespace SEM_project.Controllers
 
 
         // GET: ComputerController/Edit/5
-        public ActionResult Edit(int id)
+                    public async Task<IActionResult> Edit(Guid? id)
+
         {
+
+            var computer =  await  _context.Computer.FindAsync(id);
+
+            if (computer == null)
+            {
+                return NotFound();
+            }
+
+            return View(computer);
+
+
+        }
+
+        // POST: Employee/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, Computer computer)
+        {
+
+
+            var computerExist = await _context.Computer.Where(x=> x.Serial == computer.Serial && x.ComputerId != id).FirstOrDefaultAsync();
+
+            if (computerExist != null)
+            {
+                TempData["ErrorMessage"] =
+              "No se puede actualizar, el serial ya existe."; // You can use TempData to show success messages.
+                return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
+            }
+
+            if (id != computer.ComputerId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Update the employee in the database.
+                    _context.Update(computer);
+                    await _context.SaveChangesAsync();
+                    await AddComputerHistory(id, computer, (int)EnumAction.Actualizacion_De_Informacion, "Se actualiza la informacion del equipo");
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                 
+                        return NotFound();
+                
+                }
+
+                TempData["AlertMessage"] =
+                    "Se ha realizado la actualización de la información."; // You can use TempData to show success messages.
+                return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
+            }
+
             return View();
         }
 
-        // POST: ComputerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // GET: Users_App/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            var users_App = await _context.Computer
+                .FirstOrDefaultAsync(m => m.ComputerId == id);
+            if (users_App == null)
             {
-                return View();
+                return NotFound();
             }
+
+            return View(users_App);
         }
 
-        // GET: ComputerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ComputerController/Delete/5
-        [HttpPost]
+        // POST: Users_App/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            try
+
+            var computer = await _context.Computer.FindAsync(id);
+
+            if (!computer.IsActive)
             {
+                TempData["ErrorMessage"] = "El equipo ya se encuentra inactivo";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+
+            computer.IsActive = false;
+
+            _context.Computer.Update(computer);
+
+            await AddComputerHistory(id, computer, (int)EnumAction.Inactivar_Equipo,"");
+
+            TempData["AlertMessage"] = "Se ha realizado la Inactivación del Equipo";
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task AddComputerHistory(Guid id, Computer? computer, int action, string details)
+        {
+            var lasOwner = await _context.ComputerHistory.Where(x => x.ComputerId == id).OrderBy(c => c.date).Select(x => x.Owner).LastOrDefaultAsync();
+
+
+            var userAuth = HttpContext.User;
+
+            var newComputerHistory = new ComputerHistory()
             {
-                return View();
-            }
+                ComputerId = computer.ComputerId,
+                date = DateTime.Now,
+                Owner = lasOwner,
+                Action = action,
+                Performer = userAuth.Identity.Name,
+                Details = details
+            };
+            _context.Add(newComputerHistory);
+            await _context.SaveChangesAsync();
         }
     }
 }

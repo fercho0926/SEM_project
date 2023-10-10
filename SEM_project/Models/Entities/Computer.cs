@@ -13,8 +13,8 @@ namespace SEM_project.Models.Entities
         public string? HardDisk { get; set; }
         [Display(Name = "Sistema Operativo")] public string? OperativeSystem { get; set; }
         [Display(Name = "Tipo Equipo")] public string? Model { get; set; }
-        public string? InstaledApplications { get; set; }
-        public string? Licences { get; set; }
+        //public string? InstaledApplications { get; set; }
+        //public string? Licences { get; set; }
         public bool IsActive { get; set; }
         public bool IsAssigned { get; set; }
 
