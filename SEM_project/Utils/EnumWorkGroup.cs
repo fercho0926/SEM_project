@@ -2,13 +2,13 @@
 {
     public enum EnumWorkGroup
     {
-        AtencionALaCiudadania,
-        Contratacion,
+        Atención_a_la_Ciudadania,
+        Contratación,
         Infraestructura,
         Novedades,
-        Tecnologia,
-        TalentoHumano,
-        ServiciosGenerales,
+        Tecnología,
+        Talento_Humano,
+        Servicios_Generales,
         NA
     }
 }

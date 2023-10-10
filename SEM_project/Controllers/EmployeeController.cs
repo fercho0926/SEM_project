@@ -203,7 +203,7 @@ namespace SEM_project.Controllers
                 ComputerId = selectedOption,
                 date = DateTime.Now,
                 Owner = employee.EmployeeName, // GET THE NAME
-                Action = (int)EnumAction.Asignacion_Equipo,
+                Action = (int)EnumAction.Asignación_Equipo,
                 Performer = userAuth.Identity.Name,
                 Details = "sin novedad",
                 EmployeeId = employeeId

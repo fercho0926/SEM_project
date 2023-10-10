@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h3 style="color: #326091;"><b>Detalles del Equipo</b></h3>
                         <hr />
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" >
                             <tr>
                                 <th>@Html.DisplayNameFor(model => model.ComputerId)</th>
                                 <td>@Html.DisplayFor(model => model.ComputerId)</td>
@@ -23,6 +23,31 @@
                                 <th>@Html.DisplayNameFor(model => model.Serial)</th>
                                 <td>@Html.DisplayFor(model => model.Serial)</td>
                             </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Reference)</th>
+                                <td>@Html.DisplayFor(model => model.Reference)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Processer)</th>
+                                <td>@Html.DisplayFor(model => model.Processer)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                <td>@Html.DisplayFor(model => model.IsActive)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Ram)</th>
+                                <td>@Html.DisplayFor(model => model.Ram)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.HardDisk)</th>
+                                <td>@Html.DisplayFor(model => model.HardDisk)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.OperativeSystem)</th>
+                                <td>@Html.DisplayFor(model => model.OperativeSystem)</td>
+                            </tr>
+                            
                             <!-- Add more details as needed -->
                         </table>
                     </div>

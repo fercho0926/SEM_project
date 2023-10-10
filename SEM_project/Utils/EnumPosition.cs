@@ -15,7 +15,6 @@ namespace SEM_project.Utils
         Analista,Servidores,
         Analista_Telecomunicaciones,
         AsesorDespacho,
-        Contratista,
         Coordinador,
         DirectorTecnico,
         LiderDeProyecto,

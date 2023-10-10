@@ -5,6 +5,7 @@ namespace SEM_project.Models.Entities
     public class Computer
     {
         public Guid ComputerId { get; set; }
+        [Required]
         [Display(Name = "Placa")] public string? Serial { get; set; }
         [Display(Name = "Referencia")] public string? Reference { get; set; }
         [Display(Name = "Procesador")] public string? Processer { get; set; }

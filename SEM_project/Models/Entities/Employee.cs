@@ -15,15 +15,14 @@ namespace SEM_project.Models.Entities
         [Display(Name = "Identificación")]
         public string? IDNumber { get; set; }
         public DateTime Date { get; set; }
-        public EnumPosition EnumPosition { get; set; }
-        public EnumAffiliation EnumAffiliation { get; set; }
-        public EnumLocation EnumLocation { get; set; }
-        public EnumFloor EnumFloor { get; set; }
-        public EnumSubdepartment EnumSubdepartment { get; set; }
-        public EnumWorkGroup EnumWorkGroup { get; set; }
+        [Display(Name = "Cargo")] public EnumPosition EnumPosition { get; set; }
+        [Display(Name = "Tipo de Vinculación")] public EnumAffiliation EnumAffiliation { get; set; }
+        [Display(Name = "Sede")] public EnumLocation EnumLocation { get; set; }
+        [Display(Name = "Piso")] public EnumFloor EnumFloor { get; set; }
+        [Display(Name = "Subsecretaría")] public EnumSubdepartment EnumSubdepartment { get; set; }
+        [Display(Name = "Grupo de trabajo")] public EnumWorkGroup EnumWorkGroup { get; set; }
        
-        [MaxLength(10)]
-        public string? AssignedEquipmentPlate { get; set; }
+        [Display(Name = "Placa")][MaxLength(10)] public string? AssignedEquipmentPlate { get; set; }
         public string? PhonePlate { get; set; }
         public string? PhoneModel { get; set; }
         public string? PhoneSerial { get; set; }

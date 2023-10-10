@@ -16,7 +16,41 @@
                         <h3 class="text-primary"><b>Detalles del Funcionario</b></h3>
                         <hr />
 
-                        <div class="row">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EmployeeName)</th>
+                                <td>@Html.DisplayFor(model => model.EmployeeName)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.IDNumber)</th>
+                                <td>@Html.DisplayFor(model => model.IDNumber)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EnumAffiliation)</th>
+                                <td>@Html.DisplayFor(model => model.EnumAffiliation)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EnumSubdepartment)</th>
+                                <td>@Html.DisplayFor(model => model.EnumSubdepartment)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EnumWorkGroup)</th>
+                                <td>@Html.DisplayFor(model => model.EnumWorkGroup)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EnumLocation)</th>
+                                <td>@Html.DisplayFor(model => model.EnumLocation)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EnumFloor)</th>
+                                <td>@Html.DisplayFor(model => model.EnumFloor)</td>
+                            </tr>
+                          
+
+                            <!-- Add more details as needed -->
+                        </table>
+
+                        @* <div class="row">
                             <!-- Employee Details -->
                             <div class="col-md-6">
                                 <dl class="row">
@@ -34,7 +68,18 @@
                                     <!-- Add more employee details here -->
                                 </dl>
                             </div>
-                        </div>
+
+                            <!-- Additional Employee Details -->
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Placa:</dt>
+                                    <dd class="col-sm-8">@Model.AssignedEquipmentPlate</dd>
+                                    <!-- Add more employee details here -->
+                                </dl>
+                            </div>
+                            <!-- Additional Employee Details -->
+
+                    </div>*@
                     </div>
                 </div>
 

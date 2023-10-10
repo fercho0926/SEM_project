@@ -2,9 +2,9 @@
 {
     public enum EnumSubdepartment
     {
-        AdministrativaYFinanciera,
-        PlaneacionEducativa,
-        PrestacionDelServicioEducativo,
+        Administrativa_Financiera,
+        Planeacion_Educativa,
+        Prestación_del_Servicio_Educativo,
         NA
     }
 }

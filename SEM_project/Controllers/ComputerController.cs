@@ -184,7 +184,7 @@ namespace SEM_project.Controllers
                     ComputerId = computer.ComputerId,
                     date = DateTime.Now,
                     Owner = "",
-                    Action = (int)EnumAction.Creacion_Inicial,
+                    Action = (int)EnumAction.Creación_Inicial,
                     Performer = userAuth.Identity.Name,
                     Details = "sin novedad"
                 };
