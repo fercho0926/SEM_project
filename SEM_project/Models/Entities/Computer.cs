@@ -24,5 +24,6 @@ namespace SEM_project.Models.Entities
 
         //public Employee? Employee { get; set; }
         public IEnumerable<ComputerHistory>? ComputerHistory { get; set; }
+        public IEnumerable<ComputerToLicence>? ComputerToLicence { get; set; }
     }
 }

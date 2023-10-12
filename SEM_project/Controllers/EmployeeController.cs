@@ -237,7 +237,8 @@ namespace SEM_project.Controllers
                 SelectedOption = selectedOption,
             };
 
-            return Json(result);
+            TempData["AlertMessage"] = "Se asigna Equipo a Funcionario";
+            return RedirectToAction(nameof(Index));
         }
 
 

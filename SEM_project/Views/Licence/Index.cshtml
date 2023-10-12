@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SEM_project.Models.Entities.Licence>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (@TempData["AlertMessage"] != null)
+{
+    <div class="alert-success jumbotron">
+        <strong>Success !</strong> @TempData["AlertMessage"]
+    </div>
+}
+
+@if (@TempData["ErrorMessage"] != null)
+{
+    <div class="alert-danger jumbotron">
+        <strong>Error !</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<style>
+
+    .thNew {
+        background-color: #326091;
+        color: white;
+    }
+
+    .thmov {
+        background-color: #605F5F;
+        color: white;
+    }
+
+</style>
+
+<h1 style="color : #326091"><b>Licencia</b></h1>
+
+<p>
+    <a asp-action="Create">Crear Nueva Licencia / App</a>
+</p>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="table" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="thNew">
+                                <th>@Html.DisplayNameFor(model => model.LicenceId)</th>
+                                <th>@Html.DisplayNameFor(model => model.LicenceName)</th>
+                                <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                <th>@Html.DisplayNameFor(model => model.Version)</th>
+
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.LicenceId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LicenceName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Version)</td>
+                   
+                                    <!-- Add more columns for other properties as needed -->
+                                    <td>
+                                        <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.LicenceId" title="Editar"></a> |
+                                        <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.LicenceId" title="Detalles"></a> |
+                                        <a class="fa fa-unlock-alt" asp-action="Delete" asp-route-id="@item.LicenceId" title="Inactivar"></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
