@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SEM_project.Utils;
 using System.Drawing;
+using SEM_project.Models;
 
 namespace SEM_project.Controllers
 {
@@ -32,8 +33,16 @@ namespace SEM_project.Controllers
             var history = _context.ComputerHistory.Where(x => x.ComputerId == id).OrderByDescending(x => x.date)
                 .ToList();
 
+            var licences = _context.ComputerToLicence.Where(x => x.ComputerId == id).Include(x => x.Licence).ToList();
+
+            var allLicences = _context.Licence
+          .ToList();
+            ViewBag.LicenceList =
+                new SelectList(allLicences, "LicenceId",
+                    "LicenceName"); 
 
             details.ComputerHistory = history;
+            details.ComputerToLicence = licences;
             return View(details);
         }
 
@@ -57,7 +66,7 @@ namespace SEM_project.Controllers
             };
 
 
-            var allEmployees = _context.Employee.Where(x=>x.IsActive).ToList();
+            var allEmployees = _context.Employee.Where(x => x.IsActive).ToList();
             ViewBag.EmployeeList =
                 new SelectList(allEmployees, "EmployeeId",
                     "EmployeeName"); // Replace "UserId" and "UserName" with your actual property names.
@@ -66,10 +75,72 @@ namespace SEM_project.Controllers
         }
 
 
+  
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignLicence(ComputerToLicence licence)
+        {
+
+       
+            ModelState.Remove("licence.Computer");
+            ModelState.Remove("licence.Licence");
+
+
+            var licenceExist = await _context.ComputerToLicence
+         .Where(x => x.LicenceId == licence.LicenceId && x.ComputerId == licence.ComputerId)
+         .AnyAsync();
+
+            if (licenceExist) {
+                TempData["ErrorMessage"] = "Ya tiene asignada esta licencia";
+                return RedirectToAction("Details", "Computer", new { id = licence.ComputerId });
+
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                await _context.AddAsync(licence);
+                await _context.SaveChangesAsync();
+
+                var licenceName = await _context.Licence.FindAsync(licence.LicenceId);
+
+                await AddComputerHistory(licence.ComputerId, (int)EnumAction.Instalacion_Software_Licencia, licenceName.LicenceName);
+
+                TempData["AlertMessage"] = "Licencia Asignada Correctamente";
+
+            }
+            else {
+                TempData["ErrorMessage"] = "No se puede asignar";
+
+            }
+
+            // If ModelState is not valid, handle the validation errors or return a view
+            return RedirectToAction("Details", "Computer", new { id = licence.ComputerId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> deleteAssignedUser(
+              [Bind(" ComputerId, Owner, Action, Details,EmployeeId")]
+            ComputerHistory computerHistory)
+        {
+
+            TempData["AlertMessage"] = "Actividad Creada Correctamente";
+
+            // Redirect to the Index action if the model is valid
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateActivity(
-            [Bind(" ComputerId, Owner, Action, Details,EmployeeId")]
+    [Bind(" ComputerId, Owner, Action, Details,EmployeeId")]
             ComputerHistory computerHistory)
         {
             // Remove the existing validation state for these properties if it exists
@@ -118,7 +189,10 @@ namespace SEM_project.Controllers
                 TempData["AlertMessage"] = "Actividad Creada Correctamente";
 
                 // Redirect to the Index action if the model is valid
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Details", "Computer", new { id = computerHistory.ComputerId });
+
+                //return RedirectToAction(nameof(Index));
             }
 
             TempData["ErrorMessage"] = "Informacion Incorrecta";
@@ -209,11 +283,11 @@ namespace SEM_project.Controllers
 
 
         // GET: ComputerController/Edit/5
-                    public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
 
         {
 
-            var computer =  await  _context.Computer.FindAsync(id);
+            var computer = await _context.Computer.FindAsync(id);
 
             if (computer == null)
             {
@@ -232,7 +306,7 @@ namespace SEM_project.Controllers
         {
 
 
-            var computerExist = await _context.Computer.Where(x=> x.Serial == computer.Serial && x.ComputerId != id).FirstOrDefaultAsync();
+            var computerExist = await _context.Computer.Where(x => x.Serial == computer.Serial && x.ComputerId != id).FirstOrDefaultAsync();
 
             if (computerExist != null)
             {
@@ -253,13 +327,13 @@ namespace SEM_project.Controllers
                     // Update the employee in the database.
                     _context.Update(computer);
                     await _context.SaveChangesAsync();
-                    await AddComputerHistory(id, computer, (int)EnumAction.Actualizacion_De_Informacion, "Se actualiza la informacion del equipo");
+                    await AddComputerHistory(id, (int)EnumAction.Actualizacion_De_Informacion, "Se actualiza la informacion del equipo");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                 
-                        return NotFound();
-                
+
+                    return NotFound();
+
                 }
 
                 TempData["AlertMessage"] =
@@ -306,23 +380,23 @@ namespace SEM_project.Controllers
 
             _context.Computer.Update(computer);
 
-            await AddComputerHistory(id, computer, (int)EnumAction.Inactivar_Equipo,"");
+            await AddComputerHistory(id, (int)EnumAction.Inactivar_Equipo, "");
 
             TempData["AlertMessage"] = "Se ha realizado la Inactivación del Equipo";
             //return RedirectToAction("Index", "Home");
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task AddComputerHistory(Guid id, Computer? computer, int action, string details)
+        private async Task AddComputerHistory(Guid computerId, int action, string details)
         {
-            var lasOwner = await _context.ComputerHistory.Where(x => x.ComputerId == id).OrderBy(c => c.date).Select(x => x.Owner).LastOrDefaultAsync();
+            var lasOwner = await _context.ComputerHistory.Where(x => x.ComputerId == computerId).OrderBy(c => c.date).Select(x => x.Owner).LastOrDefaultAsync();
 
 
             var userAuth = HttpContext.User;
 
             var newComputerHistory = new ComputerHistory()
             {
-                ComputerId = computer.ComputerId,
+                ComputerId = computerId,
                 date = DateTime.Now,
                 Owner = lasOwner,
                 Action = action,

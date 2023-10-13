@@ -1,21 +1,29 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using SEM_project.Utils
-@model SEM_project.Models.Entities.ComputerHistory
+﻿
+@model SEM_project.Models.Entities.Licence
 @{
     ViewData["Title"] = "Crear actividad";
 }
 
-<h3 style="color : #326091"><b>Nuevo Actividad</b></h3>
+<h3 style="color : #326091"><b>Nuevo Licencia</b></h3>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateActivity">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ComputerId" />
-            <input type="hidden" asp-for="EmployeeId" id="EmployeeId_new" />
+            <input type="hidden" asp-for="LicenceId" />
+            <input type="hidden" asp-for="LicenceId" id="LicenceId_new" />
 
-            <div class="form-group">
+
+            <div class="form-group" id="divLicencia">
+                <label for="newOwner">Seleccion:</label>
+                <select id="newOwner" asp-items="ViewBag.LicenceList" class="form-control">
+                    <option value="">Seleccione una Licencia...</option>
+                </select>
+            </div>
+
+
+@*             <div class="form-group">
                 <label asp-for="Owner" class="control-label"></label>
                 <div class="input-group">
                     <input asp-for="Owner" class="form-control" readOnly="true" id="ownerInput" />
@@ -40,7 +48,7 @@
                 <label asp-for="Details" class="control-label"></label>
                 <textarea asp-for="Details" class="form-control" rows="5" id ="details"></textarea>
                 <span asp-validation-for="Details" class="text-danger"></span>
-            </div>
+            </div> *@
 
             
             <div class="form-group">
@@ -51,7 +59,7 @@
 
 </div>
 
-<!-- Modal for changing owner -->
+@* <!-- Modal for changing owner -->
 <div class="modal fade" id="changeOwnerModal" tabindex="-1" role="dialog" aria-labelledby="changeOwnerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -176,5 +184,5 @@
         });
     });
 </script>
+ *@
 
-}

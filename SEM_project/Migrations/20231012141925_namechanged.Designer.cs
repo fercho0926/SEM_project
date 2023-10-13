@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEM_project.Data;
 
@@ -11,9 +12,10 @@ using SEM_project.Data;
 namespace SEM_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231012141925_namechanged")]
+    partial class namechanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,10 +318,6 @@ namespace SEM_project.Migrations
 
                     b.HasKey("ComputerToLicenceId");
 
-                    b.HasIndex("ComputerId");
-
-                    b.HasIndex("LicenceId");
-
                     b.ToTable("ComputerToLicence");
                 });
 
@@ -412,12 +410,15 @@ namespace SEM_project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool>("IsAssigned")
                         .HasColumnType("bit");
 
                     b.Property<string>("LicenceName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LicenceStatus")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Version")
                         .IsRequired()
@@ -559,40 +560,14 @@ namespace SEM_project.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SEM_project.Models.Entities.ComputerToLicence", b =>
-                {
-                    b.HasOne("SEM_project.Models.Entities.Computer", "Computer")
-                        .WithMany("ComputerToLicence")
-                        .HasForeignKey("ComputerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SEM_project.Models.Entities.Licence", "Licence")
-                        .WithMany("ComputerToLicences")
-                        .HasForeignKey("LicenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Computer");
-
-                    b.Navigation("Licence");
-                });
-
             modelBuilder.Entity("SEM_project.Models.Entities.Computer", b =>
                 {
                     b.Navigation("ComputerHistory");
-
-                    b.Navigation("ComputerToLicence");
                 });
 
             modelBuilder.Entity("SEM_project.Models.Entities.Employee", b =>
                 {
                     b.Navigation("Computers");
-                });
-
-            modelBuilder.Entity("SEM_project.Models.Entities.Licence", b =>
-                {
-                    b.Navigation("ComputerToLicences");
                 });
 #pragma warning restore 612, 618
         }

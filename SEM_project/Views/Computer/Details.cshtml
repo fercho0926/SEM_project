@@ -4,6 +4,21 @@
     ViewData["Title"] = "Detalles";
 }
 
+
+@if (@TempData["AlertMessage"] != null)
+{
+    <div class="alert-success jumbotron">
+        <strong>Success !</strong> @TempData["AlertMessage"]
+    </div>
+}
+
+@if (@TempData["ErrorMessage"] != null)
+{
+    <div class="alert-danger jumbotron">
+        <strong>Error !</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -14,7 +29,7 @@
                     <div class="card-body">
                         <h3 style="color: #326091;"><b>Detalles del Equipo</b></h3>
                         <hr />
-                        <table class="table table-bordered" >
+                        <table class="table table-bordered">
                             <tr>
                                 <!-- <th>@Html.DisplayNameFor(model => model.ComputerId)</th>-->
                                 <!--  <td>@Html.DisplayFor(model => model.ComputerId)</td>-->
@@ -47,47 +62,111 @@
                                 <th>@Html.DisplayNameFor(model => model.OperativeSystem)</th>
                                 <td>@Html.DisplayFor(model => model.OperativeSystem)</td>
                             </tr>
-                            
+
                             <!-- Add more details as needed -->
                         </table>
                     </div>
                 </div>
 
-                <!-- Display computer history -->
                 <div class="card">
+                    <div class="card-header">
+                        <h3 style="color: #326091;"><b>Licencias / Apps Asignadas</b></h3>
+                        <div class="card-tools">
+                            <!-- Collapse Button -->
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CreateActivity", new { id = Model.ComputerId })'">
-                            Registrar Actividad
-                        </button>
+                        <!-- Your existing content goes here -->
+                        <!-- Display computer Licences -->
+                        <div class="card">
+                            <div class="card-body">
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#licenceModal" data-computerid="@Model.ComputerId">
+                                    Asignar Licencia
+                                </button>
+                                <hr />
+                                <table id="table" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="thNew">
+                                            <th>Licencia</th>
+                                            <th>Version</th>
+                                            <th>Estado</th>
+                                            <!-- Add more table headers as needed -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var licence in Model.ComputerToLicence)
+                                        {
+                                            <tr>
+                                                <td>@licence.Licence.LicenceName</td>
+                                                <td>@licence.Licence.Version</td>
+                                                <td>@(licence.Licence.IsActive ? "Active" : "Inactive")</td>
+                                                <!-- Add more table cells as needed -->
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+
+                <div class="card collapsed">
+                    <div class="card-header">
                         <h3 style="color: #326091;"><b>Registro de actividad</b></h3>
-                        <hr />
-                        <table id="table" class="table table-bordered table-striped">
-                            <thead>
-                                <tr class="thNew">
-                                    <th>Fecha</th>
-                                    <th>Propietario</th>
-                                    <th>Acción</th>
-                                    <th>Ejecutor</th>
-                                    <th>Detalles</th>
-                                    <!-- Add more table headers as needed -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var history in Model.ComputerHistory)
-                                {
-                                    <tr>
-                                        <td>@history.date</td>
-                                        <td>@history.Owner</td>
-                                        <td>@Enum.GetName(typeof(SEM_project.Utils.EnumAction), history.Action)</td>
-                                        <td>@history.Performer</td>
-                                        <td>@history.Details</td>
-                                        <!-- Add more table cells as needed -->
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        <div class="card-tools">
+                            <!-- Collapse Button -->
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Your existing content goes here -->
+                        <!-- Display computer history -->
+                        <div class="card">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CreateActivity", new { id = Model.ComputerId })'">
+                                    Registrar Actividad
+                                </button>
+                                <hr />
+                                <table id="table" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="thNew">
+                                            <th>Fecha</th>
+                                            <th>Propietario</th>
+                                            <th>Acción</th>
+                                            <th>Ejecutor</th>
+                                            <th>Detalles</th>
+                                            <!-- Add more table headers as needed -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var history in Model.ComputerHistory)
+                                        {
+                                            <tr>
+                                                <td>@history.date</td>
+                                                <td>@history.Owner</td>
+                                                <td>@Enum.GetName(typeof(SEM_project.Utils.EnumAction), history.Action)</td>
+                                                <td>@history.Performer</td>
+                                                <td>@history.Details</td>
+                                                <!-- Add more table cells as needed -->
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -98,3 +177,45 @@
         <span>&#8592;</span> Regresar
     </a>
 </div>
+
+
+    <!-- Modal to assing licences -->
+    <div class="modal fade" id="licenceModal" tabindex="-1" role="dialog" aria-labelledby="licenceModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="licenceModalLabel">Asignar Licencia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <form asp-action="AssignLicence">
+                <div class="modal-body">
+                    <input type="hidden" name="licence.ComputerId" value="@Model.ComputerId" />
+
+
+                 
+                    <div class="form-group" id="divOwner">
+                        <label for="licence">Seleccion Licencia:</label>
+                        <select name="licence.LicenceId" asp-items="ViewBag.LicenceList" class="form-control">
+                            <option value="">Seleccione...</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Continuar</button>
+            </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
