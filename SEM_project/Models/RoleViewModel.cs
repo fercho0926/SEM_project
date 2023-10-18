@@ -9,7 +9,7 @@ namespace SEM_project.Models
 
         [Display(Name = "Nombre")] public string? Name { get; set; }
 
-        public bool HasAdminPermissions { get; set; }
+        [Display(Name = "Administrar:")] public bool HasAdminPermissions { get; set; }
         public bool HasComputerPermissions { get; set; }
         public bool HasSoftwarePermissions { get; set; }
         public bool HasLicensesPermissions { get; set; }

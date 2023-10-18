@@ -4,6 +4,9 @@
     {
         Office,
         Office365,
-        Arcgis
+        Arcgis,
+        SAP,
+        Trendmicro,
+        Avaya_Equinox
     }
 }

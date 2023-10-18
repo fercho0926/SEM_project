@@ -35,8 +35,8 @@ namespace SEM_project.Controllers
 
             var licences = _context.ComputerToLicence.Where(x => x.ComputerId == id).Include(x => x.Licence).ToList();
 
-            var allLicences = _context.Licence
-          .ToList();
+            var allLicences = _context.Licence.Where(x => x.IsActive).ToList();
+
             ViewBag.LicenceList =
                 new SelectList(allLicences, "LicenceId",
                     "LicenceName"); 
@@ -104,7 +104,7 @@ namespace SEM_project.Controllers
 
                 var licenceName = await _context.Licence.FindAsync(licence.LicenceId);
 
-                await AddComputerHistory(licence.ComputerId, (int)EnumAction.Instalacion_Software_Licencia, licenceName.LicenceName);
+                await AddComputerHistory(licence.ComputerId, (int)EnumAction.Instalación_Software_Licencia, licenceName.LicenceName);
 
                 TempData["AlertMessage"] = "Licencia Asignada Correctamente";
 
@@ -327,7 +327,7 @@ namespace SEM_project.Controllers
                     // Update the employee in the database.
                     _context.Update(computer);
                     await _context.SaveChangesAsync();
-                    await AddComputerHistory(id, (int)EnumAction.Actualizacion_De_Informacion, "Se actualiza la informacion del equipo");
+                    await AddComputerHistory(id, (int)EnumAction.Actualización_De_Informacion, "Se actualiza la información del equipo");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -361,6 +361,18 @@ namespace SEM_project.Controllers
 
             return View(users_App);
         }
+
+
+        public async Task<IActionResult> DeleteLicencePerComputer(Guid licenceId) {
+
+            var todo = "asd";
+
+
+
+            return View(todo);
+        
+        }
+
 
         // POST: Users_App/Delete/5
         [HttpPost, ActionName("Delete")]

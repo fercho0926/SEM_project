@@ -62,6 +62,14 @@
                                 <th>@Html.DisplayNameFor(model => model.OperativeSystem)</th>
                                 <td>@Html.DisplayFor(model => model.OperativeSystem)</td>
                             </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Model)</th>
+                                <td>@Html.DisplayFor(model => model.Model)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.IsAssigned)</th>
+                                <td>@Html.DisplayFor(model => model.IsAssigned)</td>
+                            </tr>
 
                             <!-- Add more details as needed -->
                         </table>
@@ -95,7 +103,7 @@
                                         <tr class="thNew">
                                             <th>Licencia</th>
                                             <th>Version</th>
-                                            <th>Estado</th>
+                                            <!--<th>Estado</th>-->
                                             <!-- Add more table headers as needed -->
                                         </tr>
                                     </thead>
@@ -105,8 +113,8 @@
                                             <tr>
                                                 <td>@licence.Licence.LicenceName</td>
                                                 <td>@licence.Licence.Version</td>
-                                                <td>@(licence.Licence.IsActive ? "Active" : "Inactive")</td>
-                                                <!-- Add more table cells as needed -->
+                                                <!-- <td>@(licence.Licence.IsActive ? "Active" : "Inactive")</td>-->
+                                                <td><a class="fa fa-unlock-alt" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.LicenceId" title="Inactivar"></a></td>
                                             </tr>
                                         }
                                     </tbody>

@@ -45,7 +45,26 @@
                                 <th>@Html.DisplayNameFor(model => model.EnumFloor)</th>
                                 <td>@Html.DisplayFor(model => model.EnumFloor)</td>
                             </tr>
-                          
+                                <tr>
+                                <th>@Html.DisplayNameFor(model => model.PhonePlate)</th>
+                                <td>@Html.DisplayFor(model => model.PhonePlate)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.PhoneModel)</th>
+                                <td>@Html.DisplayFor(model => model.PhoneModel)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.PhoneExtension)</th>
+                                <td>@Html.DisplayFor(model => model.PhoneExtension)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                <td>@Html.DisplayFor(model => model.IsActive)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Observations)</th>
+                                <td>@Html.DisplayFor(model => model.Observations)</td>
+                            </tr>
 
                             <!-- Add more details as needed -->
                         </table>
@@ -97,9 +116,9 @@
                         <table id="table" class="table table-bordered table-striped">
                             <thead>
                                 <tr class="thNew">
-                                    <th>ComputerId</th>
-                                    <th>Serial</th>
-                                    <th>OperativeSystem</th>
+                                    <!-- <th>ComputerId</th>-->
+                                    <th>Placa</th>
+                                    <th>Referencia</th>
                                     <th>IsActive</th>
                                     <!-- Add more table headers as needed -->
                                 </tr>
@@ -108,9 +127,9 @@
                             @foreach (var computer in Model.Computers)
                             {
                                 <tr>
-                                    <td>@computer.ComputerId</td>
+                                <!--<td>@computer.ComputerId</td>-->
                                     <td>@computer.Serial</td>
-                                    <td>@computer.OperativeSystem</td>
+                                    <td>@computer.Reference</td>
                                     <td>@computer.IsActive</td>
                                     <!-- Add more table cells as needed -->
                                 </tr>

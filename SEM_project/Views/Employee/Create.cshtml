@@ -69,7 +69,7 @@
 
  
             <div class="form-group">
-                <label asp-for="PhonePlate" class="control-label">placa de teléfono:</label>
+                <label asp-for="PhonePlate" class="control-label"></label>
                 <input asp-for="PhonePlate" class="form-control" />
                 <span asp-validation-for="PhonePlate" class="text-danger"></span>
             </div>
@@ -78,11 +78,11 @@
                 <input asp-for="PhoneModel" class="form-control" />
                 <span asp-validation-for="PhoneModel" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PhoneSerial" class="control-label">serial del telefono:</label>
+           @* <div class="form-group">
+                <label asp-for="PhoneSerial" class="control-label">serial del teléfono:</label>
                 <input asp-for="PhoneSerial" class="form-control" />
                 <span asp-validation-for="PhoneSerial" class="text-danger"></span>
-            </div>
+            </div>*@
             
             <div class="form-group">
                 <label asp-for="PhoneExtension" class="control-label">extensión de teléfono:</label>
@@ -94,11 +94,11 @@
                 <textarea asp-for="Observations" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Observations" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="PersonalEquipment" class="control-label">equipo personal:</label>
                 <input type="checkbox" asp-for="PersonalEquipment" class="form-check" />
                 <span asp-validation-for="PersonalEquipment" class="text-danger"></span>
-            </div>
+            </div>*@
                                         
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />

@@ -68,10 +68,13 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="EnumWorkGroup" class="control-label">Grupo de Trabajo:</label>
-                <input asp-for="EnumWorkGroup" class="form-control" />
+                <label asp-for="EnumWorkGroup" class="control-label"></label>
+                <select asp-for="EnumWorkGroup" asp-items="Html.GetEnumSelectList<EnumWorkGroup>()" class="form-control">
+                    <option value="">Seleccione...</option>
+                </select>
                 <span asp-validation-for="EnumWorkGroup" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="PhonePlate" class="control-label">Placa de Teléfono:</label>
                 <input asp-for="PhonePlate" class="form-control" />
@@ -84,11 +87,11 @@
                 <span asp-validation-for="PhoneModel" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="PhoneSerial" class="control-label">Serial del Teléfono:</label>
                 <input asp-for="PhoneSerial" class="form-control" />
                 <span asp-validation-for="PhoneSerial" class="text-danger"></span>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <label asp-for="PhoneExtension" class="control-label">Extensión de Teléfono:</label>
@@ -108,11 +111,11 @@
                 <span asp-validation-for="IsActive" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="PersonalEquipment" class="control-label">Equipo Personal:</label>
                 <input type="checkbox" asp-for="PersonalEquipment" class="form-check" />
                 <span asp-validation-for="PersonalEquipment" class="text-danger"></span>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <input type="submit" value="Guardar Cambios" class="btn btn-primary" />

@@ -13,17 +13,18 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <input type="hidden" asp-for="ComputerId" />
+            <input type="hidden" asp-for="IsAssigned" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="Serial" class="control-label">Serial:</label>
-                <input asp-for="Serial" class="form-control" disabled="true" />
+                <label asp-for="Serial" class="control-label"></label>
+                <input asp-for="Serial" class="form-control" readonly="true" />
                 <span asp-validation-for="Serial" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Reference" class="control-label"></label>
-                <input asp-for="Reference" class="form-control" />
+                <input asp-for="Reference" class="form-control" readonly="true" />
                 <span asp-validation-for="Reference" class="text-danger"></span>
             </div>
 
@@ -38,17 +39,17 @@
                 <span asp-validation-for="Ram" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HardDisk" class="control-label">HardDisk:</label>
+                <label asp-for="HardDisk" class="control-label"></label>
                 <input asp-for="HardDisk" class="form-control" />
                 <span asp-validation-for="HardDisk" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OperativeSystem" class="control-label">OperativeSystem:</label>
+                <label asp-for="OperativeSystem" class="control-label"></label>
                 <input asp-for="OperativeSystem" class="form-control" />
                 <span asp-validation-for="OperativeSystem" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Model" class="control-label">Model:</label>
+                <label asp-for="Model" class="control-label"></label>
                 <input asp-for="Model" class="form-control" />
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>

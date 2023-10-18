@@ -5,11 +5,10 @@ namespace SEM_project.Models.Entities
 {
     public class Employee
     {
-        
         public Guid EmployeeId { get; set; }
-        [Required]
-        [Display(Name = "Nombre")]
-        public string? EmployeeName { get; set; }
+
+        [Required] [Display(Name = "Nombre")] public string? EmployeeName { get; set; }
+
         [Required]
         [MaxLength(50)]
         [Display(Name = "Identificación")]
@@ -23,12 +22,12 @@ namespace SEM_project.Models.Entities
         [Display(Name = "Grupo de trabajo")] public EnumWorkGroup EnumWorkGroup { get; set; }
        
         [Display(Name = "Placa")][MaxLength(10)] public string? AssignedEquipmentPlate { get; set; }
-        public string? PhonePlate { get; set; }
-        public string? PhoneModel { get; set; }
-        public string? PhoneSerial { get; set; }
-        public string? PhoneExtension { get; set; }
-        public string? Observations { get; set; }
-        public bool PersonalEquipment { get; set; }
+        [Display(Name = "Placa de teléfono")][MaxLength(9)] public string? PhonePlate { get; set; }
+        [Display(Name = "Modelo Teléfono")] public string? PhoneModel { get; set; }
+        [Display(Name = "campo_pendiente")] public string? PhoneSerial { get; set; }
+        [Display(Name = "Extensión")] public string? PhoneExtension { get; set; }
+        [Display(Name = "Observaciones")] public string? Observations { get; set; }
+        [Display(Name = "Equipo personal")] public bool PersonalEquipment { get; set; }
         public bool IsActive { get; set; }
 
 

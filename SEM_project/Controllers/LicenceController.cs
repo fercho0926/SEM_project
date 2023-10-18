@@ -31,15 +31,16 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-    [Bind("LicenceName, LicenceStatus, Version, IsAssigned")]
+    [Bind("LicenceName,Version, IsAssigned")]
             Licence licence)
         {
 
             ModelState.Remove("Licences");
+            ModelState.Remove("LicenceStatus");
 
             if (ModelState.IsValid)
             {
-
+                licence.IsActive = true;
                 _context.Add(licence);
                 await _context.SaveChangesAsync();
                 // Set a success message in TempData
@@ -50,7 +51,7 @@ namespace SEM_project.Controllers
             }
 
             // Set an error message in TempData if model validation fails
-            TempData["ErrorMessage"] = "No se creó el Equipo";
+            TempData["ErrorMessage"] = "No se creó licencia";
 
             // Redirect to the Index action in both success and error cases
             return RedirectToAction(nameof(Index));

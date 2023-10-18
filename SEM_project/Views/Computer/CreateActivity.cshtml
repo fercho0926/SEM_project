@@ -5,7 +5,7 @@
     ViewData["Title"] = "Crear actividad";
 }
 
-<h3 style="color : #326091"><b>Nuevo Actividad</b></h3>
+<h3 style="color : #326091"><b>Nueva Actividad</b></h3>
 
 <hr />
 <div class="row">
@@ -63,11 +63,11 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="newOwner">Eliminar Asignacion:</label>
+                    <label for="newOwner">Eliminar Asignación:</label>
                     <input type="checkbox" id="deleteAssignedUser" onchange="fnDeleteAssignedUser()" />
                 </div>
                 <div class="form-group" id="divOwner">
-                    <label for="newOwner">Seleccion nuevo propietario:</label>
+                    <label for="newOwner">Seleccione nuevo propietario:</label>
                     <select id="newOwner" asp-items="ViewBag.EmployeeList" class="form-control">
                         <option value="">Seleccione un Usuario...</option>
                     </select>

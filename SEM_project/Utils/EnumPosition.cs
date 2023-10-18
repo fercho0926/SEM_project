@@ -26,7 +26,7 @@ namespace SEM_project.Utils
         ProfesionalUniversitario,
         ProfesionalDeGestion,
         SecretarioDespacho,
-        SecretariaO,
+        Secretaria,
         SubsecretarioPlaneacionEducativa,
         SubsecretarioAdministrativoYFinanciero,
         SubsecretarioPrestacionServicioEducativo,
