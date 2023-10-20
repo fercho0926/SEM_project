@@ -40,8 +40,18 @@ namespace SEM_project.Controllers
 
             if (ModelState.IsValid)
             {
+                var licenceExist =
+          await _context.Licence.Where(x => x.LicenceName == licence.LicenceName).FirstOrDefaultAsync();
+                if (licenceExist != null)
+                {
+                    TempData["ErrorMessage"] =
+                        "Licencia ya existe."; // You can use TempData to show success messages.
+                    return RedirectToAction(nameof(Index)); // Redirect to the licence list view.
+                }
+
+
                 licence.IsActive = true;
-                _context.Add(licence);
+                _context.Add(licence);  
                 await _context.SaveChangesAsync();
                 // Set a success message in TempData
                 TempData["AlertMessage"] = "Licencia Creada Correctamente";
@@ -49,6 +59,7 @@ namespace SEM_project.Controllers
                 // Redirect to the Index action if the model is valid
                 return RedirectToAction(nameof(Index));
             }
+            
 
             // Set an error message in TempData if model validation fails
             TempData["ErrorMessage"] = "No se creó licencia";
@@ -56,6 +67,8 @@ namespace SEM_project.Controllers
             // Redirect to the Index action in both success and error cases
             return RedirectToAction(nameof(Index));
         }
+
+
 
 
 

@@ -327,7 +327,7 @@ namespace SEM_project.Controllers
                     // Update the employee in the database.
                     _context.Update(computer);
                     await _context.SaveChangesAsync();
-                    await AddComputerHistory(id, (int)EnumAction.Actualización_De_Informacion, "Se actualiza la información del equipo");
+                    await AddComputerHistory(id, (int)EnumAction.Actualización_De_Información, "Se actualiza la información del equipo");
                 }
                 catch (DbUpdateConcurrencyException)
                 {

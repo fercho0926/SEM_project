@@ -13,7 +13,7 @@
         Cambios_De_Software,
         Cambio_De_Funcionario,
         Inactivar_Equipo,
-        Actualización_De_Informacion,
+        Actualización_De_Información,
         Instalación_Software_Licencia
     }
 }
