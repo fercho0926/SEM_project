@@ -93,17 +93,19 @@
                         <!-- Display computer Licences -->
                         <div class="card">
                             <div class="card-body">
-
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#licenceModal" data-computerid="@Model.ComputerId">
-                                    Asignar Licencia
-                                </button>
+                                @if (!Model.Unsubscribed)
+                                {
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#licenceModal" data-computerid="@Model.ComputerId">
+                                        Asignar Licencia
+                                    </button>
+                                }
                                 <hr />
-                                <table id="table" class="table table-bordered table-striped">
+                                <table id="table1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr class="thNew">
                                             <th>Licencia</th>
                                             <th>Version</th>
-                                            <!--<th>Estado</th>-->
+                                            <th>Acciones</th>
                                             <!-- Add more table headers as needed -->
                                         </tr>
                                     </thead>
@@ -114,7 +116,10 @@
                                                 <td>@licence.Licence.LicenceName</td>
                                                 <td>@licence.Licence.Version</td>
                                                 <!-- <td>@(licence.Licence.IsActive ? "Active" : "Inactive")</td>-->
-                                                <td><a class="fa fa-unlock-alt" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.LicenceId" title="Inactivar"></a></td>
+                                                @if (!Model.Unsubscribed)
+                                                {
+                                                    <td><a class="fa fa-unlock-alt" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.LicenceId" title="Inactivar"></a></td>
+                                                }
                                             </tr>
                                         }
                                     </tbody>
@@ -141,9 +146,12 @@
                         <!-- Display computer history -->
                         <div class="card">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CreateActivity", new { id = Model.ComputerId })'">
-                                    Registrar Actividad
-                                </button>
+                                @if (!Model.Unsubscribed)
+                                {
+                                    <button type="button" class="btn btn-primary" onclick="location.href = '@Url.Action("CreateActivity", new { id = Model.ComputerId })'">
+                                        Registrar Actividad
+                                    </button>
+                                }
                                 <hr />
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
@@ -187,22 +195,22 @@
 </div>
 
 
-    <!-- Modal to assing licences -->
-    <div class="modal fade" id="licenceModal" tabindex="-1" role="dialog" aria-labelledby="licenceModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="licenceModalLabel">Asignar Licencia</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<!-- Modal to assing licences -->
+<div class="modal fade" id="licenceModal" tabindex="-1" role="dialog" aria-labelledby="licenceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="licenceModalLabel">Asignar Licencia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <form asp-action="AssignLicence">
                 <div class="modal-body">
                     <input type="hidden" name="licence.ComputerId" value="@Model.ComputerId" />
 
 
-                 
+
                     <div class="form-group" id="divOwner">
                         <label for="licence">Seleccion Licencia:</label>
                         <select name="licence.LicenceId" asp-items="ViewBag.LicenceList" class="form-control">
@@ -213,12 +221,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Continuar</button>
+                    <button type="submit" class="btn btn-primary">Continuar</button>
             </form>
 
-                </div>
-            </div>
         </div>
+    </div>
+</div>
     </div>
 
 

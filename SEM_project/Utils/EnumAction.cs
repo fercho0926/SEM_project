@@ -12,6 +12,7 @@
         Actualización_De_Equipo,
         Cambios_De_Software,
         Cambio_De_Funcionario,
+        Dar_De_Baja,
         Inactivar_Equipo,
         Actualización_De_Informacion,
         Instalación_Software_Licencia

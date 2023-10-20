@@ -92,18 +92,15 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Employee employee)
         {
-
-
-
-            var employeeExist = await _context.Employee.Where(x => x.IDNumber == employee.IDNumber && x.EmployeeId != id).FirstOrDefaultAsync();
+            var employeeExist = await _context.Employee
+                .Where(x => x.IDNumber == employee.IDNumber && x.EmployeeId != id).FirstOrDefaultAsync();
 
             if (employeeExist != null)
             {
                 TempData["ErrorMessage"] =
-              "No se puede actualizar, el empleado ya existe."; // You can use TempData to show success messages.
+                    "No se puede actualizar, el empleado ya existe."; // You can use TempData to show success messages.
                 return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
             }
-
 
 
             if (id != employee.EmployeeId)
@@ -167,7 +164,7 @@ namespace SEM_project.Controllers
 
 
             var allComputers
-                = _context.Computer.Where(x => x.IsActive && x.IsAssigned == false).ToList();
+                = _context.Computer.Where(x => x.IsActive && x.IsAssigned == false && x.Unsubscribed == false).ToList();
 
 
             ViewBag.ComputerList =
@@ -264,7 +261,6 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-
             var employee = await _context.Employee.FindAsync(id);
 
             if (!employee.IsActive)
@@ -282,6 +278,5 @@ namespace SEM_project.Controllers
             //return RedirectToAction("Index", "Home");
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

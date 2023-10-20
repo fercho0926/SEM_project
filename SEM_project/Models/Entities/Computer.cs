@@ -7,17 +7,23 @@ namespace SEM_project.Models.Entities
         public Guid ComputerId { get; set; }
 
         [Display(Name = "Placa")] public string? Serial { get; set; }
-        [Required][Display(Name = "Referencia")] public string? Reference { get; set; }
+
+        [Required]
+        [Display(Name = "Referencia")]
+        public string? Reference { get; set; }
+
         [Display(Name = "Procesador")] public string? Processer { get; set; }
         [Display(Name = "Memoria Ram")] public string? Ram { get; set; }
         [Display(Name = "Disco Duro")] public string? HardDisk { get; set; }
         [Display(Name = "Sistema Operativo")] public string? OperativeSystem { get; set; }
+
         [Display(Name = "Tipo de Equipo")] public string? Model { get; set; }
+
         //public string? InstaledApplications { get; set; }
         //public string? Licences { get; set; }
         public bool IsActive { get; set; }
         [Display(Name = "Asignado")] public bool IsAssigned { get; set; }
-
+        [Display(Name = "se Dio de Baja ?")] public bool Unsubscribed { get; set; }
 
         // Foreign key to relate a computer to an employee
         public Guid? EmployeeId { get; set; }
