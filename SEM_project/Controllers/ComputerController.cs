@@ -138,6 +138,7 @@ namespace SEM_project.Controllers
             ModelState.Remove("ComputerHistoryId");
             ModelState.Remove("Date");
             ModelState.Remove("Performer");
+            ModelState.Remove("EmployeeId");
 
             if (ModelState.IsValid)
             {
@@ -347,7 +348,38 @@ namespace SEM_project.Controllers
 
                             if (!object.Equals(oldValue, newValue))
                             {
-                                changes.Add($"{property.Name}: {oldValue} -> {newValue} ,  ");
+
+                                switch (property.Name)
+                                {
+                                    case "Processer":
+                                        changes.Add($" Procesador: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+
+                                    case "Ram":
+                                        changes.Add($" Memoria Ram: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+                                    case "HardDisk":
+                                        changes.Add($" Disco Duro: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+                                    case "OperativeSystem":
+                                        changes.Add($" Sistema Operativo: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+                                    case "Model":
+                                        changes.Add($" Tipo de Equipo: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+                                    default:
+                                        changes.Add($"{property.Name}: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+                                }
+
+
+
                             }
                         }
 
@@ -358,7 +390,7 @@ namespace SEM_project.Controllers
                         await _context.SaveChangesAsync();
 
 
-                        await AddComputerHistory(id, (int)EnumAction.Actualización_De_Informacion, changesString);
+                        await AddComputerHistory(id, (int)EnumAction.Actualización_De_Información, changesString);
 
 
                         TempData["AlertMessage"] = "Se ha realizado la actualización de la información.";

@@ -23,7 +23,7 @@ namespace SEM_project.Models.Entities
         //public string? Licences { get; set; }
         public bool IsActive { get; set; }
         [Display(Name = "Asignado")] public bool IsAssigned { get; set; }
-        [Display(Name = "se Dio de Baja ?")] public bool Unsubscribed { get; set; }
+        [Display(Name = "Se da de Baja")] public bool Unsubscribed { get; set; }
 
         // Foreign key to relate a computer to an employee
         public Guid? EmployeeId { get; set; }

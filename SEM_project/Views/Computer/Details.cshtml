@@ -91,7 +91,7 @@
                     <div class="card-body">
                         <!-- Your existing content goes here -->
                         <!-- Display computer Licences -->
-                        <div class="card">
+                        <div class="card ">
                             <div class="card-body">
                                 @if (!Model.Unsubscribed)
                                 {
@@ -104,7 +104,7 @@
                                     <thead>
                                         <tr class="thNew">
                                             <th>Licencia</th>
-                                            <th>Version</th>
+                                            <th>Versión</th>
                                             <th>Acciones</th>
                                             <!-- Add more table headers as needed -->
                                         </tr>
@@ -118,7 +118,7 @@
                                                 <!-- <td>@(licence.Licence.IsActive ? "Active" : "Inactive")</td>-->
                                                 @if (!Model.Unsubscribed)
                                                 {
-                                                    <td><a class="fa fa-unlock-alt" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.LicenceId" title="Inactivar"></a></td>
+                                                    <td><a class="fa fa-minus-square" aria-hidden="true" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.LicenceId" title="Remover"></a></td>
                                                 }
                                             </tr>
                                         }
