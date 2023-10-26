@@ -171,8 +171,20 @@ namespace SEM_project.Controllers
 
 
                     var computer = _context.Computer.FirstOrDefault(x => x.ComputerId == computerHistory.ComputerId);
-                    computer.IsAssigned = true;
-                    computer.EmployeeId = computerHistory.EmployeeId;
+
+
+                    if (computerHistory.EmployeeId == Guid.Empty)
+                    {
+                        computer.IsAssigned = false;
+                        computerHistory.Owner = String.Empty;
+                        computerHistory.Details = "Se Elimina Asignacion de usuario";
+                    }
+                    else
+                    {
+                        computer.IsAssigned = true;
+                        computer.EmployeeId = computerHistory.EmployeeId;
+                    }
+
 
                     _context.Update(computer);
 
