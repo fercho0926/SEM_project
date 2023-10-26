@@ -15,6 +15,7 @@
         Dar_De_Baja,
         Inactivar_Equipo,
         Actualización_De_Información,
-        Instalación_Software_Licencia
+        Instalación_Software_Licencia,
+        Eliminacion_Software_Licencia
     }
 }

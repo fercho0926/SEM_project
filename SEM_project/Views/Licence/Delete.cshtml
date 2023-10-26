@@ -1,0 +1,55 @@
+﻿@model SEM_project.Models.Entities.Licence
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<h1 style="color : #326091"><b>Inactivar licencia</b></h1>
+<hr />
+<h3 style="color : #326091"><b>¿Seguro desea inactivar esta licencia?</b></h3>
+
+<hr />
+
+    <hr />
+    <dl class="row">
+        @*<dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.ComputerId)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.ComputerId)
+    </dd>*@
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.LicenceName)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.LicenceName)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Version)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Version)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.IsActive)
+        </dd>
+       
+      
+
+    </dl>
+    
+  
+    <form asp-action="Delete">
+    <input type="hidden" asp-for="LicenceId" />
+        <div class="form-group">
+            <input type="submit" value="Inactivar" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+
+
+
+</>

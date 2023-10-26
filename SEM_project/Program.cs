@@ -5,17 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Configuration.AddSecretsManager(
-//    configurator: options =>
-//    {
-//        options.ConfigureSecretsManagerConfig(new AmazonSecretsManagerConfig());
-//        options.PollingInterval = TimeSpan.FromSeconds(10);
-//        options.SecretFilter = entry => entry.Name.Contains("Database");
-//    });
 
-//var connectionString = builder.Configuration.GetValue<string>("Dev_DatabaseConection");
 var connectionString =
-    "Server=P200583946\\SQLEXPRESS;Database=Sem_Database;Trusted_Connection=True;MultipleActiveResultSets=true; TrustServerCertificate=True";
+    "Server=EN2010480;Database=Sem_Database;Trusted_Connection=True;MultipleActiveResultSets=true; TrustServerCertificate=True";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -29,14 +21,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
-// Services dependencies
-//builder.Services.AddTransient<IDocumentService, DocumentService>();
 builder.Services.AddTransient<IMailService, MailService>();
 
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -44,7 +33,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

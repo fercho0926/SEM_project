@@ -84,7 +84,7 @@
                                     }
                                     | <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.ComputerId" title="Detalles"></a> |
                                     
-                                    @if (!item.Unsubscribed)
+                                        @if (!item.Unsubscribed)
                                     {
                                         <a class="fa fa-unlock-alt" asp-action="Delete" asp-route-id="@item.ComputerId" title="Inactivar"></a>
                                     }

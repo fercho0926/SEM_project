@@ -64,12 +64,17 @@
                                     <td>@Html.DisplayFor(modelItem => item.LicenceName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Version)</td>
-                   
+
                                     <!-- Add more columns for other properties as needed -->
                                     <td>
                                         <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.LicenceId" title="Editar"></a> |
-                                        <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.LicenceId" title="Detalles"></a> |
-                                        <a class="fa fa-unlock-alt" asp-action="Delete" asp-route-id="@item.LicenceId" title="Inactivar"></a>
+                                        <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.LicenceId" title="Detalles"></a>           |
+                                        @if (item.IsActive)
+                                        {
+
+                                            <a class="fa fa-unlock-alt" asp-action="Delete" asp-route-id="@item.LicenceId" title="Inactivar"></a>
+                                        }
+
                                     </td>
                                 </tr>
                             }

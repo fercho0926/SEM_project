@@ -31,7 +31,7 @@ namespace SEM_project.Controllers
         {
             var details = _context.Computer.Find(id);
 
-            var history = _context.ComputerHistory.Where(x => x.ComputerId == id).OrderByDescending(x => x.date)
+            var history = _context.ComputerHistory.Where(x => x.ComputerId == id).OrderBy(x => x.date)
                 .ToList();
 
             var licences = _context.ComputerToLicence.Where(x => x.ComputerId == id).Include(x => x.Licence).ToList();
@@ -348,7 +348,6 @@ namespace SEM_project.Controllers
 
                             if (!object.Equals(oldValue, newValue))
                             {
-
                                 switch (property.Name)
                                 {
                                     case "Processer":
@@ -377,9 +376,6 @@ namespace SEM_project.Controllers
 
                                         break;
                                 }
-
-
-
                             }
                         }
 
@@ -418,23 +414,33 @@ namespace SEM_project.Controllers
                 return NotFound();
             }
 
-            var users_App = await _context.Computer
+            var computer = await _context.Computer
                 .FirstOrDefaultAsync(m => m.ComputerId == id);
-            if (users_App == null)
+            if (computer == null)
             {
                 return NotFound();
             }
 
-            return View(users_App);
+            return View(computer);
         }
 
 
-        public async Task<IActionResult> DeleteLicencePerComputer(Guid licenceId)
+        public async Task<RedirectToActionResult> DeleteLicencePerComputer(Guid id)
         {
-            var todo = "asd";
+            var computerToLicence = await _context.ComputerToLicence.FindAsync(id);
+            _context.Remove(computerToLicence);
+
+            var license = await _context.Licence.FindAsync(computerToLicence.LicenceId);
 
 
-            return View(todo);
+            await AddComputerHistory(computerToLicence.ComputerId, (int)EnumAction.Eliminacion_Software_Licencia,
+                license.LicenceName);
+
+            await _context.SaveChangesAsync();
+
+            TempData["AlertMessage"] = "Se elimina licencia Correctamente";
+
+            return RedirectToAction("Details", "Computer", new { id = computerToLicence.ComputerId });
         }
 
 
@@ -454,6 +460,7 @@ namespace SEM_project.Controllers
             computer.IsActive = false;
 
             _context.Computer.Update(computer);
+            _context.SaveChangesAsync();
 
             await AddComputerHistory(id, (int)EnumAction.Inactivar_Equipo, "");
 

@@ -22,7 +22,6 @@ namespace SEM_project.Controllers
         }
 
 
-
         public ActionResult Create()
         {
             return View();
@@ -31,17 +30,16 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-    [Bind("LicenceName,Version, IsAssigned")]
+            [Bind("LicenceName,Version, IsAssigned")]
             Licence licence)
         {
-
             ModelState.Remove("Licences");
             ModelState.Remove("LicenceStatus");
 
             if (ModelState.IsValid)
             {
                 var licenceExist =
-          await _context.Licence.Where(x => x.LicenceName == licence.LicenceName).FirstOrDefaultAsync();
+                    await _context.Licence.Where(x => x.LicenceName == licence.LicenceName).FirstOrDefaultAsync();
                 if (licenceExist != null)
                 {
                     TempData["ErrorMessage"] =
@@ -51,7 +49,7 @@ namespace SEM_project.Controllers
 
 
                 licence.IsActive = true;
-                _context.Add(licence);  
+                _context.Add(licence);
                 await _context.SaveChangesAsync();
                 // Set a success message in TempData
                 TempData["AlertMessage"] = "Licencia Creada Correctamente";
@@ -59,7 +57,7 @@ namespace SEM_project.Controllers
                 // Redirect to the Index action if the model is valid
                 return RedirectToAction(nameof(Index));
             }
-            
+
 
             // Set an error message in TempData if model validation fails
             TempData["ErrorMessage"] = "No se creó licencia";
@@ -67,9 +65,6 @@ namespace SEM_project.Controllers
             // Redirect to the Index action in both success and error cases
             return RedirectToAction(nameof(Index));
         }
-
-
-
 
 
         public ActionResult Details(Guid id)
@@ -88,7 +83,6 @@ namespace SEM_project.Controllers
         public async Task<IActionResult> Edit(Guid? id)
 
         {
-
             var licence = await _context.Licence.FindAsync(id);
 
             if (licence == null)
@@ -97,19 +91,13 @@ namespace SEM_project.Controllers
             }
 
             return View(licence);
-
-
-
         }
-
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Licence licence)
         {
-
-
             if (id != licence.LicenceId)
             {
                 return NotFound();
@@ -124,9 +112,7 @@ namespace SEM_project.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-
                     return NotFound();
-
                 }
 
                 TempData["AlertMessage"] =
@@ -138,5 +124,41 @@ namespace SEM_project.Controllers
         }
 
 
+        // GET: Users_App/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var license = await _context.Licence
+                .FindAsync(id);
+            if (license == null)
+            {
+                return NotFound();
+            }
+
+            return View(license);
+        }
+
+
+        // POST: Users_App/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var licence = await _context.Licence.FindAsync(id);
+
+
+            licence.IsActive = false;
+
+            _context.Licence.Update(licence);
+            await _context.SaveChangesAsync();
+
+
+            TempData["AlertMessage"] = "Se ha realizado la Inactivación de la licencia";
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

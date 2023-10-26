@@ -118,7 +118,7 @@
                                                 <!-- <td>@(licence.Licence.IsActive ? "Active" : "Inactive")</td>-->
                                                 @if (!Model.Unsubscribed)
                                                 {
-                                                    <td><a class="fa fa-minus-square" aria-hidden="true" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.LicenceId" title="Remover"></a></td>
+                                                    <td><a class="fa fa-minus-square" aria-hidden="true" asp-action="DeleteLicencePerComputer" asp-route-id="@licence.ComputerToLicenceId" title="Remover"></a></td>
                                                 }
                                             </tr>
                                         }
