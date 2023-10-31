@@ -29,14 +29,28 @@ namespace SEM_project.Controllers
 
             var completed = _context.Users_App.FirstOrDefault(m => m.AspNetUserId == UserLogged);
 
-            if (completed == null) {
+            if (completed == null)
+            {
                 return RedirectToAction("Login", "Account", new { @mail = UserLogged });
-            }   
+            }
 
             if (completed.Identification == "")
             {
                 return RedirectToAction("EditByMail", "Users_App", new { @mail = UserLogged });
             }
+
+            var activeComputers = _context.Computer.Where(x => x.IsActive);
+            ViewBag.CountComputers = activeComputers.Count();
+
+
+            var activeEmployees = _context.Employee.Where(x => x.IsActive);
+            ViewBag.ActiveEmployees = activeEmployees.Count();
+
+            var activeLicenses = _context.Licence.Where(x => x.IsActive);
+            ViewBag.ActiveLicenses = activeLicenses.Count();
+
+            var unassignedComputers = _context.Computer.Where(x => x.IsAssigned == false);
+            ViewBag.UnassignedComputers = unassignedComputers.Count();
 
 
             return View();
