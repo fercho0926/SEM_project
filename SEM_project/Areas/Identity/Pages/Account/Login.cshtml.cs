@@ -1,19 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using SEM_project.Data;
 
 namespace SEM_project.Areas.Identity.Pages.Account
@@ -25,12 +19,12 @@ namespace SEM_project.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _context;
 
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, ApplicationDbContext context)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger,
+            ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
             _context = context;
-
         }
 
         /// <summary>
@@ -121,17 +115,20 @@ namespace SEM_project.Areas.Identity.Pages.Account
 
                 if (isactive.Any())
                 {
-
-                    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe,
+                        lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");
                         return LocalRedirect(returnUrl);
                     }
+
                     if (result.RequiresTwoFactor)
                     {
-                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                        return RedirectToPage("./LoginWith2fa",
+                            new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                     }
+
                     if (result.IsLockedOut)
                     {
                         _logger.LogWarning("User account locked out.");
@@ -143,8 +140,9 @@ namespace SEM_project.Areas.Identity.Pages.Account
                         return Page();
                     }
                 }
-                else {
-                    ModelState.AddModelError(string.Empty, "Usuario inactivo");
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Usuario inactivo ");
                     return Page();
                 }
             }

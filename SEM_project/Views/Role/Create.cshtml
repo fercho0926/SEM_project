@@ -47,6 +47,14 @@
                     <label class="custom-control-label" for="toggleLicences"></label>
                 </div>
             </div>
+             
+            <div class="form-group">
+                <label asp-for="HasEmployeePermissions" class="control-label">Funcionarios:</label>
+                <div class="custom-control custom-switch">
+                    <input asp-for="HasEmployeePermissions" class="custom-control-input" id="toggleEmployee" />
+                    <label class="custom-control-label" for="toggleEmployee"></label>
+                </div>
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
@@ -83,6 +91,7 @@
             var toggleComputers = document.getElementById("toggleComputers");
             var toggleSoftware = document.getElementById("toggleSoftware");
             var toggleLicences = document.getElementById("toggleLicences");
+            var toggleEmployee = document.getElementById("toggleEmployee");
 
             toggleAdmin.addEventListener("change", function () {
                 // Handle toggleAdmin change event
@@ -99,6 +108,10 @@
             toggleLicences.addEventListener("change", function () {
                 // Handle toggleLicences change event
             });
+            toggleEmployee.addEventListener("change", function () {
+                 Handle toggleEmployee change event
+            });
+
         });
     </script>
 }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Crear actividad";
 }
 
-<h3 style="color : #326091"><b>Nuevo Actividad</b></h3>
+<h3 style="color : #326091"><b>Nueva Actividad</b></h3>
 
 <hr />
 <div class="row">
@@ -62,14 +62,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Add your form or controls for changing the owner here -->
-                <!-- For example, you can use a dropdown to select a new owner -->
                 <div class="form-group">
-                    <label for="newOwner">Seleccion nuevo propietario:</label>
+                    <label for="newOwner">Eliminar Asignación:</label>
+                    <input type="checkbox" id="deleteAssignedUser" onchange="fnDeleteAssignedUser()" />
+                </div>
+                <div class="form-group" id="divOwner">
+                    <label for="newOwner">Seleccione nuevo propietario:</label>
                     <select id="newOwner" asp-items="ViewBag.EmployeeList" class="form-control">
                         <option value="">Seleccione un Usuario...</option>
                     </select>
                 </div>
+
+              
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -125,6 +129,24 @@
                 // Handle toggleLicences change event
             });
         });
+
+
+
+
+        function fnDeleteAssignedUser() {
+            var checkbox = document.getElementById("deleteAssignedUser");
+            var form = document.querySelector("form");
+
+            if (checkbox.checked) {
+                // Checkbox is checked, hide the div
+                form.action = "/Computer/deleteAssignedUser"; // Replace with your actual action URL
+
+
+            } else {
+                // Checkbox is unchecked, show the div
+                form.action = "/ControllerName/CreateActivity"; // Replace with your actual action URL
+            }
+        }
     </script>
     
     
@@ -145,7 +167,7 @@
             // Update the value in the owner input field
             ownerInput.value = newOwnerText;
             EmployeeId_new.value = selectedOption.value;
-            myAction.value = 7;
+            myAction.value = 9;
 
                 var selectElement = document.getElementById("myAction");
             selectElement.readOnly = true;

@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using System;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
@@ -64,19 +63,19 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-   </ul>
+            </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button" title="Expandir">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
                 <li class="nav-item">
                     <form class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></button>
+                        <button type="submit" class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" title="Logout"></button>
                     </form>
                 </li>
 
@@ -92,7 +91,7 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-       
+
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -105,79 +104,92 @@
                                 </p>
                             </a>
                         </li>
-                        
-                        <li class="nav-item">
-                            <a href="~/Employee/Index" class="nav-link">
-                                <i class="nav-icon ion-person-add"></i>
-                                <p>
-                                    Funcionarios
 
-                                </p>
-                            </a>
-                        </li>
-                        
+                        @* <li class="nav-item">
+                        <a href="~/Employee/Index" class="nav-link">
+                        <i class="nav-icon ion-person-add"></i>
+                        <p>
+                        Funcionarios
 
-                        @if (User.HasClaim("Permission", "Computer"))
-                    {
-                        <li class="nav-item">
-                            <a href="~/Computer/Index" class="nav-link">
-                                <i class="nav-icon ion-person-add"></i>
-                                <p>
-                                    Equipos
-
-                                </p>
-                            </a>
-                        </li>
-                    }
-                        @if (User.HasClaim("Permission", "Software"))
+                        </p>
+                        </a>
+                        </li>*@
+                        @if (User.HasClaim("Permission", "Employee"))
                         {
                             <li class="nav-item">
-                                <a href="~/Balance/Packages" class="nav-link">
-                                    <i class="nav-icon ion-social-usd-outline"></i>
+                                <a href="~/Employee/Index" class="nav-link">
+                                    <i class="nav-icon fa fa-users" aria-hidden="true"></i>
                                     <p>
-                                        software
+                                        Funcionarios
+                                        <span class="right badge badge-danger"></span>
                                     </p>
                                 </a>
                             </li>
                         }
+
+                        @if (User.HasClaim("Permission", "Computer"))
+                        {
+                            <li class="nav-item">
+                                <a href="~/Computer/Index" class="nav-link">
+                                    <i class="nav-icon fa fa-laptop" aria-hidden="true"></i>
+                                    <p>
+                                        Equipos
+
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @*    @if (User.HasClaim("Permission", "Software"))
+                        {
+                        <li class="nav-item">
+                        <a href="~/Balance/Packages" class="nav-link">
+                        <i class="nav-icon fa fa-laptop" aria-hidden="true" ></i>
+                        <p>
+                        software
+                        </p>
+                        </a>
+                        </li>
+                        } *@
                         @if (User.HasClaim("Permission", "Licence"))
                         {
                             <li class="nav-item">
-                                <a href="~/Balance/EmergencyFund" class="nav-link">
-                                    <i class="nav-icon ion-social-euro-outline"></i>
+                                <a href="~/Licence/Index" class="nav-link">
+                                    <i class="fa fa-id-card" aria-hidden="true"></i>
                                     <p>
-                                        Licencias
-                                        <span class="right badge badge-danger">New</span>
+                                        Software
+                                        <span class="right badge badge-danger">Licencias</span>
                                     </p>
                                 </a>
                             </li>
                         }
-                      @if (User.HasClaim("Permission", "Admin"))
+
+                   
+                        @if (User.HasClaim("Permission", "Admin"))
                         {
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Administrar
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="~/Users_App/Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Usuarios</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Administrar
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="~/Users_App/Index" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Usuarios</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="~/Role/Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Roles</p>
-                                    </a>
-                                </li>
-                              
-                            </ul>
-                        </li>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Roles</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
                         }
 
                     </ul>
@@ -329,17 +341,25 @@
     });
     </script>*@
     <script type="text/javascript">
-        $(function() {
+
+        $("#table1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
+
+        $(function () {
             $("#table").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');  
 
         });
 
+        
 
-        $(function() {
-            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+
+        $(function () {
+            $(document).on('click', '[data-toggle="lightbox"]', function (event) {
                 event.preventDefault();
                 $(this).ekkoLightbox({
                     alwaysShowClose: true
@@ -347,7 +367,7 @@
             });
 
             $('.filter-container').filterizr({ gutterPixels: 3 });
-            $('.btn[data-filter]').on('click', function() {
+            $('.btn[data-filter]').on('click', function () {
                 $('.btn[data-filter]').removeClass('active');
                 $(this).addClass('active');
             });

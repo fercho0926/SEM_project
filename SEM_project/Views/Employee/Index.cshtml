@@ -32,10 +32,10 @@
 
 </style>
 
-<h1 style="color : #326091"><b>Empleados</b></h1>
+<h1 style="color : #326091"><b>Funcionarios</b></h1>
 
 <p>
-    <a asp-action="Create">Crear Nuevo</a>
+    <a asp-action="Create">Crear Nuevo Funcionario</a>
 </p>
 
 <!-- Main content -->
@@ -48,9 +48,15 @@
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                             <tr class="thNew">
-                                <th>@Html.DisplayNameFor(model => model.EmployeeId)</th>
+                                <!-- <th>@Html.DisplayNameFor(model => model.EmployeeId)</th>-->
                                 <th>@Html.DisplayNameFor(model => model.EmployeeName)</th>
                                 <th>@Html.DisplayNameFor(model => model.IDNumber)</th>
+                                <!-- <th>@Html.DisplayNameFor(model => model.AssignedEquipmentPlate)</th>-->
+                                <th>@Html.DisplayNameFor(model => model.EnumPosition)</th>
+                                <th>@Html.DisplayNameFor(model => model.EnumAffiliation)</th>
+                                <th>@Html.DisplayNameFor(model => model.EnumSubdepartment)</th>
+                                <th>@Html.DisplayNameFor(model => model.EnumWorkGroup)</th>
+                                <!--<th>@Html.DisplayNameFor(model => model.IsActive)</th>-->
                                 <!-- Add more headers for other properties as needed -->
                                 <th>Acciones</th>
                             </tr>
@@ -59,14 +65,20 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
+                                    <!-- <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>-->
                                     <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
+                                    <!-- <td>@Html.DisplayFor(modelItem => item.AssignedEquipmentPlate)</td>-->
+                                    <td>@Html.DisplayFor(modelItem => item.EnumPosition)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.EnumAffiliation)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.EnumSubdepartment)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.EnumWorkGroup)</td>
+                                    <!--  <td>@Html.DisplayFor(modelItem => item.IsActive)</td>-->
                                     <!-- Add more columns for other properties as needed -->
                                     <td>
-                                        <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.EmployeeId"></a> |
-                                        <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.EmployeeId"></a> |
-                                        <a class="fa fa-trash" asp-action="Delete" asp-route-id="@item.EmployeeId"></a>
+                                        <a class="fa fa-pencil-alt" asp-action="Edit" asp-route-id="@item.EmployeeId" title="Editar"></a> |
+                                        <a class="fa fa-eye" asp-action="Details" asp-route-id="@item.EmployeeId" title="Detalles"></a> |
+                                        <a class="fa fa-unlock-alt" asp-action="Delete" asp-route-id="@item.EmployeeId" title="Inactivar"></a>
                                     </td>
                                 </tr>
                             }

@@ -1,0 +1,188 @@
+﻿
+@model SEM_project.Models.Entities.Licence
+@{
+    ViewData["Title"] = "Crear actividad";
+}
+
+<h3 style="color : #326091"><b>Nuevo Licencia</b></h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateActivity">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LicenceId" />
+            <input type="hidden" asp-for="LicenceId" id="LicenceId_new" />
+
+
+            <div class="form-group" id="divLicencia">
+                <label for="newOwner">Seleccion:</label>
+                <select id="newOwner" asp-items="ViewBag.LicenceList" class="form-control">
+                    <option value="">Seleccione una Licencia...</option>
+                </select>
+            </div>
+
+
+@*             <div class="form-group">
+                <label asp-for="Owner" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Owner" class="form-control" readOnly="true" id="ownerInput" />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeOwnerModal">
+                            Cambiar
+                        </button>
+                    </div>
+                </div>
+                <span asp-validation-for="Owner" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Action" class="control-label">Accion:</label>
+                <select asp-for="Action" asp-items="Html.GetEnumSelectList<EnumAction>()" class="form-control" id="myAction">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="Action" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Details" class="control-label"></label>
+                <textarea asp-for="Details" class="form-control" rows="5" id ="details"></textarea>
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div> *@
+
+            
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@* <!-- Modal for changing owner -->
+<div class="modal fade" id="changeOwnerModal" tabindex="-1" role="dialog" aria-labelledby="changeOwnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeOwnerModalLabel">Cambiar propietario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newOwner">Eliminar Asignacion:</label>
+                    <input type="checkbox" id="deleteAssignedUser" onchange="fnDeleteAssignedUser()" />
+                </div>
+                <div class="form-group" id="divOwner">
+                    <label for="newOwner">Seleccion nuevo propietario:</label>
+                    <select id="newOwner" asp-items="ViewBag.EmployeeList" class="form-control">
+                        <option value="">Seleccione un Usuario...</option>
+                    </select>
+                </div>
+
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveOwnerButton">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index" class="back-button">
+        <span>&#8592;</span> Regresar
+    </a>
+</div>
+<style>
+    /* Custom styles for the toggle switch */
+    .custom-switch .custom-control-label::before {
+        background-color: #6c757d; /* Color when the toggle is ON (green) */
+    }
+
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #28a745; /* Color when the toggle is OFF (gray) */
+    }
+
+    .custom-switch .custom-control-label::after {
+        background-color: #fff; /* Color of the toggle knob */
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // JavaScript to handle toggle switch functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            var toggleAdmin = document.getElementById("toggleAdmin");
+            var toggleComputers = document.getElementById("toggleComputers");
+            var toggleSoftware = document.getElementById("toggleSoftware");
+            var toggleLicences = document.getElementById("toggleLicences");
+
+            toggleAdmin.addEventListener("change", function () {
+                // Handle toggleAdmin change event
+            });
+
+            toggleComputers.addEventListener("change", function () {
+                // Handle toggleComputers change event
+            });
+
+            toggleSoftware.addEventListener("change", function () {
+                // Handle toggleSoftware change event
+            });
+
+            toggleLicences.addEventListener("change", function () {
+                // Handle toggleLicences change event
+            });
+        });
+
+
+
+
+        function fnDeleteAssignedUser() {
+            var checkbox = document.getElementById("deleteAssignedUser");
+            var form = document.querySelector("form");
+
+            if (checkbox.checked) {
+                // Checkbox is checked, hide the div
+                form.action = "/ControllerName/deleteAssignedUser"; // Replace with your actual action URL
+
+
+            } else {
+                // Checkbox is unchecked, show the div
+                form.action = "/ControllerName/CreateActivity"; // Replace with your actual action URL
+            }
+        }
+    </script>
+    
+    
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get references to elements
+        var ownerInput = document.getElementById("ownerInput");
+        var newOwnerSelect = document.getElementById("newOwner");
+        var saveOwnerButton = document.getElementById("saveOwnerButton");
+
+        // Add an event listener to the "Continuar" button
+        saveOwnerButton.addEventListener("click", function () {
+            // Get the selected option's text (new owner)
+            var selectedOption = newOwnerSelect.options[newOwnerSelect.selectedIndex];
+            var newOwnerText = selectedOption.text;
+
+            // Update the value in the owner input field
+            ownerInput.value = newOwnerText;
+            EmployeeId_new.value = selectedOption.value;
+            myAction.value = 9;
+
+                var selectElement = document.getElementById("myAction");
+            selectElement.readOnly = true;
+            // Close the modal
+            $('#changeOwnerModal').modal('hide');
+        });
+    });
+</script>
+ *@
+

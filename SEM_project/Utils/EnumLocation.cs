@@ -2,6 +2,7 @@
 {
     public enum EnumLocation
     {
+        NA,
         Bulevar,
         Carre
     }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Nuevo Empleado";
 }
 
-<h3 style="color : #326091"><b>Nuevo Empleado</b></h3>
+<h3 style="color : #326091"><b>Nuevo Funcionario</b></h3>
 
 <hr />
 <div class="row">
@@ -13,7 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="EmployeeName" class="control-label">Nombre del Empleado:</label>
+                <label asp-for="EmployeeName" class="control-label">Nombre del Funcionario:</label>
                 <input asp-for="EmployeeName" class="form-control" />
                 <span asp-validation-for="EmployeeName" class="text-danger"></span>
             </div>
@@ -22,13 +22,6 @@
                 <input asp-for="IDNumber" class="form-control" />
                 <span asp-validation-for="IDNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label">Fecha:</label>
-                <input asp-for="Date" type="date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-           
-            
             <div class="form-group">
                 <label asp-for="EnumPosition" class="control-label">Cargo:</label>
                 <select asp-for="EnumPosition" asp-items="Html.GetEnumSelectList<EnumPosition>()" class="form-control">
@@ -66,7 +59,7 @@
             </div>       
             
             <div class="form-group">
-                <label asp-for="EnumWorkGroup" class="control-label">Subsecretaria:</label>
+                <label asp-for="EnumWorkGroup" class="control-label">Grupo de trabajo:</label>
                 <select asp-for="EnumWorkGroup" asp-items="Html.GetEnumSelectList<EnumWorkGroup>()" class="form-control">
                     <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
                 </select>
@@ -74,33 +67,25 @@
             </div>
      
 
-       @*      <div class="form-group">
-                <label asp-for="WorkGroup" class="control-label">Grupo Trabajo:</label>
-                <input asp-for="WorkGroup" class="form-control" />
-                <span asp-validation-for="WorkGroup" class="text-danger"></span>
-            </div> *@
+ 
             <div class="form-group">
-                <label asp-for="AssignedEquipmentPlate" class="control-label">PLACA DEL EQUIPO ASIGNADO:</label>
-                <input asp-for="AssignedEquipmentPlate" class="form-control" />
-                <span asp-validation-for="AssignedEquipmentPlate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhonePlate" class="control-label">placa de telefono:</label>
+                <label asp-for="PhonePlate" class="control-label"></label>
                 <input asp-for="PhonePlate" class="form-control" />
                 <span asp-validation-for="PhonePlate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneModel" class="control-label">modelo de telefono:</label>
+                <label asp-for="PhoneModel" class="control-label">modelo de teléfono:</label>
                 <input asp-for="PhoneModel" class="form-control" />
                 <span asp-validation-for="PhoneModel" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PhoneSerial" class="control-label">serial del telefono:</label>
+           @* <div class="form-group">
+                <label asp-for="PhoneSerial" class="control-label">serial del teléfono:</label>
                 <input asp-for="PhoneSerial" class="form-control" />
                 <span asp-validation-for="PhoneSerial" class="text-danger"></span>
-            </div>
+            </div>*@
+            
             <div class="form-group">
-                <label asp-for="PhoneExtension" class="control-label">extension de telefono:</label>
+                <label asp-for="PhoneExtension" class="control-label">extensión de teléfono:</label>
                 <input asp-for="PhoneExtension" class="form-control" />
                 <span asp-validation-for="PhoneExtension" class="text-danger"></span>
             </div>
@@ -109,11 +94,12 @@
                 <textarea asp-for="Observations" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Observations" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="PersonalEquipment" class="control-label">equipo personal:</label>
-                <input asp-for="PersonalEquipment" type="checkbox" class="form-check-input" />
+                <input type="checkbox" asp-for="PersonalEquipment" class="form-check" />
                 <span asp-validation-for="PersonalEquipment" class="text-danger"></span>
-            </div>
+            </div>*@
+                                        
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>

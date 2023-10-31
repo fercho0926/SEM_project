@@ -1,10 +1,15 @@
-﻿namespace SEM_project.Utils
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SEM_project.Utils
 {
     public enum EnumAffiliation
     {
-        CarreraAdministrativa,
+        [Display(Name = "Carrera Administrativa")]
+        Carrera_Administrativa,
         Provisional,
         Contratista,
-        LibreRemocionYNombramiento
+        [Display(Name = "Libre remoción y nombramiento")]
+        Libre_Remocion_Y_Nombramiento,
+        NA
     }
 }

@@ -2,7 +2,6 @@
 using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Newtonsoft.Json.Linq;
 
 
 namespace SEM_project.Services

@@ -35,7 +35,7 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="HasSoftwarePermissions" class="control-label">Software:</label>
+                <label asp-for="HasSoftwarePermissions" class="control-label">Dashboard:</label>
                 <div class="custom-control custom-switch">
                     <input asp-for="HasSoftwarePermissions" class="custom-control-input" id="toggleSoftware" />
                     <label class="custom-control-label" for="toggleSoftware"></label>
@@ -47,6 +47,14 @@
                 <div class="custom-control custom-switch">
                     <input asp-for="HasLicensesPermissions" class="custom-control-input" id="toggleLicences" />
                     <label class="custom-control-label" for="toggleLicences"></label>
+                </div>
+            </div>
+            
+                        <div class="form-group">
+                <label asp-for="HasEmployeePermissions" class="control-label">Funcionarios:</label>
+                <div class="custom-control custom-switch">
+                    <input asp-for="HasEmployeePermissions" class="custom-control-input" id="toggleEmployee" />
+                    <label class="custom-control-label" for="toggleEmployee"></label>
                 </div>
             </div>
 
@@ -75,6 +83,7 @@
             var toggleComputers = document.getElementById("toggleComputers");
             var toggleSoftware = document.getElementById("toggleSoftware");
             var toggleLicences = document.getElementById("toggleLicences");
+           // var toggleEmployee = document.getElementById("toggleEmployee");
 
             toggleAdmin.addEventListener("change", function () {
                 // Handle toggleAdmin change event
@@ -91,6 +100,7 @@
             toggleLicences.addEventListener("change", function () {
                 // Handle toggleLicences change event
             });
+           
         });
     </script>
 }
