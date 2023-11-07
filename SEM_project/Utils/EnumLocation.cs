@@ -4,6 +4,7 @@
     {
         NA,
         Bulevar,
-        Carre
+        Carre,
+        ViveroSf
     }
 }

@@ -49,7 +49,7 @@ namespace SEM_project.Controllers
             var activeLicenses = _context.Licence.Where(x => x.IsActive);
             ViewBag.ActiveLicenses = activeLicenses.Count();
 
-            var unassignedComputers = _context.Computer.Where(x => x.IsAssigned == false);
+            var unassignedComputers = _context.Computer.Where(x => x.IsAssigned == false && x.IsActive);
             ViewBag.UnassignedComputers = unassignedComputers.Count();
 
 
