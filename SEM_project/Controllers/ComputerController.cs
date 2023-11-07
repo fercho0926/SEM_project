@@ -177,7 +177,7 @@ namespace SEM_project.Controllers
                     {
                         computer.IsAssigned = false;
                         computerHistory.Owner = String.Empty;
-                        computerHistory.Details = "Se Elimina Asignacion de usuario";
+                        computerHistory.Details = "Se Elimina Asignación de usuario";
                     }
                     else
                     {
@@ -285,7 +285,7 @@ namespace SEM_project.Controllers
                     Owner = "",
                     Action = (int)EnumAction.Creación_Inicial,
                     Performer = userAuth.Identity.Name,
-                    Details = ""
+                    Details = "Creación inicial"
                 };
                 _context.Add(newComputerHistory);
                 await _context.SaveChangesAsync();
@@ -443,11 +443,11 @@ namespace SEM_project.Controllers
             _context.Remove(computerToLicence);
 
             var license = await _context.Licence.FindAsync(computerToLicence.LicenceId);
-
+            
 
             await AddComputerHistory(computerToLicence.ComputerId, (int)EnumAction.Eliminacion_Software_Licencia,
                 license.LicenceName);
-
+            
             await _context.SaveChangesAsync();
 
             TempData["AlertMessage"] = "Se elimina licencia Correctamente";

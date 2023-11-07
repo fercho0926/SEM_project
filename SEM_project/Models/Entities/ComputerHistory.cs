@@ -11,7 +11,7 @@ namespace SEM_project.Models.Entities
 
         public int Action { get; set; }
         public string? Performer { get; set; }
-        public string? Details { get; set; }
+        [Display(Name = "Detalles")] public string? Details { get; set; }
         public Guid EmployeeId { get; set; }
     }
 }

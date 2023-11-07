@@ -21,10 +21,10 @@ namespace SEM_project.Models.Entities
         [Display(Name = "Subsecretaría")] public EnumSubdepartment EnumSubdepartment { get; set; }
         [Display(Name = "Grupo de trabajo")] public EnumWorkGroup EnumWorkGroup { get; set; }
        
-        [Display(Name = "Placa")][MaxLength(10)] public string? AssignedEquipmentPlate { get; set; }
+        [Display(Name = "campo_pendiente latitud")][MaxLength(10)] public string? AssignedEquipmentPlate { get; set; }
         [Display(Name = "Placa de teléfono")][MaxLength(9)] public string? PhonePlate { get; set; }
         [Display(Name = "Modelo Teléfono")] public string? PhoneModel { get; set; }
-        [Display(Name = "campo_pendiente")] public string? PhoneSerial { get; set; }
+        [Display(Name = "campo_pendiente longitud")] public string? PhoneSerial { get; set; }
         [Display(Name = "Extensión")] public string? PhoneExtension { get; set; }
         [Display(Name = "Observaciones")] public string? Observations { get; set; }
         [Display(Name = "Equipo personal")] public bool PersonalEquipment { get; set; }
