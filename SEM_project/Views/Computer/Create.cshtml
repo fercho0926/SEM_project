@@ -1,4 +1,5 @@
-﻿@model SEM_project.Models.Entities.Computer
+﻿@using SEM_project.Utils;
+@model SEM_project.Models.Entities.Computer
 @{
     ViewData["Title"] = "Nuevo Equipo";
 }
@@ -51,6 +52,26 @@
                 <label asp-for="Model" class="control-label">Tipo de Equipo</label>
                 <input asp-for="Model" class="form-control" />
                 <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationName" class="control-label">Sede:</label>
+                <select asp-for="LocationName" asp-items="Html.GetEnumSelectList<EnumLocation>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="LocationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationFloor" class="control-label">Piso:</label>
+                <select asp-for="LocationFloor" asp-items="Html.GetEnumSelectList<EnumFloor>()" class="form-control">
+                    <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
+                </select>
+                <span asp-validation-for="LocationFloor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Value" class="control-label">Valor</label>
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
             </div>
 
             <div class="form-group">

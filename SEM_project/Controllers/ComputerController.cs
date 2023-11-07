@@ -245,7 +245,7 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model")]
+            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model, LocationName, LocationFloor, Value")]
             Computer computer)
         {
             // Remove the existing validation state for these properties if it exists
@@ -265,6 +265,62 @@ namespace SEM_project.Controllers
                         "Equipo ya existe."; // You can use TempData to show success messages.
                     return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
                 }
+                var name = "";
+                var latitud = 0.0m;
+                var longitud = 0.0m;
+               switch (computer.LocationName) {
+                    case "0":
+                        name = "NA";
+                            break;
+                    case "1":
+                        name = "Bulevar";
+                        latitud = 6.24537173186433m;
+                        longitud = -75.5711242481222m;
+                        break;
+                    case "2":
+                        name = "Carre";
+                        latitud = 6.24597m;
+                        longitud = -75.57139m;
+                        break;
+                    case "3":
+                        name = "ViveroSf";
+                        latitud = 6.2092220071554705m;
+                        longitud = -75.57759124759058m;
+                        break;
+                }
+
+
+                var floor = "";
+                switch (computer.LocationFloor)
+                {
+                    case "0":
+                        floor = "Primero";
+                        break;
+                    case "1":
+                        floor = "Segundo";
+                        break;
+                    case "2":
+                        floor = "Tercero";
+                        break;
+                    case "3":
+                        floor = "Cuarto";
+                        break; 
+                    case "4":
+                        floor = "Quinto";
+                        break;
+                    case "5":
+                        floor = "Quinto";
+                        break;
+                    case "6":
+                        floor = "NA";
+                        break;
+                }
+                computer.LocationName = name;
+                computer.LocationFloor = floor;
+                computer.Latitud = latitud;
+                computer.Longitud = longitud;
+
+
 
 
                 var employee = _context.Employee.Find(computer.EmployeeId);
