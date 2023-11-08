@@ -7,6 +7,7 @@ using SEM_project.Utils;
 using System.Drawing;
 using SEM_project.Models;
 using System.Text;
+using System.Globalization;
 
 namespace SEM_project.Controllers
 {
@@ -101,8 +102,10 @@ namespace SEM_project.Controllers
 
                 var licenceName = await _context.Licence.FindAsync(licence.LicenceId);
 
+                var licenceWithDetail = $"Instalacion {licenceName.LicenceName}";
+
                 await AddComputerHistory(licence.ComputerId, (int)EnumAction.Instalación_Software_Licencia,
-                    licenceName.LicenceName);
+                   licenceWithDetail);
 
                 TempData["AlertMessage"] = "Licencia Asignada Correctamente";
             }
@@ -224,23 +227,7 @@ namespace SEM_project.Controllers
         }
 
 
-        //// POST: ComputerController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        // POST: Users_App/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
+    
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -252,6 +239,15 @@ namespace SEM_project.Controllers
             ModelState.Remove("ComputerHistory");
             ModelState.Remove("InstaledApplications");
             ModelState.Remove("Licences");
+            ModelState.Remove("Latitud");
+            ModelState.Remove("Longitud");
+
+
+
+
+            CultureInfo culture = new CultureInfo("es-ES"); 
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             if (ModelState.IsValid)
             {
@@ -266,8 +262,10 @@ namespace SEM_project.Controllers
                     return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
                 }
                 var name = "";
-                var latitud = 0.0m;
-                var longitud = 0.0m;
+                var latitud = 0m;
+                var longitud = 0m;
+                string latitudFormateado = "";
+                string longitudFormateado = "";
                switch (computer.LocationName) {
                     case "0":
                         name = "NA";
@@ -315,18 +313,22 @@ namespace SEM_project.Controllers
                         floor = "NA";
                         break;
                 }
+
+
+                latitudFormateado = latitud.ToString(new CultureInfo("es-ES"));
+                longitudFormateado = longitud.ToString(new CultureInfo("es-ES"));
+
+
                 computer.LocationName = name;
                 computer.LocationFloor = floor;
-                computer.Latitud = latitud;
-                computer.Longitud = longitud;
+                computer.Latitud = latitudFormateado;
+                computer.Longitud = longitudFormateado;
 
 
 
 
                 var employee = _context.Employee.Find(computer.EmployeeId);
-                //computer.InstaledApplications = "m";
                 computer.ComputerHistory = new List<ComputerHistory>();
-                //computer.Licences = "null";
                 computer.IsActive = true;
                 _context.Add(computer);
                 await _context.SaveChangesAsync();
@@ -499,10 +501,13 @@ namespace SEM_project.Controllers
             _context.Remove(computerToLicence);
 
             var license = await _context.Licence.FindAsync(computerToLicence.LicenceId);
-            
+
+
+
+            var licenceWithDetail = $"Eliminacion {license.LicenceName}";
 
             await AddComputerHistory(computerToLicence.ComputerId, (int)EnumAction.Eliminacion_Software_Licencia,
-                license.LicenceName);
+                licenceWithDetail);
             
             await _context.SaveChangesAsync();
 

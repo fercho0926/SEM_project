@@ -31,8 +31,8 @@ namespace SEM_project.Models.Entities
         //public Employee? Employee { get; set; }
         public IEnumerable<ComputerHistory>? ComputerHistory { get; set; }
         public IEnumerable<ComputerToLicence>? ComputerToLicence { get; set; }
-        public decimal Latitud { get; set; }
-        public decimal Longitud { get; set; }
+        public string Latitud { get; set; }
+        public string Longitud { get; set; }
         public string LocationName { get; set; }
         public string LocationFloor { get; set; }
         public float Value { get; set; }
