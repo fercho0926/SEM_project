@@ -262,8 +262,8 @@ namespace SEM_project.Controllers
                     return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
                 }
                 var name = "";
-                var latitud = 0m;
-                var longitud = 0m;
+                var latitud = 0d;
+                var longitud = 0d;
                 string latitudFormateado = "";
                 string longitudFormateado = "";
                switch (computer.LocationName) {
@@ -272,18 +272,18 @@ namespace SEM_project.Controllers
                             break;
                     case "1":
                         name = "Bulevar";
-                        latitud = 6.24537173186433m;
-                        longitud = -75.5711242481222m;
+                        latitud = 6.24537173186433d;
+                        longitud = -75.5711242481222d;
                         break;
                     case "2":
                         name = "Carre";
-                        latitud = 6.24597m;
-                        longitud = -75.57139m;
+                        latitud = 6.24597d;
+                        longitud = -75.57139d;
                         break;
                     case "3":
                         name = "ViveroSf";
-                        latitud = 6.2092220071554705m;
-                        longitud = -75.57759124759058m;
+                        latitud = 6.2092220071554705d;
+                        longitud = -75.57759124759058d;
                         break;
                 }
 
@@ -321,8 +321,8 @@ namespace SEM_project.Controllers
 
                 computer.LocationName = name;
                 computer.LocationFloor = floor;
-                computer.Latitud = latitudFormateado;
-                computer.Longitud = longitudFormateado;
+                computer.Latitud = latitud;
+                computer.Longitud = longitud;
 
 
 
