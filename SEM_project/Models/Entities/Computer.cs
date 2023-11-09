@@ -33,8 +33,8 @@ namespace SEM_project.Models.Entities
         public IEnumerable<ComputerToLicence>? ComputerToLicence { get; set; }
         public double Latitud { get; set; }
         public double Longitud { get; set; }
-        public string LocationName { get; set; }
-        public string LocationFloor { get; set; }
+        [Display(Name = "Sede")] public string LocationName { get; set; }
+        [Display(Name = "Piso")] public string LocationFloor { get; set; }
         public float Value { get; set; }
 
     }

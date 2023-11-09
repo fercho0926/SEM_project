@@ -74,7 +74,7 @@
             </div>
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-dark">
                     <div class="inner">
                         <h3>@ViewBag.UnassignedComputers</h3>
 
@@ -93,6 +93,22 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
+                        <h3>@ViewBag.UnsubscribedComputers</h3>
+
+                        <p>Dados de baja</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-chevron-down"></i>
+                    </div>
+                    @*                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    *@
+                </div>
+            </div>
+                       
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-secondary">
+                    <div class="inner">
                         <div class="container">
                         </div>
 
@@ -103,28 +119,30 @@
                     </div>
                     <a href="https://app.powerbi.com/reportEmbed?reportId=195be172-c9c3-4014-95e3-9952e8e18d5c&autoAuth=true&ctid=9c48e088-5e44-4b0d-93a0-eeb2c6127c3d" class="small-box-footer">Ver más información <i class="fas fa-arrow-circle-right"></i></a>
 
-                </div>
-
-                <div class="small-box bg-info">
-                    <iframe title="mapa_sedes" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=7ec66914-f81b-4f16-ad27-95905286710f&autoAuth=true&ctid=9c48e088-5e44-4b0d-93a0-eeb2c6127c3d" frameborder="0" allowFullScreen="true"></iframe>
-                </div>
+               </div>
+               
+                
             </div>
             <!-- ./col -->
 
         </div>
+
+        <div class="embed-responsive embed-responsive-21by9">
+            <iframe title="V1_datasem_ppal" width="1140" height="541" src="https://app.powerbi.com/reportEmbed?reportId=a571b27a-ed1f-4ffc-859f-e6df523989c4&autoAuth=true&ctid=9c48e088-5e44-4b0d-93a0-eeb2c6127c3d" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
-        
+            
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
             <section class="col-lg-5 connectedSortable">
 
                 <!-- Map card -->
                 <div class="card bg-gradient-primary">
 
-
+                    
                     <!-- /.card-body-->
-                    <div class="card-footer bg-transparent">
+                   @* <div class="card-footer bg-transparent">
                         <div class="row">
                             <div class="col-4 text-center">
                                 <div id="sparkline-1"></div>
@@ -188,7 +206,7 @@
                                        data-fgColor="#39CCCC">
 
                                 <div class="text-white">Sin Asignar</div>
-                            </div>
+                    </div>*@
                             <!-- ./col -->
                         </div>
                         <!-- /.row -->
@@ -201,6 +219,6 @@
             <!-- right col -->
         </div>
         <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
+                    </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->

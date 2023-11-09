@@ -102,7 +102,7 @@ namespace SEM_project.Controllers
 
                 var licenceName = await _context.Licence.FindAsync(licence.LicenceId);
 
-                var licenceWithDetail = $"Instalacion {licenceName.LicenceName}";
+                var licenceWithDetail = $"Instalación {licenceName.LicenceName}";
 
                 await AddComputerHistory(licence.ComputerId, (int)EnumAction.Instalación_Software_Licencia,
                    licenceWithDetail);
@@ -262,8 +262,8 @@ namespace SEM_project.Controllers
                     return RedirectToAction(nameof(Index)); // Redirect to the employee list view.
                 }
                 var name = "";
-                var latitud = 0d;
-                var longitud = 0d;
+                var latitud = 0f;
+                var longitud = 0f;
                 string latitudFormateado = "";
                 string longitudFormateado = "";
                switch (computer.LocationName) {
@@ -272,18 +272,18 @@ namespace SEM_project.Controllers
                             break;
                     case "1":
                         name = "Bulevar";
-                        latitud = 6.24537173186433d;
-                        longitud = -75.5711242481222d;
+                        latitud = 6.24537173186433f;
+                        longitud = -75.5711242481222f;
                         break;
                     case "2":
                         name = "Carre";
-                        latitud = 6.24597d;
-                        longitud = -75.57139d;
+                        latitud = 6.24597f;
+                        longitud = -75.57139f;
                         break;
                     case "3":
                         name = "ViveroSf";
-                        latitud = 6.2092220071554705d;
-                        longitud = -75.57759124759058d;
+                        latitud = 6.2092220071554705f;
+                        longitud = -75.57759124759058f;
                         break;
                 }
 
@@ -504,7 +504,7 @@ namespace SEM_project.Controllers
 
 
 
-            var licenceWithDetail = $"Eliminacion {license.LicenceName}";
+            var licenceWithDetail = $"Eliminación Licencia {license.LicenceName}";
 
             await AddComputerHistory(computerToLicence.ComputerId, (int)EnumAction.Eliminacion_Software_Licencia,
                 licenceWithDetail);

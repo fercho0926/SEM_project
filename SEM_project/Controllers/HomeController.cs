@@ -39,7 +39,7 @@ namespace SEM_project.Controllers
                 return RedirectToAction("EditByMail", "Users_App", new { @mail = UserLogged });
             }
 
-            var activeComputers = _context.Computer.Where(x => x.IsActive);
+            var activeComputers = _context.Computer.Where(x => x.IsActive== true && x.Unsubscribed == false);
             ViewBag.CountComputers = activeComputers.Count();
 
 
@@ -49,9 +49,11 @@ namespace SEM_project.Controllers
             var activeLicenses = _context.Licence.Where(x => x.IsActive);
             ViewBag.ActiveLicenses = activeLicenses.Count();
 
-            var unassignedComputers = _context.Computer.Where(x => x.IsAssigned == false && x.IsActive);
+            var unassignedComputers = _context.Computer.Where(x => x.IsAssigned == false && x.IsActive==true);
             ViewBag.UnassignedComputers = unassignedComputers.Count();
 
+            var UnsubscribedComputers = _context.Computer.Where(x => x.Unsubscribed == false && x.IsActive==false);
+            ViewBag.UnsubscribedComputers = UnsubscribedComputers.Count();
 
             return View();
         }
