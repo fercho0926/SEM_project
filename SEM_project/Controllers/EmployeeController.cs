@@ -216,7 +216,7 @@ namespace SEM_project.Controllers
                 Owner = employee.EmployeeName, // GET THE NAME
                 Action = (int)EnumAction.Asignación_Equipo,
                 Performer = userAuth.Identity.Name,
-                Details = "",
+                Details = "Asignación_Equipo",
                 EmployeeId = employeeId
             };
             _context.Add(newComputerHistory);
