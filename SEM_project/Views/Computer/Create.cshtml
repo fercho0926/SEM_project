@@ -54,11 +54,11 @@
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LocationName" class="control-label">Sede:</label>
-                <select asp-for="LocationName" asp-items="Html.GetEnumSelectList<EnumLocation>()" class="form-control">
+                <label asp-for="EnumLocation" class="control-label">Sede:</label>
+                <select asp-for="EnumLocation" asp-items="Html.GetEnumSelectList<EnumLocation>()" class="form-control">
                     <option value="">Seleccione...</option> <!-- Add this line for an empty option -->
                 </select>
-                <span asp-validation-for="LocationName" class="text-danger"></span>
+                <span asp-validation-for="EnumLocation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LocationFloor" class="control-label">Piso:</label>

@@ -60,7 +60,27 @@
                 </select>
                 <span asp-validation-for="LocationName" class="text-danger"></span>
             </div>*@
-           
+
+
+            <div class="form-group">
+                <label asp-for="EnumLocation" class="control-label">Location:</label>
+                <select asp-for="EnumLocation" asp-items="Html.GetEnumSelectList<EnumLocation>()" class="form-control">
+                    <option value="">Seleccione...</option>
+                </select>
+                <span asp-validation-for="EnumLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationFloor" class="control-label"></label>
+                <input asp-for="LocationFloor" class="form-control" />
+                <span asp-validation-for="LocationFloor" class="text-danger"></span>
+            </div>
+          
+
+            <div class="form-group">
+                <label asp-for="Value" class="control-label">Valor</label>
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="IsActive" class="control-label">IsActive:</label>
                 <input type="checkbox" asp-for="IsActive" class="form-check" />

@@ -232,7 +232,7 @@ namespace SEM_project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model, LocationName, LocationFloor, Value")]
+            [Bind("ComputerId, Serial, Reference, Processer, Ram, HardDisk, OperativeSystem, Model, EnumLocation, LocationFloor, Value")]
             Computer computer)
         {
             // Remove the existing validation state for these properties if it exists
@@ -241,6 +241,7 @@ namespace SEM_project.Controllers
             ModelState.Remove("Licences");
             ModelState.Remove("Latitud");
             ModelState.Remove("Longitud");
+            ModelState.Remove("LocationName");
 
 
 
@@ -264,23 +265,22 @@ namespace SEM_project.Controllers
                 var name = "";
                 var latitud = 0f;
                 var longitud = 0f;
-                string latitudFormateado = "";
-                string longitudFormateado = "";
-               switch (computer.LocationName) {
-                    case "0":
+
+               switch (computer.EnumLocation) {
+                    case EnumLocation.NA:
                         name = "NA";
                             break;
-                    case "1":
+                    case EnumLocation.Bulevar:
                         name = "Bulevar";
                         latitud = 6.24537173186433f;
                         longitud = -75.5711242481222f;
                         break;
-                    case "2":
+                    case EnumLocation.Carre:
                         name = "Carre";
                         latitud = 6.24597f;
                         longitud = -75.57139f;
                         break;
-                    case "3":
+                    case EnumLocation.ViveroSf:
                         name = "ViveroSf";
                         latitud = 6.2092220071554705f;
                         longitud = -75.57759124759058f;
@@ -314,11 +314,6 @@ namespace SEM_project.Controllers
                         break;
                 }
 
-
-                latitudFormateado = latitud.ToString(new CultureInfo("es-ES"));
-                longitudFormateado = longitud.ToString(new CultureInfo("es-ES"));
-
-
                 computer.LocationName = name;
                 computer.LocationFloor = floor;
                 computer.Latitud = latitud;
@@ -327,7 +322,7 @@ namespace SEM_project.Controllers
 
 
 
-                var employee = _context.Employee.Find(computer.EmployeeId);
+                //var employee = _context.Employee.Find(computer.EmployeeId);
                 computer.ComputerHistory = new List<ComputerHistory>();
                 computer.IsActive = true;
                 _context.Add(computer);
@@ -383,6 +378,8 @@ namespace SEM_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Computer computer)
         {
+            ModelState.Remove("LocationName");
+
             var computerExist = await _context.Computer.Where(x => x.Serial == computer.Serial && x.ComputerId != id)
                 .FirstOrDefaultAsync();
 
@@ -450,6 +447,37 @@ namespace SEM_project.Controllers
                         }
 
                         var changesString = string.Join(Environment.NewLine, changes);
+
+
+                        var name = "";
+                        var latitud = 0f;
+                        var longitud = 0f;
+
+                        switch (computer.EnumLocation)
+                        {
+                            case EnumLocation.NA:
+                                name = "NA";
+                                break;
+                            case EnumLocation.Bulevar:
+                                name = "Bulevar";
+                                latitud = 6.24537173186433f;
+                                longitud = -75.5711242481222f;
+                                break;
+                            case EnumLocation.Carre:
+                                name = "Carre";
+                                latitud = 6.24597f;
+                                longitud = -75.57139f;
+                                break;
+                            case EnumLocation.ViveroSf:
+                                name = "ViveroSf";
+                                latitud = 6.2092220071554705f;
+                                longitud = -75.57759124759058f;
+                                break;
+                        }
+                        computer.LocationName = name;
+                        computer.Latitud = latitud;
+                        computer.Longitud = longitud;
+
 
 
                         _context.Update(computer);

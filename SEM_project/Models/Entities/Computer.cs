@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SEM_project.Utils;
+using System.ComponentModel.DataAnnotations;
 
 namespace SEM_project.Models.Entities
 {
@@ -33,6 +34,7 @@ namespace SEM_project.Models.Entities
         public IEnumerable<ComputerToLicence>? ComputerToLicence { get; set; }
         public double Latitud { get; set; }
         public double Longitud { get; set; }
+        public EnumLocation EnumLocation { get; set; }
         [Display(Name = "Sede")] public string LocationName { get; set; }
         [Display(Name = "Piso")] public string LocationFloor { get; set; }
         public float Value { get; set; }
