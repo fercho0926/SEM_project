@@ -181,6 +181,12 @@ namespace SEM_project.Controllers
                         computer.IsAssigned = false;
                         computerHistory.Owner = String.Empty;
                         computerHistory.Details = "Se Elimina Asignación de usuario";
+
+                        var emploToComputer =
+                       _context.EmployeeToComputer.FirstOrDefault(x => x.ComputerId == computerHistory.ComputerId);
+
+                        _context.EmployeeToComputer.Remove(emploToComputer);
+                        _context.SaveChanges();
                     }
                     else
                     {
@@ -222,7 +228,7 @@ namespace SEM_project.Controllers
                 //return RedirectToAction(nameof(Index));
             }
 
-            TempData["ErrorMessage"] = "Informacion Incorrecta";
+            TempData["ErrorMessage"] = "Información Incorrecta";
             return RedirectToAction(nameof(Index));
         }
 
@@ -412,6 +418,7 @@ namespace SEM_project.Controllers
                         {
                             var oldValue = property.GetValue(oldData);
                             var newValue = property.GetValue(computer);
+                            
 
                             if (!object.Equals(oldValue, newValue))
                             {
@@ -438,10 +445,21 @@ namespace SEM_project.Controllers
                                         changes.Add($" Tipo de Equipo: {oldValue} -> {newValue} ,  ");
 
                                         break;
+
+                                    case "IsActive":
+                                        changes.Add($"Activo: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+
+                                    case "EnumLocation":
+                                        changes.Add($" Sede: {oldValue} -> {newValue} ,  ");
+
+                                        break;
+
                                     default:
                                         changes.Add($"{property.Name}: {oldValue} -> {newValue} ,  ");
 
-                                        break;
+                                       break;
                                 }
                             }
                         }
@@ -452,6 +470,8 @@ namespace SEM_project.Controllers
                         var name = "";
                         var latitud = 0f;
                         var longitud = 0f;
+
+
 
                         switch (computer.EnumLocation)
                         {
@@ -561,13 +581,15 @@ namespace SEM_project.Controllers
             computer.IsActive = false;
 
             _context.Computer.Update(computer);
+            await AddComputerHistory(id, (int)EnumAction.Inactivar_Equipo, "Se inactiva equipo");
             _context.SaveChangesAsync();
 
-            await AddComputerHistory(id, (int)EnumAction.Inactivar_Equipo, "");
+            
 
             TempData["AlertMessage"] = "Se ha realizado la Inactivación del Equipo";
             //return RedirectToAction("Index", "Home");
             return RedirectToAction(nameof(Index));
+            
         }
 
         private async Task AddComputerHistory(Guid computerId, int action, string details)

@@ -57,9 +57,10 @@
                                 <th>@Html.DisplayNameFor(model => model.Serial)</th>
                                 <th> @Html.DisplayNameFor(model => model.Reference)</th>
                                 <th>@Html.DisplayNameFor(model => model.Model)</th>
-                                   <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                  @* <th>@Html.DisplayNameFor(model => model.IsActive)</th>
                                 <th>@Html.DisplayNameFor(model => model.IsAssigned)</th>
-                                <th>@Html.DisplayNameFor(model => model.Unsubscribed)</th>
+                                <th>@Html.DisplayNameFor(model => model.Unsubscribed)</th>*@
+                                <th>@Html.DisplayNameFor(model => model.LocationName)</th>
           
                                 <th>Acciones</th>
                             </tr>
@@ -72,10 +73,11 @@
                                     <td>@Html.DisplayFor(modelItem => item.Serial)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Reference)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Model)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                                    
+                                   @* <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IsAssigned)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Unsubscribed)</td>
-
+                                <td>@Html.DisplayFor(modelItem => item.Unsubscribed)</td>*@
+                                    <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
 
                                     <td>
                                     @if (!item.Unsubscribed)

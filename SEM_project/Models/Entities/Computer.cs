@@ -22,7 +22,7 @@ namespace SEM_project.Models.Entities
 
         //public string? InstaledApplications { get; set; }
         //public string? Licences { get; set; }
-        public bool IsActive { get; set; }
+        [Display(Name = "Equipo Activo")] public bool IsActive { get; set; }
         [Display(Name = "Asignado")] public bool IsAssigned { get; set; }
         [Display(Name = "Se da de Baja")] public bool Unsubscribed { get; set; }
 
@@ -34,10 +34,10 @@ namespace SEM_project.Models.Entities
         public IEnumerable<ComputerToLicence>? ComputerToLicence { get; set; }
         public double Latitud { get; set; }
         public double Longitud { get; set; }
-        public EnumLocation EnumLocation { get; set; }
+        [Display(Name = "Sede")] public EnumLocation EnumLocation { get; set; }
         [Display(Name = "Sede")] public string LocationName { get; set; }
         [Display(Name = "Piso")] public string LocationFloor { get; set; }
-        public float Value { get; set; }
+        [Display(Name = "Costo")] public float Value { get; set; }
 
     }
 }
