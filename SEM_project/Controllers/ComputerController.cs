@@ -165,13 +165,7 @@ namespace SEM_project.Controllers
                     }
 
 
-                    var employeeTocomputer = new EmployeeToComputer()
-                    {
-                        ComputerId = computerHistory.ComputerId,
-                        EmployeeId = computerHistory.EmployeeId
-                    };
-                    _context.Add(employeeTocomputer);
-
+                
 
                     var computer = _context.Computer.FirstOrDefault(x => x.ComputerId == computerHistory.ComputerId);
 
@@ -181,6 +175,7 @@ namespace SEM_project.Controllers
                         computer.IsAssigned = false;
                         computerHistory.Owner = String.Empty;
                         computerHistory.Details = "Se Elimina Asignación de usuario";
+                        computer.EmployeeId = null;
 
                         var emploToComputer =
                        _context.EmployeeToComputer.FirstOrDefault(x => x.ComputerId == computerHistory.ComputerId);
@@ -416,52 +411,65 @@ namespace SEM_project.Controllers
                         // Use reflection to compare property values
                         foreach (var property in typeof(Computer).GetProperties())
                         {
-                            var oldValue = property.GetValue(oldData);
-                            var newValue = property.GetValue(computer);
+                            if (property.Name == "Latitud")
+                            {
+                            }
+                            else if (property.Name == "Longitud")
+                            {
+                            }
+                            else { 
                             
 
-                            if (!object.Equals(oldValue, newValue))
-                            {
-                                switch (property.Name)
+                                var oldValue = property.GetValue(oldData);
+                                var newValue = property.GetValue(computer);
+
+
+                                if (!object.Equals(oldValue, newValue))
                                 {
-                                    case "Processer":
-                                        changes.Add($" Procesador: {oldValue} -> {newValue} ,  ");
+                                    switch (property.Name)
+                                    {
+                                        case "Processer":
+                                            changes.Add($" Procesador: {oldValue} -> {newValue} ,  ");
 
-                                        break;
+                                            break;
 
-                                    case "Ram":
-                                        changes.Add($" Memoria Ram: {oldValue} -> {newValue} ,  ");
+                                        case "Ram":
+                                            changes.Add($" Memoria Ram: {oldValue} -> {newValue} ,  ");
 
-                                        break;
-                                    case "HardDisk":
-                                        changes.Add($" Disco Duro: {oldValue} -> {newValue} ,  ");
+                                            break;
+                                        case "HardDisk":
+                                            changes.Add($" Disco Duro: {oldValue} -> {newValue} ,  ");
 
-                                        break;
-                                    case "OperativeSystem":
-                                        changes.Add($" Sistema Operativo: {oldValue} -> {newValue} ,  ");
+                                            break;
+                                        case "OperativeSystem":
+                                            changes.Add($" Sistema Operativo: {oldValue} -> {newValue} ,  ");
 
-                                        break;
-                                    case "Model":
-                                        changes.Add($" Tipo de Equipo: {oldValue} -> {newValue} ,  ");
+                                            break;
+                                        case "Model":
+                                            changes.Add($" Tipo de Equipo: {oldValue} -> {newValue} ,  ");
 
-                                        break;
+                                            break;
 
-                                    case "IsActive":
-                                        changes.Add($"Activo: {oldValue} -> {newValue} ,  ");
+                                        case "IsActive":
+                                            changes.Add($"Activo: {oldValue} -> {newValue} ,  ");
 
-                                        break;
+                                            break;
 
-                                    case "EnumLocation":
-                                        changes.Add($" Sede: {oldValue} -> {newValue} ,  ");
+                                        case "EnumLocation":
+                                            changes.Add($" Sede: {oldValue} -> {newValue} ,  ");
 
-                                        break;
+                                            break;
 
-                                    default:
-                                        changes.Add($"{property.Name}: {oldValue} -> {newValue} ,  ");
+                                        default:
+                                            changes.Add($"{property.Name}: {oldValue} -> {newValue} ,  ");
 
-                                       break;
+                                            break;
+                                    }
                                 }
+
                             }
+
+                            
                         }
 
                         var changesString = string.Join(Environment.NewLine, changes);
